@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  public-portal:
+  frontend:
     image: ${DOCKER_REPO_URL}${CI_PROJECT_NAME}/frontend:${IMAGE_TAG}
     hostname: "{{index .Service.Labels \"com.docker.stack.namespace\"}}.{{.Task.Slot}}.{{index .Service.Labels \"ru.seals.service\"}}"
     #deploy:
