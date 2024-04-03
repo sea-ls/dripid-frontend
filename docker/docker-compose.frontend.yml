@@ -22,5 +22,5 @@ services:
 
 networks:
   default:
-    name: ucso-network
+    name: dripid-network
     external: true
