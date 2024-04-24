@@ -6,7 +6,7 @@
    <v-btn icon="mdi-account">
    </v-btn>
 
-   <v-btn icon="mdi-menu">
+   <v-btn icon="mdi-menu" @mouseenter="$emit('openMenu')" @mouseleave="$emit('closeMenu')">
      <v-icon>mdi-menu</v-icon>
    </v-btn>
 
