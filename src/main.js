@@ -34,7 +34,8 @@ keycloak.init({
     checkLoginIframe: false,
     scope: 'openid email profile roles',
 }).then((auth) => {
-    console.log(auth, keycloak)
+    console.log(auth, keycloak.token)
+    localStorage.setItem('token', keycloak.token)
 })
 
 const app = createApp(App)

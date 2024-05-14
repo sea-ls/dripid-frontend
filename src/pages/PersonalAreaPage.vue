@@ -6,23 +6,23 @@
         <div class="lk__about d-flex w-100 ga-2 flex-column">
           <div class="lk__about_ro d-flex ga-1" >
             <span class="lk__about_row-title">ИМЯ:</span>
-            <div class="lk__about_row-text d-inline-block"></div>
+            <div class="lk__about_row-text d-inline-block text-white">{{accountInfo.firstName}}</div>
           </div>
           <div class="lk__about_row d-flex ga-1" >
             <span class="lk__about_row-title">ФАМИЛИЯ:</span>
-            <div class="lk__about_row-text d-inline-block"></div>
+            <div class="lk__about_row-text d-inline-block text-white">{{accountInfo.lastName}}</div>
           </div>
           <div class="lk__about_row d-flex ga-1" >
             <span class="lk__about_row-title">АДРЕС:</span>
-            <div class="lk__about_row-text d-inline-block"></div>
+            <div class="lk__about_row-text d-inline-block text-white"></div>
           </div>
           <div class="lk__about_row d-flex ga-1" >
             <span class="lk__about_row-title">EMAIL:</span>
-            <div class="lk__about_row-text d-inline-block"></div>
+            <div class="lk__about_row-text d-inline-block text-white">{{accountInfo.email}}</div>
           </div>
           <div class="lk__about_row d-flex ga-1" >
             <span class="lk__about_row-title">ТЕЛЕФОН:</span>
-            <div class="lk__about_row-text d-inline-block"></div>
+            <div class="lk__about_row-text d-inline-block text-white">{{accountInfo.phone}}</div>
           </div>
         </div>
       </div>
@@ -44,6 +44,9 @@
 </template>
 
 <script>
+import {da} from "vuetify/locale";
+import {ref} from "vue";
+
 export default {
   name: "PersonalAreaPAge",
   setup() {
@@ -84,10 +87,18 @@ export default {
       },
     ]
 
+    const accountInfo = ref({})
+
+    fetch('http://212.233.73.223:8080/api/delivery-service/person/authenticated', {
+      method: 'GET',
+      headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
+    }).then(res =>  res.json()).then((data) => accountInfo.value = data.accountInfo)
+
 
     return {
       orders,
-      headers
+      headers,
+      accountInfo
     }
   }
 }

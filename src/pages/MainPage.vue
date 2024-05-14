@@ -1,5 +1,22 @@
 <template>
+
   <div>
+    <v-bottom-sheet inset location="left bottom">
+      <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" text="Появились вопросы?"></v-btn>
+      </template>
+      <v-list lines="two">
+        <v-list-item
+            v-for="n in 3"
+            :key="n"
+            subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit"
+        >
+          <template v-slot:title>
+            <div class="bg-indigo-accent-4 rounded">Это безопасно?</div>
+          </template>
+        </v-list-item>
+      </v-list>
+    </v-bottom-sheet>
     <v-container>
       <div class="d-flex justify-center flex-column container-gap align-center">
         <v-carousel class="w-66" hide-delimiter-background>
@@ -45,6 +62,11 @@
         >
 
         </MainContentCanvas>
+        <div class="d-flex justify-center">
+          <img alt="Контакты" src="../../public/contacts-mock.jpg">
+
+        </div>
+
 
 
       </div>
@@ -64,7 +86,10 @@ import AppCard from "@/components/AppCard.vue";
 
 export default {
   name: "MainPage",
-  components: {AppCard, AppAboutWrapper, MainContentCanvas}
+  components: {AppCard, AppAboutWrapper, MainContentCanvas},
+  setup() {
+
+  }
 }
 </script>
 
@@ -72,6 +97,7 @@ export default {
 .container-gap {
   gap: 10vh;
 }
+
 .main {
   overflow-y: scroll;
 }
