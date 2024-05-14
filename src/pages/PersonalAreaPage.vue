@@ -1,10 +1,10 @@
 <template>
   <v-container>
-    <div class="lk d-flex justify-space-between">
-      <div class="d-flex w-33 flex-column ga-10">
+    <div class="lk d-flex flex-column justify-space-between">
+      <div class="d-flex w-100 ga-10 justify-space-around">
         <div class="lk__avatar"></div>
-        <div class="lk__about d-flex ga-2 flex-column">
-          <div class="lk__about_row d-flex ga-1" >
+        <div class="lk__about d-flex w-100 ga-2 flex-column">
+          <div class="lk__about_ro d-flex ga-1" >
             <span class="lk__about_row-title">ИМЯ:</span>
             <div class="lk__about_row-text d-inline-block"></div>
           </div>
@@ -16,42 +16,28 @@
             <span class="lk__about_row-title">АДРЕС:</span>
             <div class="lk__about_row-text d-inline-block"></div>
           </div>
+          <div class="lk__about_row d-flex ga-1" >
+            <span class="lk__about_row-title">EMAIL:</span>
+            <div class="lk__about_row-text d-inline-block"></div>
+          </div>
+          <div class="lk__about_row d-flex ga-1" >
+            <span class="lk__about_row-title">ТЕЛЕФОН:</span>
+            <div class="lk__about_row-text d-inline-block"></div>
+          </div>
         </div>
       </div>
-      <div class="w-50 h-75 overflow-visible">
-        <v-table>
-          <thead>
-          <tr>
-            <th class="text-center">
-              НОМЕР ЗАКАЗА
-            </th>
-            <th class="text-center">
-              ОПИСАНИЕ ЗАКАЗА
-            </th>
-            <th class="text-center">
-              ТРЕК НОМЕР
-            </th>
-            <th class="text-center">
-              СТАТУС
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr
-              v-for="item in orders"
-              :key="item.id"
-          >
-            <td class="text-center">{{ item.id }}</td>
-            <td class="text-center">{{ item.description }}</td>
-            <td class="text-center">{{ item.track }}</td>
-            <td class="text-center">
-              <v-chip :color="item.color">
-                {{item.status}}
-              </v-chip>
-            </td>
-          </tr>
-          </tbody>
-        </v-table>
+      <div class="w-100 overflow-visible">
+        <v-data-table-virtual
+          :headers="headers"
+          :items="orders"
+          height="600px"
+        >
+          <template v-slot:item.status="{item}">
+            <v-chip :color="item.color">
+              {{ item.status }}
+            </v-chip>
+          </template>
+        </v-data-table-virtual>
       </div>
     </div>
   </v-container>
@@ -79,9 +65,29 @@ export default {
       {id: 16, description: 'AIRMAX 95', track: 'E12MW45921231', status: 'Доставлен', color: 'green'},
     ]
 
+    const headers = [
+      {
+        title: 'НОМЕР ЗАКАЗА',
+        key: 'id'
+      },
+      {
+        title: 'ОПИСАНИЕ',
+        key: 'description'
+      },
+      {
+        title: 'ТРЕК НОМЕР',
+        key: 'track'
+      },
+      {
+        title: 'СТАТУС',
+        key: 'status'
+      },
+    ]
+
 
     return {
-      orders
+      orders,
+      headers
     }
   }
 }

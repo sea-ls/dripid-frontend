@@ -28,7 +28,7 @@
 
         </AppAboutWrapper>
 
-        <div class="d-flex justify-space-between w-66">
+        <div class="d-flex justify-space-between  w-66">
           <AppCard></AppCard>
           <AppCard></AppCard>
           <AppCard></AppCard>

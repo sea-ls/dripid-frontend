@@ -16,18 +16,24 @@ import { createApp } from 'vue'
 import router from "@/router/router";
 
 let initOptions = {
-    url: 'http://127.0.0.1:8080/', // Адрес Keycloak
+    url: 'http://212.233.73.223:9000', // Адрес Keycloak
     realm: 'dripId', // Имя нашего realm в Keycloak
     clientId: 'pbpkce_client', // Идентификатор клиента в Keycloak
 
-    // Перенаправлять неавторизованных пользователей на страницу входа
 }
 
 // Создать Keycloak JS Adapter
 let keycloak = new Keycloak(initOptions);
 
 // Инициализировать Keycloak JS Adapter
-keycloak.init({}).then((auth) => {
+keycloak.init({
+    onLoad: 'login-required',
+    flow: 'standard',
+    pkceMethod: 'S256',
+    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+    checkLoginIframe: false,
+    scope: 'openid email profile roles',
+}).then((auth) => {
     console.log(auth, keycloak)
 })
 

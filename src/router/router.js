@@ -1,7 +1,7 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
 import MainLayout from "@/layouts/MainLayout.vue";
-import MainPage from "@/pages/MainPage.vue";
-import PersonalAreaPage from "@/pages/PersonalAreaPage.vue";
+import MainPage from "../pages/MainPage.vue";
+import PersonalAreaPage from "../pages/PersonalAreaPage.vue";
 
 const routes = [
     {
