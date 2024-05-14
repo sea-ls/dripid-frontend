@@ -13,6 +13,7 @@ import Keycloak from "keycloak-js";
 
 // Composables
 import { createApp } from 'vue'
+import router from "@/router/router";
 
 let initOptions = {
     url: 'http://127.0.0.1:8080/', // Адрес Keycloak
@@ -31,6 +32,7 @@ keycloak.init({}).then((auth) => {
 })
 
 const app = createApp(App)
+app.use(router)
 
 registerPlugins(app)
 

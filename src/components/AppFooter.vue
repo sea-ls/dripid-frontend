@@ -1,11 +1,11 @@
 <template>
-  <footer class="footer bg-indigo-accent-4 w-100 d-flex justify-center">
-    <v-container class="w-66">
+  <v-app-bar location="bottom" class="footer bg-indigo-accent-4 w-100 d-flex justify-center position-fixed">
+    <v-container>
         <h2>DRIP ID</h2>
         <span>КОНТАКТЫ</span>
 
     </v-container>
-  </footer>
+  </v-app-bar>
 </template>
 
 <script>
@@ -16,7 +16,6 @@ export default {
 
 <style scoped>
 .footer {
-  height: 100px;
   width: 100%;
 }
 </style>
