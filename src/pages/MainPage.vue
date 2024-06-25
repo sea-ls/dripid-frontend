@@ -38,19 +38,19 @@
       <div class="d-flex justify-center flex-column container-gap align-center">
 
 
-<!--        <MainContentCanvas-->
-<!--            text-top="DRIPID"-->
-<!--            text-middle="DRIPID"-->
-<!--            text-low="DRIPID"-->
-<!--        >-->
+        <MainContentCanvas
+            text-top="DRIPID"
+            text-middle="DRIPID"
+            text-low="DRIPID"
+        >
 
-<!--        </MainContentCanvas>-->
+        </MainContentCanvas>
 
         <div class="roadmap d-flex justify-space-between w-66">
           <v-card width="300px" height="200px" rounded="xl" class="bg-indigo-accent-4" >
             <v-card-title class="bg-grey-lighten-3 w-50 card-title">ШАГ 1</v-card-title>
             <v-card-text>
-              <h2 class="card-title ma-0">Регестрация</h2>
+              <h2 class="card-title ma-0">Регистрация</h2>
               <p class="card-text">Зарегестрируйтесь на сервисе DRIPID и получите персональный адрес</p>
             </v-card-text>
           </v-card>

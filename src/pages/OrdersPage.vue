@@ -1,43 +1,52 @@
 <template>
-
-  <v-container>
-    <v-navigation-drawer class="justify-space-between">
-      <v-list>
-        <v-list-item link title="Заказы" @click="$router.push('/lk/orders')"></v-list-item>
-        <v-list-item link title="Заявка на выкуп" @click="$router.push('/lk/buy')"></v-list-item>
-        <v-list-item link title="Калькулятор стоимости" @click="$router.push('/lk/calc')"></v-list-item>
-        <v-list-item link title="Трек номер" @click="$router.push('/lk/track')"></v-list-item>
-      </v-list>
-
-      <template #prepend>
-        <v-list-item title="Баланс">
-          0.00 ₽
-        </v-list-item>
-      </template>
-
-    </v-navigation-drawer>
-    <router-view>
-
-    </router-view>
-
-  </v-container>
+  <div class="lk d-flex flex-column justify-space-between">
+<!--    <div class="d-flex w-100 ga-10 justify-space-around">-->
+<!--      <div class="lk__avatar"></div>-->
+<!--      <div class="lk__about d-flex w-100 ga-2 flex-column">-->
+<!--        <div class="lk__about_ro d-flex ga-1">-->
+<!--          <span class="lk__about_row-title">ИМЯ:</span>-->
+<!--          <div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.firstName }}</div>-->
+<!--        </div>-->
+<!--        <div class="lk__about_row d-flex ga-1">-->
+<!--          <span class="lk__about_row-title">ФАМИЛИЯ:</span>-->
+<!--          <div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.lastName }}</div>-->
+<!--        </div>-->
+<!--        <div class="lk__about_row d-flex ga-1">-->
+<!--          <span class="lk__about_row-title">АДРЕС:</span>-->
+<!--          <div class="lk__about_row-text d-inline-block text-white"></div>-->
+<!--        </div>-->
+<!--        <div class="lk__about_row d-flex ga-1">-->
+<!--          <span class="lk__about_row-title">EMAIL:</span>-->
+<!--          <div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.email }}</div>-->
+<!--        </div>-->
+<!--        <div class="lk__about_row d-flex ga-1">-->
+<!--          <span class="lk__about_row-title">ТЕЛЕФОН:</span>-->
+<!--          <div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.phone }}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <div class="w-100 overflow-visible">
+      <v-data-table-virtual
+          :headers="headers"
+          :items="orders"
+          height="600px"
+      >
+        <template v-slot:item.status="{item}">
+          <v-chip :color="item.color">
+            {{ item.status }}
+          </v-chip>
+        </template>
+      </v-data-table-virtual>
+    </div>
+  </div>
 </template>
 
 <script>
 import {ref} from "vue";
-import router from "@/router/router";
-import {useRouter} from "vue-router";
 
 export default {
-  name: "PersonalAreaPAge",
-  methods: {
-    router() {
-      return router
-    }
-  },
+  name: "OrdersPage",
   setup() {
-    const router = useRouter();
-    console.log(router)
     const orders = [
       {id: 1, description: 'Nike AIR MAX 95', track: '', status: 'В обработке', color: 'gray'},
       {id: 2, description: 'Adidas Color sweatshirt', track: '', status: 'В обработке', color: 'gray'},
@@ -77,10 +86,10 @@ export default {
 
     const accountInfo = ref({})
 
-    // fetch('http://212.233.73.223:8080/api/delivery-service/person/authenticated', {
-    //   method: 'GET',
-    //   headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
-    // }).then(res => res.json()).then((data) => accountInfo.value = data.accountInfo)
+    fetch('http://212.233.73.223:8080/api/delivery-service/person/authenticated', {
+      method: 'GET',
+      headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}
+    }).then(res => res.json()).then((data) => accountInfo.value = data.accountInfo)
 
 
     return {
@@ -92,21 +101,6 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.lk__avatar {
-  width: 200px;
-  height: 200px;
-  background-color: gray;
-  border-radius: 20px;
-}
+<style scoped>
 
-.lk__about_row-title {
-  color: #304FFE;
-}
-
-.lk__about_row-text {
-  width: 100%;
-  background-color: gray;
-  border-radius: 10px;
-}
 </style>
