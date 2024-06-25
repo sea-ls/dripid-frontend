@@ -1,20 +1,25 @@
 <template>
   <v-layout>
     <AppHeader @openMenu="drawer = !drawer"></AppHeader>
-    <AppFooter></AppFooter>
-    <v-navigation-drawer location="right" v-model="drawer">
-      <v-list-item link title="Доставка"></v-list-item>
-      <v-list-item link title="Проверка трек номера"></v-list-item>
-      <v-list-item link title="Наши склады"></v-list-item>
-    </v-navigation-drawer>
-
+<!--    <AppFooter></AppFooter>-->
 
     <v-main>
       <router-view/>
     </v-main>
 
-
   </v-layout>
+
+  <v-fab
+      icon="mdi-chat"
+      color="indigo-accent-4"
+      appear
+      layout
+      app
+      location="bottom end"
+      text="Сайт использует cookie"
+      extended
+      size="64"
+  ></v-fab>
 
 </template>
 

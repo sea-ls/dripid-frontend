@@ -22,8 +22,13 @@ const drawer = ref(false)
   src: url("@/assets/fonts/Kharkiv Tone 04.10.2020.ttf");
 }
 
+@font-face {
+  font-family: 'onest';
+  src: url("@/assets/fonts/Onest-VariableFont_wght.ttf");
+}
+
 * {
-  font-family: Kharkiv-Tone, sans-serif;
+  font-family: onest, sans-serif;
 }
 
 body::-webkit-scrollbar {
