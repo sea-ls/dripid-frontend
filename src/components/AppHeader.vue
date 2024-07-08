@@ -16,7 +16,7 @@
              color="indigo-accent-4"
              class="bg-grey-lighten-3 mr-1"
              rounded
-             @click="$router.push('/lk/orders')"
+             @click="$router.push('/lk/personal')"
       >
 
       </v-btn>
