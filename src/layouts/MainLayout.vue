@@ -1,11 +1,14 @@
 <template>
   <v-layout>
-    <AppHeader @openMenu="drawer = !drawer"></AppHeader>
+    <AppHeader @menuClick="drawer = !drawer" @openMenu="drawer = !drawer"></AppHeader>
 <!--    <AppFooter></AppFooter>-->
 
     <v-main>
       <router-view/>
     </v-main>
+
+
+
 
   </v-layout>
 
@@ -21,21 +24,28 @@
       size="64"
   ></v-fab>
 
+
+
 </template>
 
 <script>
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
-import {ref} from "vue";
+import {provide, ref} from "vue";
+import {useDisplay} from "vuetify";
 
 export default {
   name: "MainLayout",
   components: {AppFooter, AppHeader},
   setup() {
-    const drawer = ref(false)
+    const drawer = ref(false);
+    const {mobile} = useDisplay();
+    provide('drawer', drawer)
+
 
     return {
-      drawer
+      drawer,
+      mobile
     }
   }
 }

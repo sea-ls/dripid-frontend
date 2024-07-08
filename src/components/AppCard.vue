@@ -14,8 +14,8 @@ export default {
 
 <style scoped>
 .card {
-  height:400px;
-  width: 250px;
+  height: 500px;
+  width: 350px;
   border-radius: 30px;
 }
 </style>

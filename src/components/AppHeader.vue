@@ -1,23 +1,22 @@
 <template>
-  <v-app-bar class="bg-indigo-accent-4 position-fixed">
+  <v-app-bar class="bg-white position-fixed">
     <v-container class="pa-0 fill-height">
-      <v-app-bar-title  class="w-auto" @click="$router.push('/')">
-        <p class="title">DRIP ID /</p></v-app-bar-title>
+      <v-app-bar-nav-icon color="primary" v-if="mobile" @click="$emit('menuClick')"></v-app-bar-nav-icon>
+      <v-app-bar-title  class="title" @click="$router.push('/')"><span class="w-100">DRIP ID/</span></v-app-bar-title>
       <v-spacer></v-spacer>
-      <div class="d-flex justify-space-around links w-50">
-        <router-link class="link" to="/">Заказать доставку</router-link>
-        <router-link class="link" to="/">Проверка трек номера</router-link>
-        <router-link class="link" to="/">Наши склады</router-link>
-        <router-link class="link" to="/">Поддержка</router-link>
-        <router-link class="link" to="/">Наши склады</router-link>
+      <div class="d-flex justify-space-around links w-50" v-if="!mobile">
+        <router-link class="link" to="/">Как это работает?</router-link>
+        <router-link class="link" to="/">Бренды</router-link>
+        <router-link class="link" to="/">Помощь</router-link>
+        <router-link class="link" to="/">Вопросы</router-link>
       </div>
       <v-spacer></v-spacer>
       <v-btn prepend-icon="mdi-account"
              :text="isLogin ? 'Аккаунт' : 'Вход'"
              color="indigo-accent-4"
-             class="bg-grey-lighten-3"
+             class="bg-grey-lighten-3 mr-1"
              rounded
-             @click="$router.push('/lk')"
+             @click="$router.push('/lk/orders')"
       >
 
       </v-btn>
@@ -28,14 +27,17 @@
 
 <script>
 import {ref} from "vue";
+import {useDisplay} from "vuetify";
 
 export default {
   name: "AppHeader",
   setup() {
     const isLogin = ref(localStorage.getItem('token') === undefined || localStorage.getItem('token') === '');
+    const {mobile} = useDisplay();
 
     return {
-      isLogin
+      isLogin,
+      mobile
     }
   }
 }
@@ -43,10 +45,14 @@ export default {
 
 <style scoped>
 .link {
-  color: white;
+  color: #304FFE;
   text-decoration: none;
 }
-.title {
+.title span {
   font-family: Kharkiv-Tone, sans-serif;
+  color: #304FFE;
+}
+:deep(.v-toolbar-title) {
+  flex: none;
 }
 </style>

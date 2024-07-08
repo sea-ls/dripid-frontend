@@ -1,19 +1,22 @@
 <template>
 
   <v-container>
-    <v-navigation-drawer class="justify-space-between">
+    <v-navigation-drawer class="justify-space-between"  v-model="drawer">
       <v-list>
+        <v-list-item
+            prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+            subtitle="Баланс 0.00 ₽"
+            title="Илья"
+            @click="$router.push('/lk/personal')"
+        ></v-list-item>
+        <v-divider></v-divider>
         <v-list-item link title="Заказы" @click="$router.push('/lk/orders')"></v-list-item>
         <v-list-item link title="Заявка на выкуп" @click="$router.push('/lk/buy')"></v-list-item>
         <v-list-item link title="Калькулятор стоимости" @click="$router.push('/lk/calc')"></v-list-item>
         <v-list-item link title="Трек номер" @click="$router.push('/lk/track')"></v-list-item>
       </v-list>
 
-      <template #prepend>
-        <v-list-item title="Баланс">
-          0.00 ₽
-        </v-list-item>
-      </template>
+
 
     </v-navigation-drawer>
     <router-view>
@@ -24,9 +27,10 @@
 </template>
 
 <script>
-import {ref} from "vue";
+import {inject, ref} from "vue";
 import router from "@/router/router";
 import {useRouter} from "vue-router";
+import {useDisplay} from "vuetify";
 
 export default {
   name: "PersonalAreaPAge",
@@ -37,7 +41,7 @@ export default {
   },
   setup() {
     const router = useRouter();
-    console.log(router)
+    const {mobile} = useDisplay()
     const orders = [
       {id: 1, description: 'Nike AIR MAX 95', track: '', status: 'В обработке', color: 'gray'},
       {id: 2, description: 'Adidas Color sweatshirt', track: '', status: 'В обработке', color: 'gray'},
@@ -55,6 +59,10 @@ export default {
       {id: 15, description: 'AIRMAX 95', track: 'E12MW45921231', status: 'Доставлен', color: 'green'},
       {id: 16, description: 'AIRMAX 95', track: 'E12MW45921231', status: 'Доставлен', color: 'green'},
     ]
+
+    let drawer = inject('drawer')
+    if (!mobile.value) drawer.value = true
+
 
     const headers = [
       {
@@ -86,7 +94,8 @@ export default {
     return {
       orders,
       headers,
-      accountInfo
+      accountInfo,
+      drawer
     }
   }
 }

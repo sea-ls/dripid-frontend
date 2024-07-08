@@ -1,5 +1,5 @@
 <template>
-<v-card width="600px" height="300px" class="bg-grey-lighten-3 pa-10" :rounded="'xl'" title="Расчет стоимости" >
+<v-card :width="mobile ? '100%' : '600px'"  height="300px" class="bg-grey-lighten-3 pa-10" :rounded="'xl'" title="Расчет стоимости" >
   <template #text>
     <v-text-field placeholder="Страна, город" color="primary" variant="outlined"></v-text-field >
     <div class="d-flex justify-space-between">
@@ -15,8 +15,17 @@
 </template>
 
 <script>
+import {useDisplay} from "vuetify";
+
 export default {
-  name: "CalculatorPage"
+  name: "CalculatorPage",
+  setup() {
+    const {mobile} = useDisplay()
+
+    return {
+      mobile
+    }
+  }
 }
 </script>
 
