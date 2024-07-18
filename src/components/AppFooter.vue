@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="footer bg-indigo-accent-4 w-100 d-flex justify-center flex-column">
+  <v-footer class="footer bg-indigo-accent-4 w-100 h-100 d-flex justify-center flex-column" rounded="xl">
     <h2>
       DRIP ID
     </h2>
@@ -34,6 +34,7 @@ export default {
 <style scoped>
 .footer {
   width: 100%;
+  height: 90vh !important;
 }
 h2 {
   font-size: 3rem;

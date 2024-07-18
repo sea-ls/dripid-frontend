@@ -46,30 +46,7 @@
         </MainContentCanvas>
 
         <div class="w-100">
-          <h2 class="roadmap-title">Как заказать доставку?</h2>
-          <div class="roadmap d-flex justify-space-between align-center w-100 ga-2 flex-column flex-md-row" >
-            <v-card width="300px" height="200px" rounded="xl" class="bg-indigo-accent-4" >
-              <v-card-title class="bg-grey-lighten-3 w-50 card-title">ШАГ 1</v-card-title>
-              <v-card-text>
-                <h2 class="card-title ma-0">Регистрация</h2>
-                <p class="card-text">Зарегестрируйтесь на сервисе DRIPID и получите персональный адрес</p>
-              </v-card-text>
-            </v-card>
-            <v-card width="300px" height="200px" rounded="xl" class="bg-grey-lighten-3">
-              <v-card-title class="w-50 bg-indigo-accent-4 card-title" >ШАГ 2</v-card-title>
-              <v-card-text>
-                <h2 class="ma-0">Покупка</h2>
-                <p class="card-text">Зарегестрируйтесь на сервисе DRIPID и получите персональный адрес</p>
-              </v-card-text>
-            </v-card>
-            <v-card width="300px" height="200px" rounded="xl" class="bg-indigo-accent-4">
-              <v-card-title class="bg-grey-lighten-3 w-50 card-title">ШАГ 3</v-card-title>
-              <v-card-text>
-                <h2 class="ma-0">Доставка</h2>
-                <p class="card-text">Зарегестрируйтесь на сервисе DRIPID и получите персональный адрес</p>
-              </v-card-text>
-            </v-card>
-          </div>
+          <AppRoadmap></AppRoadmap>
         </div>
 
 
@@ -81,10 +58,44 @@
 
         <div class="d-flex justify-space-between align-center w-100 ga-2 flex-column flex-md-row">
 
-          <v-carousel class="carousel" hide-delimiter-background v-if="mobile">
+          <v-carousel class="carousel d-flex align-center justify-cente" hide-delimiter-background v-if="mobile" :show-arrows="false" >
             <v-carousel-item cover rounded
             >
-              <AppCard></AppCard>
+              <v-dialog class="d-flex justify-center align-center" close-on-back>
+                <template #activator="{ props: activatorProps }">
+                  <AppCard
+                      v-bind="activatorProps"
+                  ></AppCard>
+                </template>
+                <template v-slot:default="{ isActive }">
+                  <div class="d-flex justify-center align-center">
+                    <v-carousel class="carousel" hide-delimiter-background>
+                      <v-carousel-item cover rounded
+                      >
+                        <AppCard></AppCard>
+
+                      </v-carousel-item>
+
+                      <v-carousel-item
+
+                      >
+                        <AppCard></AppCard>
+
+                      </v-carousel-item>
+
+                      <v-carousel-item
+                      >
+                        <AppCard></AppCard>
+                      </v-carousel-item>
+                      <v-carousel-item
+                      >
+                        <AppCard></AppCard>
+                      </v-carousel-item>
+                    </v-carousel>
+                  </div>
+
+                </template>
+              </v-dialog>
             </v-carousel-item>
 
             <v-carousel-item
@@ -105,7 +116,41 @@
           </v-carousel>
 
           <div v-else class="d-flex w-100 justify-space-around align-center">
-            <AppCard></AppCard>
+            <v-dialog class="d-flex justify-center align-center" close-on-back>
+              <template #activator="{ props: activatorProps }">
+                <AppCard
+                    v-bind="activatorProps"
+                ></AppCard>
+              </template>
+              <template v-slot:default="{ isActive }">
+                <div class="d-flex justify-center align-center">
+                  <v-carousel class="carousel" hide-delimiter-background>
+                    <v-carousel-item cover rounded
+                    >
+                      <AppCard></AppCard>
+
+                    </v-carousel-item>
+
+                    <v-carousel-item
+
+                    >
+                      <AppCard></AppCard>
+
+                    </v-carousel-item>
+
+                    <v-carousel-item
+                    >
+                      <AppCard></AppCard>
+                    </v-carousel-item>
+                    <v-carousel-item
+                    >
+                      <AppCard></AppCard>
+                    </v-carousel-item>
+                  </v-carousel>
+                </div>
+
+              </template>
+            </v-dialog>
             <AppCard></AppCard>
             <AppCard></AppCard>
             <AppCard></AppCard>
@@ -115,17 +160,19 @@
         </div>
 
 
-        <v-card :width="mobile ? '100%' : '600px'"  height="300px" class="bg-grey-lighten-3 pa-10" :rounded="'xl'" title="Расчет стоимости" >
+        <v-card :width="mobile ? '100%' : '600px'"  height="400px" class="bg-grey-lighten-3 pa-10" :rounded="'xl'" title="Расчет стоимости" >
           <template #text>
+            <v-select clearable variant="outlined" :items="['Китай', 'США', 'Германия']" label="Откуда" color="primary"></v-select>
             <v-text-field placeholder="Страна, город" color="primary" variant="outlined"></v-text-field >
             <div class="d-flex justify-space-between">
               <div class="field">
-                <v-text-field color="primary" variant="outlined" placeholder="Вес"></v-text-field>
+                <v-text-field color="primary" variant="outlined" placeholder="Вес" v-model="range[1]" type="number"></v-text-field>
               </div>
               <div class="field">
                 <v-text-field color="primary" variant="outlined" placeholder="Стоимость"></v-text-field>
               </div>
             </div>
+            <v-range-slider color="primary" :min="0" :max="20" :step="1" v-model="range" thumb-label></v-range-slider>
           </template>
         </v-card>
 
@@ -150,18 +197,21 @@ import AppAboutWrapper from "@/components/AppAboutWrapper.vue";
 import AppCard from "@/components/AppCard.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import {useDisplay} from "vuetify";
-import {inject} from "vue";
+import {inject, ref} from "vue";
+import AppRoadmap from "@/components/AppRoadmap.vue";
 
 export default {
   name: "MainPage",
-  components: {AppFooter, AppCard, AppAboutWrapper, MainContentCanvas},
+  components: {AppRoadmap, AppFooter, AppCard, AppAboutWrapper, MainContentCanvas},
   setup() {
     const {mobile} = useDisplay();
-    const drawer = inject('drawer')
+    const drawer = inject('drawer');
+    const range = ref([0, 20])
 
     return {
       mobile,
-      drawer
+      drawer,
+      range
     }
 
   }
@@ -169,18 +219,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.card-title {
-  margin: 20px;
-  border-radius: 20px;
-}
-.roadmap {
-  margin-top: 50px;
-  &-title {
-    font-size: 4rem;
-    text-align: center;
-    color: #304FFE;
-  }
-}
 .container-gap {
   gap: 10vh;
 }
