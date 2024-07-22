@@ -19,10 +19,10 @@
 <!--    </v-bottom-sheet>-->
 
     <v-navigation-drawer v-if="mobile" v-model="drawer" class="position-fixed">
-      <v-list-item>Как это работает?</v-list-item>
+      <v-list-item @click="navigateTo('#roadmap')">Как это работает?</v-list-item>
       <v-list-item>Бренды</v-list-item>
-      <v-list-item>Помощь</v-list-item>
-      <v-list-item>Вопросы</v-list-item>
+      <v-list-item @click="navigateTo('#about')">О нас</v-list-item>
+      <v-list-item @click="navigateTo('#questions')">Вопросы</v-list-item>
     </v-navigation-drawer>
 
 
@@ -45,7 +45,7 @@
 
         </MainContentCanvas>
 
-        <div class="w-100">
+        <div class="w-100" id="roadmap">
           <AppRoadmap></AppRoadmap>
         </div>
 
@@ -61,9 +61,10 @@
 
 
 
-        <AppAboutWrapper>
+          <AppAboutWrapper id="about">
 
-        </AppAboutWrapper>
+          </AppAboutWrapper>
+
 
         <div class="d-flex justify-space-between align-center w-100 ga-2 flex-column flex-md-row">
 
@@ -169,8 +170,8 @@
         </div>
 
 
-        <v-card :width="mobile ? '100%' : '600px'"  height="400px" class="bg-grey-lighten-3 pa-10" :rounded="'xl'" title="Расчет стоимости" >
-          <template #text>
+        <v-card width="100%"  height="400px" class="bg-grey-lighten-3 pa-10" :rounded="'xl'" title="Расчет стоимости" >
+          <template #text class="w-33">
             <v-select clearable variant="outlined" :items="['Китай', 'США', 'Германия']" label="Откуда" color="primary"></v-select>
             <v-text-field placeholder="Страна, город" color="primary" variant="outlined"></v-text-field >
             <div class="d-flex justify-space-between">
@@ -185,6 +186,7 @@
           </template>
         </v-card>
 
+        <AppFooter id="questions"></AppFooter>
 
 
       </div>
@@ -192,7 +194,6 @@
 
     </v-container>
 
-    <AppFooter></AppFooter>
 
 
 
@@ -205,8 +206,8 @@ import MainContentCanvas from "@/components/MainContentCanvas.vue";
 import AppAboutWrapper from "@/components/AppAboutWrapper.vue";
 import AppCard from "@/components/AppCard.vue";
 import AppFooter from "@/components/AppFooter.vue";
-import {useDisplay} from "vuetify";
-import {inject, ref} from "vue";
+import {useDisplay, useGoTo} from "vuetify";
+import {inject, provide, ref} from "vue";
 import AppRoadmap from "@/components/AppRoadmap.vue";
 
 export default {
@@ -215,12 +216,18 @@ export default {
   setup() {
     const {mobile} = useDisplay();
     const drawer = inject('drawer');
-    const range = ref([0, 20])
+    const range = ref([0, 20]);
+
+    const goTo = useGoTo();
+    const navigateTo = (selector) => {
+      goTo(selector)
+    }
 
     return {
       mobile,
       drawer,
-      range
+      range,
+      navigateTo
     }
 
   }
@@ -228,6 +235,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container {
+  max-width: 100vw;
+  padding: 4rem;
+}
 .container-gap {
   gap: 10vh;
 }

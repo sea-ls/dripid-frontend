@@ -5,11 +5,10 @@
       <v-app-bar-title  class="title" @click="$router.push('/')"><span class="w-100">DRIP ID/</span></v-app-bar-title>
       <v-spacer></v-spacer>
       <div class="d-flex justify-space-around links w-50" v-if="!mobile">
-        <router-link class="link" to="/">Как это работает?</router-link>
-        <router-link class="link" to="/">Бренды</router-link>
-        <router-link class="link" to="/">Помощь</router-link>
-        <router-link class="link" to="/">Вопросы</router-link>
-
+        <span class="link" @click="navigateTo('#roadmap')">Как это работает?</span>
+        <span class="link">Бренды</span>
+        <span class="link" @click="navigateTo('#about')">О нас</span>
+        <span class="link" @click="navigateTo('#questions')">Вопросы</span>
       </div>
       <v-spacer></v-spacer>
       <v-text-field v-if="!mobile" class="mr-2" placeholder="Отследить посылку" density="compact" rounded="xl" width="50px" color="#304FFE" variant="outlined">
@@ -29,8 +28,8 @@
 </template>
 
 <script>
-import {ref} from "vue";
-import {useDisplay} from "vuetify";
+import {computed, ref} from "vue";
+import {useDisplay, useGoTo} from "vuetify";
 
 export default {
   name: "AppHeader",
@@ -38,9 +37,16 @@ export default {
     const isLogin = ref(localStorage.getItem('token') === undefined || localStorage.getItem('token') === '');
     const {mobile} = useDisplay();
 
+
+    const goTo = useGoTo();
+    const navigateTo = (selector) => {
+      goTo(selector, {duration: 1000})
+    }
+
     return {
       isLogin,
-      mobile
+      mobile,
+      navigateTo
     }
   }
 }
@@ -50,6 +56,7 @@ export default {
 .link {
   color: #304FFE;
   text-decoration: none;
+  cursor: pointer;
 }
 .title span {
   font-family: Kharkiv-Tone, sans-serif;

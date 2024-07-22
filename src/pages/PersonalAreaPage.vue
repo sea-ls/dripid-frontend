@@ -1,24 +1,9 @@
 <template>
 
   <v-container>
-    <v-navigation-drawer class="justify-space-between"  v-model="drawer">
-      <v-list>
-        <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
-            subtitle="Баланс 0.00 ₽"
-            title="Илья"
-            @click="$router.push('/lk/personal')"
-        ></v-list-item>
-        <v-divider></v-divider>
-        <v-list-item link title="Заказы" @click="$router.push('/lk/orders')"></v-list-item>
-        <v-list-item link title="Заявка на выкуп" @click="$router.push('/lk/buy')"></v-list-item>
-        <v-list-item link title="Калькулятор стоимости" @click="$router.push('/lk/calc')"></v-list-item>
-        <v-list-item link title="Трек номер" @click="$router.push('/lk/track')"></v-list-item>
-      </v-list>
 
 
 
-    </v-navigation-drawer>
     <router-view>
 
     </router-view>
