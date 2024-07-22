@@ -10,13 +10,14 @@ import { registerPlugins } from '@/plugins'
 // Components
 import App from './App.vue'
 import Keycloak from "keycloak-js";
+import 'animate.css'
 
 // Composables
 import { createApp } from 'vue'
 import router from "@/router/router";
 
 let initOptions = {
-    url: 'http://212.233.73.223:9000', // Адрес Keycloak
+    url: 'https://212.233.73.223:9000', // Адрес Keycloak
     realm: 'dripId', // Имя нашего realm в Keycloak
     clientId: 'pbpkce_client', // Идентификатор клиента в Keycloak
 

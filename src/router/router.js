@@ -6,6 +6,8 @@ import OrdersPage from "@/pages/OrdersPage.vue";
 import BuyApplicationPage from "@/pages/BuyApplicationPage.vue";
 import CalculatorPage from "@/pages/CalculatorPage.vue";
 import TrackPage from "@/pages/TrackPage.vue";
+import PersonalPage from "@/pages/PersonalPage.vue";
+import MenuPage from "@/pages/MenuPage.vue";
 
 const routes = [
     {
@@ -22,6 +24,16 @@ const routes = [
                 name: 'personal-area',
                 component: PersonalAreaPage,
                 children: [
+                    {
+                        name: 'menu',
+                        path: '/lk/menu',
+                        component: MenuPage
+                    },
+                    {
+                        name: 'personal',
+                        path: '/lk/personal',
+                        component: PersonalPage
+                    },
                     {
                         name: 'orders',
                         path: '/lk/orders',
