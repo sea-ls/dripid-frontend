@@ -52,104 +52,6 @@
 
         <div class="d-flex justify-space-between align-center w-100 ga-2 flex-column flex-md-row">
 
-<!--          <v-carousel class="carousel d-flex align-center justify-cente" hide-delimiter-background v-if="mobile" :show-arrows="false" >-->
-<!--            <v-carousel-item cover rounded-->
-<!--            >-->
-<!--              <v-dialog class="d-flex justify-center align-center" close-on-back>-->
-<!--                <template #activator="{ props: activatorProps }">-->
-<!--                  <AppCard-->
-<!--                      v-bind="activatorProps"-->
-<!--                  ></AppCard>-->
-<!--                </template>-->
-<!--                <template v-slot:default="{ isActive }">-->
-<!--                  <div class="d-flex justify-center align-center">-->
-<!--                    <v-carousel class="carousel" hide-delimiter-background>-->
-<!--                      <v-carousel-item cover rounded-->
-<!--                      >-->
-<!--                        <AppCard></AppCard>-->
-
-<!--                      </v-carousel-item>-->
-
-<!--                      <v-carousel-item-->
-
-<!--                      >-->
-<!--                        <AppCard></AppCard>-->
-
-<!--                      </v-carousel-item>-->
-
-<!--                      <v-carousel-item-->
-<!--                      >-->
-<!--                        <AppCard></AppCard>-->
-<!--                      </v-carousel-item>-->
-<!--                      <v-carousel-item-->
-<!--                      >-->
-<!--                        <AppCard></AppCard>-->
-<!--                      </v-carousel-item>-->
-<!--                    </v-carousel>-->
-<!--                  </div>-->
-
-<!--                </template>-->
-<!--              </v-dialog>-->
-<!--            </v-carousel-item>-->
-
-<!--            <v-carousel-item-->
-
-<!--            >-->
-<!--              <AppCard></AppCard>-->
-
-<!--            </v-carousel-item>-->
-
-<!--            <v-carousel-item-->
-<!--            >-->
-<!--              <AppCard></AppCard>-->
-<!--            </v-carousel-item>-->
-<!--            <v-carousel-item-->
-<!--            >-->
-<!--              <AppCard></AppCard>-->
-<!--            </v-carousel-item>-->
-<!--          </v-carousel>-->
-
-<!--          <div v-else class="d-flex w-100 justify-space-around align-center">-->
-<!--            <v-dialog class="d-flex justify-center align-center" close-on-back>-->
-<!--              <template #activator="{ props: activatorProps }">-->
-<!--                <AppCard-->
-<!--                    v-bind="activatorProps"-->
-<!--                ></AppCard>-->
-<!--              </template>-->
-<!--              <template v-slot:default="{ isActive }">-->
-<!--                <div class="d-flex justify-center align-center">-->
-<!--                  <v-carousel class="carousel" hide-delimiter-background>-->
-<!--                    <v-carousel-item cover rounded-->
-<!--                    >-->
-<!--                      <AppCard></AppCard>-->
-
-<!--                    </v-carousel-item>-->
-
-<!--                    <v-carousel-item-->
-
-<!--                    >-->
-<!--                      <AppCard></AppCard>-->
-
-<!--                    </v-carousel-item>-->
-
-<!--                    <v-carousel-item-->
-<!--                    >-->
-<!--                      <AppCard></AppCard>-->
-<!--                    </v-carousel-item>-->
-<!--                    <v-carousel-item-->
-<!--                    >-->
-<!--                      <AppCard></AppCard>-->
-<!--                    </v-carousel-item>-->
-<!--                  </v-carousel>-->
-<!--                </div>-->
-
-<!--              </template>-->
-<!--            </v-dialog>-->
-<!--            <AppCard></AppCard>-->
-<!--            <AppCard></AppCard>-->
-<!--            <AppCard></AppCard>-->
-<!--          </div>-->
-
           <v-slide-group
               selected-class="bg-primary"
               show-arrows
@@ -204,7 +106,7 @@ import AppCard from "@/components/AppCard.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import {useDisplay, useGoTo} from "vuetify";
 import {inject, provide, ref} from "vue";
-import AppRoadmap from "@/components/AppRoadmap.vue";
+import AppRoadmap from "@/components/roadmap/AppRoadmap.vue";
 import AppStories from "@/components/AppStories.vue";
 
 export default {
