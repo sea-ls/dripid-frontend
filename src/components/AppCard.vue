@@ -1,5 +1,5 @@
 <template>
-  <v-card class="card bg-indigo-accent-4">
+  <v-card class="card bg-indigo-accent-4 " :width="width" :height="height" rounded="xl">
     <template #title>
       <h3 class="pa-2">Доставка</h3>
     </template>
@@ -8,14 +8,21 @@
 
 <script>
 export default {
-  name: "AppCard"
+  name: "AppCard",
+  props: {
+    width: {
+      default: 280
+    },
+    height: {
+      default: 500
+    }
+  },
+  setup() {
+
+  }
 }
 </script>
 
 <style scoped>
-.card {
-  height: 500px;
-  width: 350px;
-  border-radius: 30px;
-}
+
 </style>

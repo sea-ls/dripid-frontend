@@ -1,22 +1,6 @@
 <template>
 
   <div>
-<!--    <v-bottom-sheet inset location="left bottom">-->
-<!--      <template v-slot:activator="{ props }">-->
-<!--        <v-btn v-bind="props" text="Появились вопросы?"></v-btn>-->
-<!--      </template>-->
-<!--      <v-list lines="two">-->
-<!--        <v-list-item-->
-<!--            v-for="n in 3"-->
-<!--            :key="n"-->
-<!--            subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit"-->
-<!--        >-->
-<!--          <template v-slot:title>-->
-<!--            <div class="bg-indigo-accent-4 rounded">Это безопасно?</div>-->
-<!--          </template>-->
-<!--        </v-list-item>-->
-<!--      </v-list>-->
-<!--    </v-bottom-sheet>-->
 
     <v-navigation-drawer v-if="mobile" v-model="drawer" class="position-fixed">
       <v-list-item @click="navigateTo('#roadmap')">Как это работает?</v-list-item>
@@ -30,8 +14,8 @@
 
 
     <div class="img d-flex justify-center align-center flex-column ">
-      <h2 class="img-title">DRIP ID!</h2>
-      <p class="img-text">DRIP ID - Сервис достаок посылок из-за рубежа, с помощью которго вы сможете получать в РФ свои покупки из США, ЕС, Китая, Турции и ОАЭ</p>
+      <h1 class="img-title text-h1 text-center">DRIP ID!</h1>
+      <p class="img-text text-body-1">DRIP ID - Сервис достаок посылок из-за рубежа, с помощью которго вы сможете получать в РФ свои покупки из США, ЕС, Китая, Турции и ОАЭ</p>
     </div>
     <v-container>
       <div class="d-flex justify-center flex-column container-gap align-center">
@@ -68,105 +52,117 @@
 
         <div class="d-flex justify-space-between align-center w-100 ga-2 flex-column flex-md-row">
 
-          <v-carousel class="carousel d-flex align-center justify-cente" hide-delimiter-background v-if="mobile" :show-arrows="false" >
-            <v-carousel-item cover rounded
+<!--          <v-carousel class="carousel d-flex align-center justify-cente" hide-delimiter-background v-if="mobile" :show-arrows="false" >-->
+<!--            <v-carousel-item cover rounded-->
+<!--            >-->
+<!--              <v-dialog class="d-flex justify-center align-center" close-on-back>-->
+<!--                <template #activator="{ props: activatorProps }">-->
+<!--                  <AppCard-->
+<!--                      v-bind="activatorProps"-->
+<!--                  ></AppCard>-->
+<!--                </template>-->
+<!--                <template v-slot:default="{ isActive }">-->
+<!--                  <div class="d-flex justify-center align-center">-->
+<!--                    <v-carousel class="carousel" hide-delimiter-background>-->
+<!--                      <v-carousel-item cover rounded-->
+<!--                      >-->
+<!--                        <AppCard></AppCard>-->
+
+<!--                      </v-carousel-item>-->
+
+<!--                      <v-carousel-item-->
+
+<!--                      >-->
+<!--                        <AppCard></AppCard>-->
+
+<!--                      </v-carousel-item>-->
+
+<!--                      <v-carousel-item-->
+<!--                      >-->
+<!--                        <AppCard></AppCard>-->
+<!--                      </v-carousel-item>-->
+<!--                      <v-carousel-item-->
+<!--                      >-->
+<!--                        <AppCard></AppCard>-->
+<!--                      </v-carousel-item>-->
+<!--                    </v-carousel>-->
+<!--                  </div>-->
+
+<!--                </template>-->
+<!--              </v-dialog>-->
+<!--            </v-carousel-item>-->
+
+<!--            <v-carousel-item-->
+
+<!--            >-->
+<!--              <AppCard></AppCard>-->
+
+<!--            </v-carousel-item>-->
+
+<!--            <v-carousel-item-->
+<!--            >-->
+<!--              <AppCard></AppCard>-->
+<!--            </v-carousel-item>-->
+<!--            <v-carousel-item-->
+<!--            >-->
+<!--              <AppCard></AppCard>-->
+<!--            </v-carousel-item>-->
+<!--          </v-carousel>-->
+
+<!--          <div v-else class="d-flex w-100 justify-space-around align-center">-->
+<!--            <v-dialog class="d-flex justify-center align-center" close-on-back>-->
+<!--              <template #activator="{ props: activatorProps }">-->
+<!--                <AppCard-->
+<!--                    v-bind="activatorProps"-->
+<!--                ></AppCard>-->
+<!--              </template>-->
+<!--              <template v-slot:default="{ isActive }">-->
+<!--                <div class="d-flex justify-center align-center">-->
+<!--                  <v-carousel class="carousel" hide-delimiter-background>-->
+<!--                    <v-carousel-item cover rounded-->
+<!--                    >-->
+<!--                      <AppCard></AppCard>-->
+
+<!--                    </v-carousel-item>-->
+
+<!--                    <v-carousel-item-->
+
+<!--                    >-->
+<!--                      <AppCard></AppCard>-->
+
+<!--                    </v-carousel-item>-->
+
+<!--                    <v-carousel-item-->
+<!--                    >-->
+<!--                      <AppCard></AppCard>-->
+<!--                    </v-carousel-item>-->
+<!--                    <v-carousel-item-->
+<!--                    >-->
+<!--                      <AppCard></AppCard>-->
+<!--                    </v-carousel-item>-->
+<!--                  </v-carousel>-->
+<!--                </div>-->
+
+<!--              </template>-->
+<!--            </v-dialog>-->
+<!--            <AppCard></AppCard>-->
+<!--            <AppCard></AppCard>-->
+<!--            <AppCard></AppCard>-->
+<!--          </div>-->
+
+          <v-slide-group
+              selected-class="bg-primary"
+              show-arrows
+          >
+            <v-slide-group-item
+                v-for="n in 15"
+                :key="n"
             >
-              <v-dialog class="d-flex justify-center align-center" close-on-back>
-                <template #activator="{ props: activatorProps }">
-                  <AppCard
-                      v-bind="activatorProps"
-                  ></AppCard>
-                </template>
-                <template v-slot:default="{ isActive }">
-                  <div class="d-flex justify-center align-center">
-                    <v-carousel class="carousel" hide-delimiter-background>
-                      <v-carousel-item cover rounded
-                      >
-                        <AppCard></AppCard>
-
-                      </v-carousel-item>
-
-                      <v-carousel-item
-
-                      >
-                        <AppCard></AppCard>
-
-                      </v-carousel-item>
-
-                      <v-carousel-item
-                      >
-                        <AppCard></AppCard>
-                      </v-carousel-item>
-                      <v-carousel-item
-                      >
-                        <AppCard></AppCard>
-                      </v-carousel-item>
-                    </v-carousel>
-                  </div>
-
-                </template>
-              </v-dialog>
-            </v-carousel-item>
-
-            <v-carousel-item
-
-            >
-              <AppCard></AppCard>
-
-            </v-carousel-item>
-
-            <v-carousel-item
-            >
-              <AppCard></AppCard>
-            </v-carousel-item>
-            <v-carousel-item
-            >
-              <AppCard></AppCard>
-            </v-carousel-item>
-          </v-carousel>
-
-          <div v-else class="d-flex w-100 justify-space-around align-center">
-            <v-dialog class="d-flex justify-center align-center" close-on-back>
-              <template #activator="{ props: activatorProps }">
-                <AppCard
-                    v-bind="activatorProps"
-                ></AppCard>
-              </template>
-              <template v-slot:default="{ isActive }">
-                <div class="d-flex justify-center align-center">
-                  <v-carousel class="carousel" hide-delimiter-background>
-                    <v-carousel-item cover rounded
-                    >
-                      <AppCard></AppCard>
-
-                    </v-carousel-item>
-
-                    <v-carousel-item
-
-                    >
-                      <AppCard></AppCard>
-
-                    </v-carousel-item>
-
-                    <v-carousel-item
-                    >
-                      <AppCard></AppCard>
-                    </v-carousel-item>
-                    <v-carousel-item
-                    >
-                      <AppCard></AppCard>
-                    </v-carousel-item>
-                  </v-carousel>
-                </div>
-
-              </template>
-            </v-dialog>
-            <AppCard></AppCard>
-            <AppCard></AppCard>
-            <AppCard></AppCard>
-          </div>
-
-
+             <AppStories
+              :stories="new Array(15)"
+             ></AppStories>
+            </v-slide-group-item>
+          </v-slide-group>
         </div>
 
 
@@ -209,10 +205,11 @@ import AppFooter from "@/components/AppFooter.vue";
 import {useDisplay, useGoTo} from "vuetify";
 import {inject, provide, ref} from "vue";
 import AppRoadmap from "@/components/AppRoadmap.vue";
+import AppStories from "@/components/AppStories.vue";
 
 export default {
   name: "MainPage",
-  components: {AppRoadmap, AppFooter, AppCard, AppAboutWrapper, MainContentCanvas},
+  components: {AppStories, AppRoadmap, AppFooter, AppCard, AppAboutWrapper, MainContentCanvas},
   setup() {
     const {mobile} = useDisplay();
     const drawer = inject('drawer');
@@ -248,7 +245,6 @@ export default {
   font-family: Kharkiv-Tone, sans-serif;
 }
 .img-text {
-  font-size: 20px;
   color: white;
   width: 50vw;
   text-align: center;
