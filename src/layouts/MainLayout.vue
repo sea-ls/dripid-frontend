@@ -54,11 +54,16 @@
         </template>
         <template #text>
           <div class="chat bg-white ">
-            <div class="chat__primary d-flex justify-center align-center w-100">
-              <p class="chat__primary-text">Мы на связи 24/7</p>
+            <div class="chat__primary d-flex flex-column ga-3 pa-3 w-100">
+              <p v-if="messages.length === 0" class="chat__primary-text my-auto align-self-center">Мы на связи 24/7</p>
+              <v-chip v-else v-for="item of messages" :key="item.id" variant="elevated" :color="item.byUser && 'primary'" :class="item.byUser ? 'align-self-end' : 'align-self-start'">
+                {{ item.text }}
+              </v-chip>
             </div>
             <div class="chat__input  w-100 border">
-              <v-text-field  append-inner-icon="mdi-paperclip" density="compact" color="#304FFE" placeholder="Отправить сообщение..." small></v-text-field>
+              <v-form @submit.prevent="handleSendMessage()">
+                <v-text-field v-model="message" append-inner-icon="mdi-paperclip" density="compact" color="#304FFE" placeholder="Отправить сообщение..." small />
+              </v-form>
             </div>
 
           </div>
@@ -77,21 +82,32 @@ import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import {provide, ref} from "vue";
 import {useDisplay} from "vuetify";
+import { useSupportStore } from "@/stores/support";
+import { storeToRefs } from "pinia";
 
 export default {
   name: "MainLayout",
   components: {AppFooter, AppHeader},
   setup() {
     const drawer = ref(false);
+    const message = ref('');
     const {mobile} = useDisplay();
-    const chat = ref(false);
+    const supportStore = useSupportStore()
+    const {messages} = storeToRefs(supportStore)
     provide('drawer', drawer)
+
+    const handleSendMessage = () => {
+      messages.value.push({text: message.value, byUser: true, id: Date.now()})
+      message.value = ''
+    }
 
 
     return {
       drawer,
       mobile,
-      chat
+      message,
+      messages,
+      handleSendMessage
     }
   }
 }
