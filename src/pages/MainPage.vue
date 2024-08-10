@@ -36,9 +36,12 @@
 
         <div class="w-100">
           <h1 class="title d-flex text-center justify-center">ГДЕ МОЙ ДРИП БОКС?</h1>
-          <v-text-field placeholder="Номер отслежевания" rounded="xl" color="#304FFE" variant="outlined">
-            <template #append v-if="!mobile">
-              <v-btn color="#304FFE" rounded="xl">Отследить посылку</v-btn>
+          <v-text-field v-model="trackNumber" placeholder="Номер отслежевания" density="comfortable" hide-details color="#304FFE" variant="solo-filled" flat class="rounded-xl position-relative overflow-hidden">
+            <template #prepend-inner>
+              <div class="pl-12" />
+            </template>
+            <template #append-inner v-if="!mobile">
+              <v-btn @click="router.push({name: 'track'})" v-if="!mobile" color="#304FFE" class="h-100 px-16 rounded-0 position-absolute right-0" flat>Отследить посылку</v-btn>
             </template>
           </v-text-field>
         </div>
@@ -108,6 +111,10 @@ import {useDisplay, useGoTo} from "vuetify";
 import {inject, provide, ref} from "vue";
 import AppRoadmap from "@/components/roadmap/AppRoadmap.vue";
 import AppStories from "@/components/AppStories.vue";
+import { useTrackStore } from "@/stores/track";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+
 
 export default {
   name: "MainPage",
@@ -115,7 +122,10 @@ export default {
   setup() {
     const {mobile} = useDisplay();
     const drawer = inject('drawer');
+    const trackStore = useTrackStore()
+    const {trackNumber} = storeToRefs(trackStore)
     const range = ref([0, 20]);
+    const router = useRouter()
 
     const goTo = useGoTo();
     const navigateTo = (selector) => {
@@ -126,7 +136,9 @@ export default {
       mobile,
       drawer,
       range,
-      navigateTo
+      navigateTo,
+      trackNumber,
+      router
     }
 
   }
