@@ -2,19 +2,17 @@
   <v-footer class="footer bg-indigo-accent-4 pa-0" rounded="xl">
 
     <v-container class="pa-0 d-flex flex-column h-100">
-      <v-row class="border-b-md border-white ma-0 justify-self-start flex-0-1">
-          <v-col class="pa-5">
-            <h2>
-              DRIP ID
-            </h2>
+      <v-row class="border-b-md border-white justify-center ma-0">
+          <v-col class="pa-5 flex-grow-0">
+            <h2 :class="[xlAndUp ? 'h2-xl': 'text-md-h1 text-h2',]">DRIP&nbsp;ID</h2>
           </v-col>
           
         </v-row>
       
 
-      <v-row class="ma-0">
-        <v-col class="border-e-md border-white d-flex pa-10">
-          <v-row>
+      <v-row class="ma-0 flex-column flex-xl-row">
+        <v-col :class="[xlAndUp ? 'border-e-md' : 'border-b-md', 'border-white d-flex pa-10']">
+          <v-row class="flex-column flex-md-row">
             <v-col>
               <div>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad architecto consequatur consequuntur cumque cupiditate, dolore in, maxime perspiciatis provident quod reiciendis, reprehenderit sapiente suscipit ullam voluptas. Aperiam officia rerum veritatis.
@@ -32,9 +30,9 @@
         </v-col>
         
         <v-col class="align-self-end pa-10">
-          <v-row>
+          <v-row class="flex-column flex-sm-row">
             <v-col class="contacts d-flex">
-              <div class="d-flex flex-column justify-space-between ">
+              <div class="d-flex flex-column justify-space-between ga-3">
                   <a class="link" href="#">Telegram</a>
                   <a class="link" href="#">VK</a>
                   <a class="link" href="#">INSTAGRAM</a>
@@ -53,8 +51,17 @@
 </template>
 
 <script>
+import { useDisplay } from 'vuetify/lib/framework.mjs';
+
 export default {
-  name: "AppFooter"
+  name: "AppFooter",
+  setup() {
+    const {xlAndUp} = useDisplay();
+
+    return {
+      xlAndUp
+    }
+  }
 }
 </script>
 
@@ -62,8 +69,10 @@ export default {
 .footer {
   font-size: 1.2rem;
 }
-h2 {
+.h2-xl {
   font-size: 20rem;
+}
+h2 {
   font-weight: 400;
   line-height: 1;
   font-family: Kharkiv-Tone, sans-serif;
