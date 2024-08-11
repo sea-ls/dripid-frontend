@@ -5,9 +5,10 @@
       <v-switch class="justify-center d-flex" color="#304FFE" inset v-model="selected"
                 :label="selected ? 'У меня есть зарубежная карта' : 'У меня нет зарубежной карты'"></v-switch>
       <div class="d-flex justify-center ga-10">
-          <div :class="[!selected ? 'blur d-none' : 'd-flex' ,'d-md-block roadmap align-center flex-column']"
+          <div :class="[selected ? 'blur d-none' : 'd-block' ,'d-md-block roadmap']"
                @click="selected = false">
             <RoadmapCard
+                class="mb-2"
                 v-for="(card, i) in withCardRoadmapData"
                 :key="card.subtitle"
                 :subtitle="card.subtitle"
@@ -16,7 +17,7 @@
             ></RoadmapCard>
           </div>
 
-          <div :class="[selected ? 'blur d-none' : 'd-flex', 'd-md-block roadmap align-center flex-column']"
+          <div :class="[!selected ? 'blur d-none' : 'd-block', 'd-md-block roadmap']"
                @click="selected = true">
             <RoadmapCard
                 class="mb-2"
