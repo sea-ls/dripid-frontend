@@ -8,7 +8,7 @@
 import { createPinia } from 'pinia'
 import vuetify from './vuetify'
 
-export function registerPlugins (app) {
-  app.use(vuetify)
-  app.use(createPinia())
+export function registerPlugins(app) {
+	app.use(vuetify)
+	app.use(createPinia())
 }
