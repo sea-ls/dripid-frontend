@@ -1,27 +1,27 @@
 version: '3.9'
 
 services:
-  frontend:
-    image: ${DOCKER_REPO_URL}${CI_PROJECT_NAME}/frontend:${IMAGE_TAG}
-    hostname: "{{index .Service.Labels \"com.docker.stack.namespace\"}}.{{.Task.Slot}}.{{index .Service.Labels \"ru.seals.service\"}}"
-    #deploy:
-    #  replicas: ${FRONTEND_REPLICAS}
-    #  update_config:
-    #    parallelism: 1
-    #    delay: 10s
-    #    order: stop-first
-    #  restart_policy:
-    #    condition: any
-    #    delay: 10s
-    #
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-    ports:
-      - "80:80"
+    frontend:
+        image: ${DOCKER_REPO_URL}${CI_PROJECT_NAME}/frontend:${IMAGE_TAG}
+        hostname: '{{index .Service.Labels "com.docker.stack.namespace"}}.{{.Task.Slot}}.{{index .Service.Labels "ru.seals.service"}}'
+        #deploy:
+        #  replicas: ${FRONTEND_REPLICAS}
+        #  update_config:
+        #    parallelism: 1
+        #    delay: 10s
+        #    order: stop-first
+        #  restart_policy:
+        #    condition: any
+        #    delay: 10s
+        #
+        logging:
+            driver: 'json-file'
+            options:
+                max-size: '10m'
+        ports:
+            - '80:80'
 
 networks:
-  default:
-    name: dripid-network
-    external: true
+    default:
+        name: dripid-network
+        external: true
