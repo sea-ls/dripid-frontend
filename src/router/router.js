@@ -36,7 +36,7 @@ const routes = [
 					},
 					{
 						name: 'orders',
-						path: '/lk/orders',
+						path: '/lk/orders/:role',
 						component: OrdersPage,
 					},
 					{

@@ -36,9 +36,19 @@
 		<div class="w-100 overflow-visible">
 			<v-data-table-virtual :headers="headers" :items="orders" height="600px">
 				<template v-slot:item.status="{ item }">
-					<v-chip :color="item.color">
+					<v-chip :color="item.color" v-if="role === 'user'">
 						{{ item.status }}
 					</v-chip>
+          <v-select
+              variant="plain" width="200px"
+              v-else
+          >
+            <template #chip="{item}" v>
+              <v-chip :color="item.color">
+                {{ item.status }}
+              </v-chip>
+            </template>
+          </v-select>
 				</template>
 			</v-data-table-virtual>
 		</div>
@@ -47,139 +57,16 @@
 
 <script>
 import { ref } from 'vue'
+import {useRoute} from "vue-router";
+import {storeToRefs} from "pinia";
+import {useOrdersStore} from "@/stores/orders";
 
 export default {
 	name: 'OrdersPage',
 	setup() {
-		const orders = [
-			{
-				id: 1,
-				description: 'Nike AIR MAX 95',
-				track: '',
-				status: 'В обработке',
-				color: 'gray',
-			},
-			{
-				id: 2,
-				description: 'Adidas Color sweatshirt',
-				track: '',
-				status: 'В обработке',
-				color: 'gray',
-			},
-			{
-				id: 3,
-				description: 'Louis bag',
-				track: 'E12MW459678',
-				status: 'В Пути',
-				color: '#304FFE',
-			},
-			{
-				id: 4,
-				description: 'AIRMAX 95',
-				track: 'E12MW459462',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 5,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 6,
-				description: 'AIRMAX 95',
-				track: 'E12MW45923',
-				status: 'Отменен',
-				color: 'red',
-			},
-			{
-				id: 7,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 8,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 9,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 10,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 11,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 12,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 13,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 15,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-			{
-				id: 16,
-				description: 'AIRMAX 95',
-				track: 'E12MW45921231',
-				status: 'Доставлен',
-				color: 'green',
-			},
-		]
-
-		const headers = [
-			{
-				title: 'НОМЕР ЗАКАЗА',
-				key: 'id',
-			},
-			{
-				title: 'ОПИСАНИЕ',
-				key: 'description',
-			},
-			{
-				title: 'ТРЕК НОМЕР',
-				key: 'track',
-			},
-			{
-				title: 'СТАТУС',
-				key: 'status',
-			},
-		]
-
-		const accountInfo = ref({})
-
+    const accountInfo = ref({});
+    const store = useOrdersStore()
+    const {orders, headers} = storeToRefs(store)
 		fetch('http://212.233.73.223:8080/api/delivery-service/person/authenticated', {
 			method: 'GET',
 			headers: {
@@ -188,11 +75,14 @@ export default {
 		})
 			.then((res) => res.json())
 			.then((data) => (accountInfo.value = data.accountInfo))
+    const route = useRoute()
+    const role = route.params.role
 
 		return {
 			orders,
 			headers,
 			accountInfo,
+      role
 		}
 	},
 }
