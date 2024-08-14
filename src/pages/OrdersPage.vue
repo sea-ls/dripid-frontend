@@ -36,19 +36,22 @@
 		<div class="w-100 overflow-visible">
 			<v-data-table-virtual :headers="headers" :items="orders" height="600px">
 				<template v-slot:item.status="{ item }">
-					<v-chip :color="item.color" v-if="role === 'user'">
-						{{ item.status }}
-					</v-chip>
-          <v-select
-              variant="plain" width="200px"
-              v-else
-          >
-            <template #chip="{item}" v>
-              <v-chip :color="item.color">
-                {{ item.status }}
-              </v-chip>
-            </template>
-          </v-select>
+            <v-chip :color="store.getStatusByName(item.status).color" v-if="role === 'user'">
+              {{ item.status }}
+            </v-chip>
+            <v-select
+                v-else
+                variant="outlined"
+                rounded="xl"
+                width="200px"
+                density="compact"
+                color="primary"
+                :items="store.statuses"
+                item-title="name"
+                :model-value="item.status"
+                @update:model-value="changeStatus($event,item)"
+            >
+            </v-select>
 				</template>
 			</v-data-table-virtual>
 		</div>
@@ -78,14 +81,25 @@ export default {
     const route = useRoute()
     const role = route.params.role
 
+    function changeStatus(event, item) {
+      const store = useOrdersStore()
+      store.changeStatus(event, item)
+    }
+
 		return {
 			orders,
 			headers,
 			accountInfo,
-      role
+      role,
+      store,
+      changeStatus
 		}
 	},
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+:deep(.v-input__details) {
+  display: none !important;
+}
+</style>

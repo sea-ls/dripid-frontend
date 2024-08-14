@@ -8,6 +8,7 @@ import CalculatorPage from '@/pages/CalculatorPage.vue'
 import TrackPage from '@/pages/TrackPage.vue'
 import PersonalPage from '@/pages/PersonalPage.vue'
 import MenuPage from '@/pages/MenuPage.vue'
+import InfoPage from "@/pages/InfoPage.vue";
 
 const routes = [
 	{
@@ -54,6 +55,11 @@ const routes = [
 						path: '/lk/track',
 						component: TrackPage,
 					},
+					{
+						name: 'info',
+						path: '/lk/info',
+						component: InfoPage
+					}
 				],
 			},
 		],

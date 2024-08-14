@@ -1,21 +1,20 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import {useRouter} from "vue-router";
-
 export const useOrdersStore = defineStore('order', () => {
+
 
     const orders = ref([
         {
             id: 1,
             description: 'Nike AIR MAX 95',
-            track: '',
+            track: 'E12MW459678',
             status: 'В обработке',
             color: 'gray',
         },
         {
             id: 2,
             description: 'Adidas Color sweatshirt',
-            track: '',
+            track: 'E12MW459679',
             status: 'В обработке',
             color: 'gray',
         },
@@ -51,19 +50,48 @@ export const useOrdersStore = defineStore('order', () => {
             key: 'status',
         },
     ])
-
+    //
     const statuses = [
         {
             name: 'В обработке',
-            color: 'gray'
+            color: 'gray',
+            desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор'
         },
         {
             name: 'Доставка по США',
-            color: ''
+            color: '#304ffe',
+            desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор'
+        },
+        {
+            name: 'Доставка по России',
+            color: '#304ffe',
+            desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор'
+        },
+        {
+            name: 'Отменен',
+            color: 'red',
+            desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор'
+        },
+        {
+            name: 'Доставлено',
+            color: 'green',
+            desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор'
         }
     ]
 
-    function addOrder(type, cost, address, count, link) {
+    const warehouse = ref({});
+    const withCard = ref(false);
+
+    function checkTrack(track) {
+        const current = orders.value.find((o) => o.track.trim() === track.value.trim())
+        return getStatusByName(current.status)
+    }
+
+    function getStatusByName(name) {
+        return statuses.find(status => status.name === name)
+    }
+
+    function addOrder(type, cost, address, count, link, warehouse, withCard) {
         orders.value.push({
             id: orders.value.length + 1,
             description: type,
@@ -71,9 +99,25 @@ export const useOrdersStore = defineStore('order', () => {
             cost,
             address,
             count,
-            link
+            link,
+            warehouse,
+            withCard,
+            track: 'E12MW459678' + (Math.round(Math.random() * 100)).toString()
         })
     }
 
-    return { orders, headers, addOrder }
+    function changeStatus(status, item) {
+        const current = orders.value.find((o) => o.id === item.id)
+        current.status = status
+    }
+
+    function setWarehouse(house) {
+        warehouse.value = house.value
+    }
+
+    function setIsWithCard(isCard) {
+        withCard.value = isCard
+    }
+
+    return { orders, headers, addOrder, warehouse, setWarehouse, setIsWithCard, withCard, getStatusByName, statuses, changeStatus, checkTrack }
 })
