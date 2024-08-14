@@ -3,7 +3,7 @@
   <v-card-title>
     <h2>Ваша заявка успешно создана!</h2>
   </v-card-title>
-  <v-card-item>
+  <v-card-item v-if="withCard">
     <h4 class="text-indigo-accent-4">Тип заявки:</h4>
     <h4>{{w}}</h4>
     <h4 class="text-indigo-accent-4">Страна:</h4>
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import {inject} from "vue";
 import {useOrdersStore} from "@/stores/orders";
 
 export default {
@@ -28,9 +27,10 @@ export default {
     const store = useOrdersStore()
     const warehouse = store.warehouse
 
-    console.log(warehouse)
+    const withCard = store.withCard
 
     return {
+      withCard,
       warehouse
     }
   }
