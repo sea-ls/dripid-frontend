@@ -5,7 +5,7 @@
   </v-card-title>
   <v-card-item v-if="withCard">
     <h4 class="text-indigo-accent-4">Тип заявки:</h4>
-    <h4>{{w}}</h4>
+    <h4>{{withCard ? 'Доставка' : 'Выкуп'}}</h4>
     <h4 class="text-indigo-accent-4">Страна:</h4>
     <h4>{{warehouse.name}}</h4>
     <h4 class="text-indigo-accent-4">Адрес склада:</h4>
