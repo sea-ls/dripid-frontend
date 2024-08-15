@@ -7,11 +7,13 @@
 		hide-details
 		color="#304FFE"
 		variant="solo-filled"
+		:append-inner-icon="mobile && 'mdi-magnify'"
 		flat
 		class="rounded-xl position-relative overflow-hidden"
+		@click:append-inner="onSearch"
 	>
 		<template #prepend-inner>
-			<div class="pl-12" />
+			<div class="pl-md-12 pl-6"></div>
 		</template>
 		<template #append-inner v-if="!mobile">
 			<v-btn

@@ -15,6 +15,7 @@
 			<v-spacer />
 			<v-text-field
 				v-if="!mobile"
+				v-model="trackNumber"
 				class="mr-2"
 				placeholder="Отследить посылку"
 				density="compact"
@@ -22,6 +23,8 @@
 				width="50px"
 				color="#304FFE"
 				variant="outlined"
+				append-inner-icon="mdi-chevron-right"
+				@click:append-inner="router.push({ name: 'track' })"
 			/>
 
 			<v-btn
@@ -38,7 +41,10 @@
 </template>
 
 <script>
+import { useTrackStore } from '@/stores/track'
+import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useDisplay, useGoTo } from 'vuetify'
 
 export default {
@@ -46,6 +52,9 @@ export default {
 	setup() {
 		const isLogin = ref(localStorage.getItem('token') === undefined || localStorage.getItem('token') === '')
 		const { mobile } = useDisplay()
+		const router = useRouter()
+		const trackStore = useTrackStore()
+		const { trackNumber } = storeToRefs(trackStore)
 
 		const goTo = useGoTo()
 		const navigateTo = (selector) => {
@@ -56,6 +65,8 @@ export default {
 			isLogin,
 			mobile,
 			navigateTo,
+			router,
+			trackNumber,
 		}
 	},
 }
