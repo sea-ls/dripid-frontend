@@ -33,9 +33,11 @@
 						variant="solo-filled"
 						flat
 						class="rounded-xl position-relative overflow-hidden"
+						:append-inner-icon="mobile && 'mdi-chevron-right'"
+						@click:append-inner="router.push({ name: 'track' })"
 					>
 						<template #prepend-inner>
-							<div class="pl-12"></div>
+							<div class="pl-md-12 pl-6"></div>
 						</template>
 						<template #append-inner v-if="!mobile">
 							<v-btn

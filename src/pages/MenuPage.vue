@@ -25,10 +25,10 @@
 			<v-list-item-title @click="$router.push('/lk/track')">Трек номер</v-list-item-title>
 		</v-list-item>
 
-    <v-divider />
-    <v-list-item class="link" rounded="xl">
-      <v-list-item-title @click="$router.push('/lk/orders/admin')">Администратор</v-list-item-title>
-    </v-list-item>
+		<v-divider />
+		<v-list-item class="link" rounded="xl">
+			<v-list-item-title @click="$router.push('/lk/orders/admin')">Администратор</v-list-item-title>
+		</v-list-item>
 	</v-list>
 </template>
 
