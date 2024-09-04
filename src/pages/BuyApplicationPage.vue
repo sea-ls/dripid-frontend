@@ -18,28 +18,14 @@
 						</v-expansion-panel-title>
 						<v-expansion-panel-text>
 							<v-form>
-								<v-text-field
+								<v-select
 									placeholder="Фактический адрес доставки"
 									label="Фактический адрес доставки"
 									color="#304FFE"
 									variant="outlined"
 									rounded="xl"
-									v-model="address"
+									:items="addresses"
 								/>
-								<v-autocomplete
-									placeholder="Склад"
-									label="Склад"
-									:items="warehouses"
-									:item-title="'name'"
-									return-object
-									auto-select-first
-									color="#304FFE"
-									v-model="warehouse"
-									:disabled="!withCard"
-									variant="outlined"
-									rounded="xl"
-								>
-								</v-autocomplete>
 							</v-form>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
@@ -56,6 +42,7 @@ import { useOrdersStore } from '@/stores/orders'
 import { useRouter } from 'vue-router'
 import AddProductForm from "@/components/AddProductForm.vue";
 import {useProductStore} from "@/stores/product";
+import {useAddressStore} from "@/stores/address";
 
 export default {
 	name: 'BuyApplicationPage',
@@ -72,6 +59,8 @@ export default {
 		const router = useRouter()
 
 		const panels = ref(['type', 'info', 'address'])
+    const addressStore = useAddressStore();
+    const addresses = addressStore.addresses
 
 		const warehouses = [
 			{
@@ -125,6 +114,7 @@ export default {
 			addApplication,
 			warehouse,
 			warehouses,
+      addresses
 		}
 	},
 }
