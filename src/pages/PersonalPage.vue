@@ -15,10 +15,53 @@
 							<span class="lk__about_row-title">ФАМИЛИЯ:</span>
 							<div class="lk__about_row-text d-inline-block text-white">Фамилия</div>
 						</div>
-						<div class="lk__about_row d-flex ga-1">
-							<span class="lk__about_row-title">АДРЕС:</span>
-							<div class="lk__about_row-text d-inline-block text-white"></div>
+						<div class="lk__about_row d-flex flex-column ga-1">
+							<span class="lk__about_row-title">АДРЕСА:</span>
+							<div v-for="address in addresses" class="lk__about_row-text d-inline-block text-white">{{address}}</div>
 						</div>
+            <div class="lk__about_row">
+                <v-btn color="primary" @click="openDialog">Добавить адрес</v-btn>
+                <v-dialog v-model="dialog" max-width="600px">
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">Добавить адрес доставки</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-form ref="form" v-model="valid" lazy-validation>
+                        <v-text-field
+                            v-model="country"
+                            :rules="[rules.required]"
+                            label="Страна"
+                            required
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="city"
+                            :rules="[rules.required]"
+                            label="Город"
+                            required
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="address"
+                            :rules="[rules.required]"
+                            label="Адрес"
+                            required
+                        ></v-text-field>
+                        <v-text-field
+                            v-model="postalCode"
+                            :rules="[rules.required, rules.postalCode]"
+                            label="Индекс"
+                            required
+                        ></v-text-field>
+                      </v-form>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="closeDialog">Закрыть</v-btn>
+                      <v-btn color="blue darken-1" text @click="submit">Добавить</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+            </div>
 						<div class="lk__about_row d-flex ga-1">
 							<span class="lk__about_row-title">EMAIL:</span>
 							<div class="lk__about_row-text d-inline-block text-white"></div>
@@ -44,8 +87,67 @@
 </template>
 
 <script>
+import {computed, ref} from "vue";
+import {useAddressStore} from "@/stores/address";
+
 export default {
 	name: 'PersonalPage',
+  setup() {
+    const dialog = ref(false);
+    const valid = ref(false);
+    const country = ref('');
+    const city = ref('');
+    const address = ref('');
+    const postalCode = ref('');
+    const rules = {
+      required: (v) => !!v || 'Это поле обязательно',
+    };
+
+    const addressStore = useAddressStore(); // Используем store
+
+    const openDialog = () => {
+      dialog.value = true;
+    };
+
+    const closeDialog = () => {
+      dialog.value = false;
+    };
+
+    const submit = () => {
+      if (valid.value) {
+        addressStore.addAddress(country.value, city.value, address.value, postalCode.value); // Сохраняем адрес в store
+        closeDialog();
+        resetForm();
+      }
+    };
+
+    const addresses = computed(() => {
+      return addressStore.addresses
+    })
+
+    const resetForm = () => {
+      country.value = '';
+      city.value = '';
+      address.value = '';
+      postalCode.value = '';
+      valid.value = false; // Сброс валидации формы
+    };
+
+    return {
+      dialog,
+      valid,
+      country,
+      city,
+      address,
+      postalCode,
+      rules,
+      openDialog,
+      closeDialog,
+      submit,
+      addressStore,
+      addresses
+    };
+  },
 }
 </script>
 

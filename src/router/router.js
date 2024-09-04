@@ -9,6 +9,7 @@ import TrackPage from '@/pages/TrackPage.vue'
 import PersonalPage from '@/pages/PersonalPage.vue'
 import MenuPage from '@/pages/MenuPage.vue'
 import InfoPage from '@/pages/InfoPage.vue'
+import WaitingTrackPage from "@/pages/WaitingTrackPage.vue";
 
 const routes = [
 	{
@@ -60,6 +61,11 @@ const routes = [
 						path: '/lk/info',
 						component: InfoPage,
 					},
+					{
+						name: 'waiting',
+						path: '/lk/wait',
+						component: WaitingTrackPage
+					}
 				],
 			},
 		],

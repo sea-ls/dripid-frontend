@@ -4,69 +4,12 @@
 			<v-sheet class="d-flex flex-column ga-5">
 				<h1>Заявка на выкуп-доставку товара</h1>
 				<v-expansion-panels variant="accordion" multiple v-model="panels">
-					<v-expansion-panel rounded="xl" value="type">
-						<v-expansion-panel-title>
-							<h4>Выберите тип доставки</h4>
-						</v-expansion-panel-title>
-						<v-expansion-panel-text>
-							<v-switch
-								color="#304FFE"
-								inset
-								v-model="withCard"
-								:label="withCard ? 'У меня есть зарубежная карта' : 'У меня нет зарубежной карты'"
-							/>
-							<p class="text-black text-h5" v-if="!withCard">
-								Если у вас нету зарубежной банковской карты, после заполнения формы заявки мы выкупим
-								ваш товар и доставим его до вашего адреса в России или СНГ. Для выкупа товара и оплаты
-								доставки поплните баланс
-							</p>
-							<p class="text-black text-h5" v-else>
-								Если у вас есть зарубежная банковская карта, после заполнения формы мы выдадим вам адрес
-								склада, который нужно указать при покупке товара. Адрес склада зависит от его страны
-								которую вы выберите в заявке. После прибытия товара на склад, с вашего счета спишется
-								цена доставки, убедитесь, что на вашем аккаунте пополнен баланс.
-							</p>
-						</v-expansion-panel-text>
-					</v-expansion-panel>
 					<v-expansion-panel rounded="xl" value="info">
 						<v-expansion-panel-title>
 							<h4>Укажите информацию о товаре</h4>
 						</v-expansion-panel-title>
 						<v-expansion-panel-text>
-							<v-form>
-								<v-text-field
-									placeholder="Тип товара"
-									label="Тип товара"
-									color="#304FFE"
-									variant="outlined"
-									rounded="xl"
-									v-model="type"
-								/>
-								<v-text-field
-									placeholder="Стоимость"
-									label="Стоимость"
-									color="#304FFE"
-									variant="outlined"
-									rounded="xl"
-									v-model="cost"
-								/>
-								<v-text-field
-									placeholder="Кол-во"
-									label="Кол-во"
-									color="#304FFE"
-									variant="outlined"
-									rounded="xl"
-									v-model="count"
-								/>
-								<v-text-field
-									placeholder="Ссылка на товар"
-									label="Ссылка на товар"
-									color="#304FFE"
-									variant="outlined"
-									rounded="xl"
-									v-model="link"
-								/>
-							</v-form>
+						 <AddProductForm></AddProductForm>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 					<v-expansion-panel rounded="xl" value="address">
@@ -111,9 +54,12 @@
 import { provide, ref } from 'vue'
 import { useOrdersStore } from '@/stores/orders'
 import { useRouter } from 'vue-router'
+import AddProductForm from "@/components/AddProductForm.vue";
+import {useProductStore} from "@/stores/product";
 
 export default {
 	name: 'BuyApplicationPage',
+  components: {AddProductForm},
 	setup() {
 		const type = ref('')
 		const cost = ref(0)
@@ -152,7 +98,8 @@ export default {
 		]
 
 		function addApplication() {
-			const store = useOrdersStore()
+			const store = useOrdersStore();
+      const productStore = useProductStore
 			store.addOrder(
 				type.value,
 				cost.value,
