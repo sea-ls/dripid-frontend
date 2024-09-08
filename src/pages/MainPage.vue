@@ -2,7 +2,7 @@
 	<div>
 		<v-navigation-drawer v-if="mobile" v-model="drawer" class="position-fixed">
 			<v-list-item @click="navigateTo('#roadmap')"> Как это работает? </v-list-item>
-			<v-list-item>Бренды</v-list-item>
+			<v-list-item>Где покупать</v-list-item>
 			<v-list-item @click="navigateTo('#about')">О нас</v-list-item>
 			<v-list-item @click="navigateTo('#questions')">Вопросы</v-list-item>
 		</v-navigation-drawer>
@@ -33,7 +33,7 @@
 						variant="solo-filled"
 						flat
 						class="rounded-xl position-relative overflow-hidden"
-						:append-inner-icon="mobile && 'mdi-chevron-right'"
+						:append-inner-icon="mobile ? 'mdi-chevron-right' : ''"
 						@click:append-inner="router.push({ name: 'track' })"
 					>
 						<template #prepend-inner>

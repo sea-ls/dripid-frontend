@@ -10,13 +10,14 @@
 			<v-row class="ma-0 flex-column flex-xl-row">
 				<v-col :class="[xlAndUp ? 'border-e-md' : 'border-b-md', 'border-white d-flex pa-10']">
 					<v-row class="flex-column flex-md-row">
-						<v-col>
+						<v-col class="d-flex flex-column justify-space-between">
 							<div>
 								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad architecto consequatur
 								consequuntur cumque cupiditate, dolore in, maxime perspiciatis provident quod
 								reiciendis, reprehenderit sapiente suscipit ullam voluptas. Aperiam officia rerum
 								veritatis.
 							</div>
+							<div><AppCurs></AppCurs></div>
 						</v-col>
 						<v-col>
 							<div>
@@ -58,6 +59,7 @@
 
 <script>
 import { useDisplay } from 'vuetify/lib/framework.mjs'
+import AppCurs from './AppCurs.vue'
 
 export default {
 	name: 'AppFooter',

@@ -7,7 +7,7 @@
 		hide-details
 		color="#304FFE"
 		variant="solo-filled"
-		:append-inner-icon="mobile && 'mdi-magnify'"
+		:append-inner-icon="mobile ? 'mdi-magnify' : ''"
 		flat
 		class="rounded-xl position-relative overflow-hidden"
 		@click:append-inner="onSearch"
