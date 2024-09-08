@@ -12,7 +12,7 @@
 			<div class="d-flex justify-space-between">
 				<div class="field">
 					<v-text-field color="primary" variant="outlined" placeholder="Вес" v-model="range" type="number" />
-					<v-btn-toggle v-model="buttonToggle">
+					<v-btn-toggle v-model="buttonToggle" class="mb-5">
 						<v-btn icon="mdi-cellphone"></v-btn>
 						<v-btn icon="mdi-tshirt-crew"></v-btn>
 						<v-btn icon="mdi-shoe-sneaker"></v-btn>

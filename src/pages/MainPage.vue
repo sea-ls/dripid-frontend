@@ -67,13 +67,7 @@
 					</v-slide-group>
 				</div>
 
-				<v-card
-					width="100%"
-					height="400px"
-					class="bg-grey-lighten-3 pa-10"
-					:rounded="'xl'"
-					title="Расчет стоимости"
-				>
+				<v-card width="100%" class="bg-grey-lighten-3 pa-10" :rounded="'xl'" title="Расчет стоимости">
 					<template #text class="w-33">
 						<v-select
 							clearable
@@ -89,15 +83,20 @@
 									color="primary"
 									variant="outlined"
 									placeholder="Вес"
-									v-model="range[1]"
+									v-model="range"
 									type="number"
 								/>
+								<v-btn-toggle v-model="buttonToggle" class="mb-5">
+									<v-btn icon="mdi-cellphone"></v-btn>
+									<v-btn icon="mdi-tshirt-crew"></v-btn>
+									<v-btn icon="mdi-shoe-sneaker"></v-btn>
+								</v-btn-toggle>
 							</div>
 							<div class="field">
 								<v-text-field color="primary" variant="outlined" placeholder="Стоимость" />
 							</div>
 						</div>
-						<v-range-slider color="primary" :min="0" :max="20" :step="1" v-model="range" thumb-label />
+						<v-slider color="primary" :min="0" :max="20" :step="1" v-model="range" thumb-label />
 					</template>
 				</v-card>
 
@@ -113,7 +112,7 @@ import AppAboutWrapper from '@/components/AppAboutWrapper.vue'
 import AppCard from '@/components/AppCard.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { useDisplay, useGoTo } from 'vuetify'
-import { inject, provide, ref } from 'vue'
+import { inject, provide, ref, watch } from 'vue'
 import AppRoadmap from '@/components/roadmap/AppRoadmap.vue'
 import AppStories from '@/components/AppStories.vue'
 import { useTrackStore } from '@/stores/track'
@@ -137,7 +136,25 @@ export default {
 		const drawer = inject('drawer')
 		const trackStore = useTrackStore()
 		const { trackNumber } = storeToRefs(trackStore)
-		const range = ref([0, 20])
+		const range = ref(null)
+		const buttonToggle = ref(null)
+
+		watch(buttonToggle, (newVal, _) => {
+			switch (newVal) {
+				case 0:
+					range.value = 2
+					break
+				case 1:
+					range.value = 5
+					break
+				case 2:
+					range.value = 10
+					break
+				default:
+					range.value = 0
+					break
+			}
+		})
 		const router = useRouter()
 		const carouselImages = ref([
 			'https://via.placeholder.com/200x200?text=Image1',
@@ -177,6 +194,7 @@ export default {
 			trackNumber,
 			router,
 			carouselImages,
+			buttonToggle,
 		}
 	},
 }
