@@ -17,19 +17,13 @@
 			<v-text-field placeholder="Страна, город" color="primary" variant="outlined" />
 			<div class="d-flex justify-space-between">
 				<div class="field">
-					<v-text-field
-						color="primary"
-						variant="outlined"
-						placeholder="Вес"
-						v-model="range[1]"
-						type="number"
-					/>
+					<v-text-field color="primary" variant="outlined" placeholder="Вес" v-model="range" type="number" />
 				</div>
 				<div class="field">
 					<v-text-field color="primary" variant="outlined" placeholder="Стоимость" />
 				</div>
 			</div>
-			<v-range-slider color="primary" :min="0" :max="20" :step="1" v-model="range" thumb-label />
+			<v-slider color="primary" :min="0" :max="20" :step="1" v-model="range" thumb-label />
 		</template>
 	</v-card>
 </template>
@@ -42,7 +36,7 @@ export default {
 	name: 'CalculatorPage',
 	setup() {
 		const { mobile } = useDisplay()
-		const range = ref([0, 20])
+		const range = ref(0)
 
 		return {
 			mobile,

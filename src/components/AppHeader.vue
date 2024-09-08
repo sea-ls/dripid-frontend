@@ -2,13 +2,13 @@
 	<v-app-bar class="bg-white position-fixed d-flex align-center">
 		<v-container class="pa-0 fill-height">
 			<v-app-bar-nav-icon color="primary" v-if="mobile" @click="$emit('menuClick')" />
-			<v-app-bar-title class="title" @click="$router.push('/')">
+			<v-app-bar-title class="title cursor-pointer" @click="$router.push('/')">
 				<span class="w-100">DRIP ID/</span>
 			</v-app-bar-title>
 			<v-spacer />
 			<div class="d-flex justify-space-around links w-50" v-if="!mobile">
 				<span class="link" @click="navigateTo('#roadmap')">Как это работает?</span>
-				<span class="link">Где покупать</span>
+				<span class="link" @click="navigateTo('#brands')">Где покупать</span>
 				<span class="link" @click="navigateTo('#about')">О нас</span>
 				<span class="link">Адреса складов</span>
 				<span class="link" @click="navigateTo('#questions')"> Вопросы </span>
@@ -62,7 +62,7 @@ export default {
 		const { trackNumber } = storeToRefs(trackStore)
 		const goTo = useGoTo()
 		const navigateTo = (selector) => {
-			goTo(selector, { duration: 1000 })
+			goTo(selector, { duration: 1000, offset: -85 })
 		}
 
 		const authorization = () => {

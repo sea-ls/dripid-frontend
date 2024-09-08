@@ -2,7 +2,7 @@
 	<div>
 		<v-navigation-drawer v-if="mobile" v-model="drawer" class="position-fixed">
 			<v-list-item @click="navigateTo('#roadmap')"> Как это работает? </v-list-item>
-			<v-list-item>Где покупать</v-list-item>
+			<v-list-item @click="navigateTo('#brands')">Где покупать</v-list-item>
 			<v-list-item @click="navigateTo('#about')">О нас</v-list-item>
 			<v-list-item @click="navigateTo('#questions')">Вопросы</v-list-item>
 		</v-navigation-drawer>
@@ -20,6 +20,10 @@
 
 				<div class="w-100" id="roadmap">
 					<AppRoadmap />
+				</div>
+
+				<div class="w-100" id="brands">
+					<AppBrands :images="carouselImages" />
 				</div>
 
 				<div class="w-100">
@@ -115,6 +119,7 @@ import AppStories from '@/components/AppStories.vue'
 import { useTrackStore } from '@/stores/track'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import AppBrands from '@/components/AppBrands.vue'
 
 export default {
 	name: 'MainPage',
@@ -125,6 +130,7 @@ export default {
 		AppCard,
 		AppAboutWrapper,
 		MainContentCanvas,
+		AppBrands,
 	},
 	setup() {
 		const { mobile } = useDisplay()
@@ -133,6 +139,30 @@ export default {
 		const { trackNumber } = storeToRefs(trackStore)
 		const range = ref([0, 20])
 		const router = useRouter()
+		const carouselImages = ref([
+			'https://via.placeholder.com/200x200?text=Image1',
+			'https://via.placeholder.com/200x200?text=Image2',
+			'https://via.placeholder.com/200x200?text=Image3',
+			'https://via.placeholder.com/200x200?text=Image4',
+			'https://via.placeholder.com/200x200?text=Image5',
+			'https://via.placeholder.com/200x200?text=Image6',
+			'https://via.placeholder.com/200x200?text=Image7',
+			'https://via.placeholder.com/200x200?text=Image8',
+			'https://via.placeholder.com/200x200?text=Image9',
+			'https://via.placeholder.com/200x200?text=Image10',
+			'https://via.placeholder.com/200x200?text=Image11',
+			'https://via.placeholder.com/200x200?text=Image12',
+			'https://via.placeholder.com/200x200?text=Image13',
+			'https://via.placeholder.com/200x200?text=Image14',
+			'https://via.placeholder.com/200x200?text=Image15',
+			'https://via.placeholder.com/200x200?text=Image16',
+			'https://via.placeholder.com/200x200?text=Image17',
+			'https://via.placeholder.com/200x200?text=Image18',
+			'https://via.placeholder.com/200x200?text=Image19',
+			'https://via.placeholder.com/200x200?text=Image20',
+			'https://via.placeholder.com/200x200?text=Image21',
+			'https://via.placeholder.com/200x200?text=Image22',
+		])
 
 		const goTo = useGoTo()
 		const navigateTo = (selector) => {
@@ -146,6 +176,7 @@ export default {
 			navigateTo,
 			trackNumber,
 			router,
+			carouselImages,
 		}
 	},
 }
