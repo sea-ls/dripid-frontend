@@ -8,17 +8,21 @@
 		/>
 		<v-spacer />
 		<v-list-item class="link" rounded="xl">
+			<v-list-item-title @click="$router.push('/lk/buy')">Заявка на выкуп</v-list-item-title>
+		</v-list-item>
+		<v-divider />
+		<v-list-item class="link" rounded="xl">
+			<v-list-item-title @click="$router.push('/lk/wait')">Добавить ожидаемую посылку</v-list-item-title>
+		</v-list-item>
+		<v-divider />
+		<v-list-item class="link" rounded="xl">
 			<v-list-item-title @click="$router.push('/lk/orders/user')">Заказы</v-list-item-title>
 		</v-list-item>
 		<v-divider />
 		<v-list-item class="link" rounded="xl">
-			<v-list-item-title @click="$router.push('/lk/buy')">Заявка на выкуп</v-list-item-title>
+			<v-list-item-title @click="$router.push('/lk/wait')">Ожидание посылки</v-list-item-title>
 		</v-list-item>
 		<v-divider />
-    <v-list-item class="link" rounded="xl">
-      <v-list-item-title @click="$router.push('/lk/wait')">Заявка на ожидание</v-list-item-title>
-    </v-list-item>
-    <v-divider />
 		<v-list-item class="link" rounded="xl">
 			<v-list-item-title @click="$router.push('/lk/calc')">Калькулятор стоимости</v-list-item-title>
 		</v-list-item>
