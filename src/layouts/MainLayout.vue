@@ -19,6 +19,7 @@
 				layout
 				app
 				location="bottom end"
+				elevation="7"
 				extended
 				size="64"
 				v-bind="activatorProps"

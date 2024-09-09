@@ -1,9 +1,9 @@
 <template>
 	<div class="currency-rates">
 		<span>Курс валют: </span>
-		<span class="currency-rate">1 USD = {{ usdToRub }} ₽</span>
+		<span class="currency-rate">1 $ = {{ usdToRub }} ₽</span>
 		<span class="currency-rate"> |</span>
-		<span class="currency-rate">1 EUR = {{ eurToRub }} ₽</span>
+		<span class="currency-rate">1 € = {{ eurToRub }} ₽</span>
 	</div>
 </template>
 
