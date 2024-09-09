@@ -5,16 +5,12 @@
 			subtitle="Баланс 0.00 ₽"
 			title="Илья"
 			@click="$router.push('/lk/personal')"
-		/>
-		<v-spacer />
-		<v-list-item class="link" rounded="xl">
-			<v-list-item-title @click="$router.push('/lk/buy')">Заявка на выкуп</v-list-item-title>
+		>
 		</v-list-item>
-		<v-divider />
-		<v-list-item class="link" rounded="xl">
-			<v-list-item-title @click="$router.push('/lk/wait')">Добавить ожидаемую посылку</v-list-item-title>
-		</v-list-item>
-		<v-divider />
+		<div class="buttons position-relative">
+			<v-btn @click.stop="$router.push('/lk/buy')" class="mr-3" variant="text">Заявка на выкуп</v-btn>
+			<v-btn @click.stop="$router.push('/lk/wait')" variant="text">Добавить ожидаемую посылку</v-btn>
+		</div>
 		<v-list-item class="link" rounded="xl">
 			<v-list-item-title @click="$router.push('/lk/orders/user')">Заказы</v-list-item-title>
 		</v-list-item>
@@ -46,9 +42,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .link:hover {
 	background: #304ffe;
 	cursor: pointer;
+}
+.buttons {
+	top: -42px;
+	left: 190px;
+	width: fit-content;
+	margin-bottom: -36px;
+	button:hover {
+		background-color: rgba($color: #1867c0, $alpha: 0.1);
+		color: #1867c0;
+	}
 }
 </style>
