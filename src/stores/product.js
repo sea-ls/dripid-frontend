@@ -7,10 +7,6 @@ export const useProductStore = defineStore('product', () => {
 
     const addProduct = (product) => {
         products.value.push(product);
-        const api = useApi({
-            params: product
-        })
-        api.post().then()
     };
 
     return { products, addProduct };

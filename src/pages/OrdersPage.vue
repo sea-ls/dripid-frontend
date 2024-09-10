@@ -38,17 +38,9 @@ import {useOrdersStore} from '@/stores/orders'
 export default {
   name: 'OrdersPage',
   setup() {
-    const accountInfo = ref({})
     const store = useOrdersStore()
     const {orders, headers} = storeToRefs(store)
-    fetch('http://212.233.73.223:8080/api/delivery-service/person/authenticated', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-        .then((res) => res.json())
-        .then((data) => (accountInfo.value = data.accountInfo))
+
     const route = useRoute()
     const role = route.params.role
 
@@ -60,7 +52,6 @@ export default {
     return {
       orders,
       headers,
-      accountInfo,
       role,
       store,
       changeStatus,

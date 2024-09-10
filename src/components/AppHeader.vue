@@ -70,7 +70,8 @@ export default {
 
     const authorization = () => {
       if (!store.isAuth) {
-        auth.logIn().then(() => {
+        auth.logIn()
+            .then(() => {
               router.push('/lk/menu')
             }
         )
@@ -78,6 +79,8 @@ export default {
         router.push('/lk/menu')
       }
     }
+
+    if (store.isAuth) authorization()
 
     const logout = () => {
       router.push('/')

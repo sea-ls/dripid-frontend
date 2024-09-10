@@ -51,6 +51,5 @@ export const useUserStore = defineStore('user', () => {
         serUserId,
         setUserRole,
         isAuth,
-        setUserBalance
     }
 })

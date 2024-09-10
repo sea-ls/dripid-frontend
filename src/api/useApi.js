@@ -3,7 +3,8 @@ import axios from "axios";
 export function useApi(init = {}) {
     const {endpoint, headers, params, body} = init;
     const API_URL = import.meta.env.VITE_APP_API_URL
-    const url = `${API_URL}/api/delivery-service${endpoint}`
+    const url = `${API_URL}/${endpoint}`
+
 
     function get() {
         return axios({

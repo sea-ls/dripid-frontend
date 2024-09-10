@@ -97,7 +97,7 @@ import {ref, computed} from 'vue';
 import {useProductStore} from '@/stores/product';
 
 export default {
-  setup() {
+  setup(_, context) {
     const productStore = useProductStore();
     const valid = ref(false);
     const productType = ref('');
@@ -137,6 +137,12 @@ export default {
           description: comment.value,
         };
         productStore.addProduct(newProduct);
+        context.emit('add', {
+          url: productLink.value,
+          description: comment.value,
+          price: parseInt(price.value),
+          weight: 1
+        })
         resetForm();
       }
     };

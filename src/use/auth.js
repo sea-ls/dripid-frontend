@@ -3,12 +3,11 @@ import {useUserStore} from "@/stores/user";
 import {storeToRefs} from "pinia";
 import {authService} from "@/api/sevices/authService";
 import {identityRole} from "@/helpers/roleHelper";
-import {ref} from "vue";
 
 export function useAuth() {
     const store = useUserStore();
     const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL;
-    const {getUserData} = authService()
+    const {fetchUserData} = authService()
 
     const keycloakOptions = {
         url: AUTH_URL,
@@ -29,9 +28,9 @@ export function useAuth() {
             keycloak = new Keycloak(keycloakOptions)
             await keycloak
                 .init(initOptions)
-                .then(async () => {
+                .then(() => {
                     store.setToken(keycloak.token)
-                    await getUserData()
+                    fetchUserData()
                         .then(async ({data}) => {
                             store.setAccountInfo(data.accountInfo);
                             store.setAddresses(data.saveAddresses);
@@ -39,9 +38,21 @@ export function useAuth() {
                             store.setUserRole(identityRole(keycloak));
                         })
                 });
-
+            return keycloak
+        } else {
+            store.setToken(keycloak.token)
+            await fetchUserData()
+                .then(async ({data}) => {
+                    store.setAccountInfo(data.accountInfo);
+                    store.setAddresses(data.saveAddresses);
+                    store.serUserId(data.id);
+                    store.setUserRole(identityRole(keycloak));
+                })
+            return keycloak
         }
     }
+
+
 
     const logOut = async () => {
         await keycloak
