@@ -8,9 +8,6 @@
           required
       ></v-text-field>
     </v-form>
-    <v-alert type="info" class="mt-4" color="#304FFE">
-      При оформлении заказа необходимо указать адрес нашего склада.
-    </v-alert>
   </v-container>
 </template>
 

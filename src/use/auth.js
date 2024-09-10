@@ -1,13 +1,14 @@
 import Keycloak from "keycloak-js";
 import {useUserStore} from "@/stores/user";
 import {storeToRefs} from "pinia";
-import {useRouter} from "vue-router";
+import {authService} from "@/api/sevices/authService";
+import {identityRole} from "@/helpers/roleHelper";
+import {ref} from "vue";
 
 export function useAuth() {
     const store = useUserStore();
-    const router = useRouter();
-
     const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL;
+    const {getUserData} = authService()
 
     const keycloakOptions = {
         url: AUTH_URL,
@@ -15,56 +16,47 @@ export function useAuth() {
         clientId: 'pbpkce_client',
     }
     const initOptions = {
+        onLoad: 'login-required',
         flow: 'standard',
         pkceMethod: 'S256',
         checkLoginIframe: false,
     }
 
-    const keycloak = new Keycloak(keycloakOptions)
-
-    console.log(keycloak)
+    let keycloak = null;
 
     const logIn = async () => {
-        if (!keycloak.authenticated) {
+        if (keycloak === null) {
+            keycloak = new Keycloak(keycloakOptions)
             await keycloak
                 .init(initOptions)
-                .then(() => {
-                    console.log('init')
-                })
-                .catch(e => {
-                    console.error(e)
-                })
+                .then(async () => {
+                    store.setToken(keycloak.token)
+                    await getUserData()
+                        .then(async ({data}) => {
+                            store.setAccountInfo(data.accountInfo);
+                            store.setAddresses(data.saveAddresses);
+                            store.serUserId(data.id);
+                            store.setUserRole(identityRole(keycloak));
+                        })
+                });
 
-        } else {
-            await keycloak.login().then(() => console.log('login'))
         }
-
-
     }
 
     const logOut = async () => {
         await keycloak
-            .init({
-                onLoad: 'login-required',
-                flow: 'standard',
-                pkceMethod: 'S256',
-                checkLoginIframe: false,
+            .logout({
+                redirectUri : `http://${window.location.hostname}:${window.location.port}/`
             })
-            .then((auth) => {
-                console.log(auth, keycloak.token)
-                localStorage.setItem('token', keycloak.token)
-            })
-            .catch(e => {
-                console.error(e)
-            })
-
     }
 
     const {name, surname} = storeToRefs(store);
 
     return {
         logIn,
+        logOut,
         name,
-        surname
+        surname,
+        keycloak
     }
 }

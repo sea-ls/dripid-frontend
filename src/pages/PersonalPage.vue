@@ -8,12 +8,12 @@
 					</v-avatar>
 					<div class="lk__about d-flex w-100 ga-2 flex-column">
 						<div class="lk__about_ro d-flex ga-1">
-							<span class="lk__about_row-title">ИМЯ:</span>
-							<div class="lk__about_row-text d-inline-block text-white">Имя</div>
+							<span class="lk__about_row-title">ИМЯ: </span>
+							<div class="lk__about_row-text d-inline-block text-white">{{accountInfo.firstName}}</div>
 						</div>
 						<div class="lk__about_row d-flex ga-1">
-							<span class="lk__about_row-title">ФАМИЛИЯ:</span>
-							<div class="lk__about_row-text d-inline-block text-white">Фамилия</div>
+							<span class="lk__about_row-title">ФАМИЛИЯ:  </span>
+							<div class="lk__about_row-text d-inline-block text-white">{{accountInfo.lastName}}</div>
 						</div>
 						<div class="lk__about_row d-flex flex-column ga-1">
 							<span class="lk__about_row-title">АДРЕСА:</span>
@@ -63,12 +63,12 @@
                 </v-dialog>
             </div>
 						<div class="lk__about_row d-flex ga-1">
-							<span class="lk__about_row-title">EMAIL:</span>
-							<div class="lk__about_row-text d-inline-block text-white"></div>
+							<span class="lk__about_row-title">EMAIL: </span>
+							<div class="lk__about_row-text d-inline-block text-white">{{accountInfo.email}}</div>
 						</div>
 						<div class="lk__about_row d-flex ga-1">
-							<span class="lk__about_row-title">ТЕЛЕФОН:</span>
-							<div class="lk__about_row-text d-inline-block text-white"></div>
+							<span class="lk__about_row-title">ТЕЛЕФОН: </span>
+							<div class="lk__about_row-text d-inline-block text-white">{{accountInfo.phone}}</div>
 						</div>
 						<v-divider />
 						<div class="lk__about_row d-flex ga-1 flex-column">
@@ -89,10 +89,14 @@
 <script>
 import {computed, ref} from "vue";
 import {useAddressStore} from "@/stores/address";
+import {useAuth} from "@/use/auth";
+import {useUserStore} from "@/stores/user";
+
 
 export default {
 	name: 'PersonalPage',
   setup() {
+    const {token, accountInfo, userRole} = useUserStore();
     const dialog = ref(false);
     const valid = ref(false);
     const country = ref('');
@@ -102,6 +106,9 @@ export default {
     const rules = {
       required: (v) => !!v || 'Это поле обязательно',
     };
+
+
+    console.log(userRole)
 
     const addressStore = useAddressStore(); // Используем store
 
@@ -145,7 +152,8 @@ export default {
       closeDialog,
       submit,
       addressStore,
-      addresses
+      addresses,
+      accountInfo
     };
   },
 }
@@ -167,5 +175,6 @@ export default {
 	width: 100%;
 	background-color: gray;
 	border-radius: 10px;
+  padding: 0 10px;
 }
 </style>

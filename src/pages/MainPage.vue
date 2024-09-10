@@ -7,9 +7,9 @@
 			<v-list-item @click="navigateTo('#questions')">Вопросы</v-list-item>
 		</v-navigation-drawer>
 
-		<div class="img d-flex justify-center align-center flex-column">
+		<div class="img d-flex align-center flex-column">
 			<h1 class="img-title text-h1 text-center">DRIP ID!</h1>
-			<p class="img-text text-body-1">
+			<p class="img-text text-h4 ma-10">
 				DRIP ID - Сервис достаок посылок из-за рубежа, с помощью которго вы сможете получать в РФ свои покупки
 				из США, ЕС, Китая, Турции и ОАЭ
 			</p>
@@ -212,16 +212,17 @@ export default {
 	font-size: 50px;
 	color: #304ffe;
 	font-family: Kharkiv-Tone, sans-serif;
+  display: none;
 }
 .img-text {
-	color: white;
 	width: 50vw;
+  color: black;
 	text-align: center;
 }
 .img {
 	background-image: url('/main-page.jpg');
 	background-size: cover;
-	background-position: center;
+	//background-position: center;
 	width: 100%;
 	height: 95vh;
 }
