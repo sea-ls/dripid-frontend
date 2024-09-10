@@ -91,12 +91,13 @@ import {computed, ref} from "vue";
 import {useAddressStore} from "@/stores/address";
 import {useAuth} from "@/use/auth";
 import {useUserStore} from "@/stores/user";
+import {authService} from "@/api/sevices/authService";
 
 
 export default {
 	name: 'PersonalPage',
   setup() {
-    const {token, accountInfo, userRole} = useUserStore();
+    const {token, accountInfo} = useUserStore();
     const dialog = ref(false);
     const valid = ref(false);
     const country = ref('');
@@ -108,7 +109,6 @@ export default {
     };
 
 
-    console.log(userRole)
 
     const addressStore = useAddressStore(); // Используем store
 
@@ -122,14 +122,24 @@ export default {
 
     const submit = () => {
       if (valid.value) {
-        addressStore.addAddress(country.value, city.value, address.value, postalCode.value); // Сохраняем адрес в store
-        closeDialog();
-        resetForm();
+        addressStore.addAddress(country.value, city.value, address.value, postalCode.value);
+        const service = authService()
+        service.saveAddress({
+          country: country.value,
+          city: city.value,
+          address: address.value,
+          region: '',
+        }).then(() => {
+          closeDialog();
+          resetForm();
+        })
       }
     };
 
     const addresses = computed(() => {
-      return addressStore.addresses
+      return addressStore.addresses.map((address) => {
+        return `${address.country} (${address.city}) ${address.address}`;
+      })
     })
 
     const resetForm = () => {

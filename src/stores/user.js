@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', () => {
 
     const isAdmin = computed(() => userRole.value === 'ADMIN')
     const isAuth = computed(() => userId.value !== null)
+    const fullName = computed(() => accountInfo.value.firstName + ' ' + accountInfo.value.lastName )
 
     function setToken(accessToken) {
         token.value = accessToken
@@ -45,6 +46,7 @@ export const useUserStore = defineStore('user', () => {
         userBalance,
         userRole,
         isAdmin,
+        fullName,
         setToken,
         setAccountInfo,
         setAddresses,

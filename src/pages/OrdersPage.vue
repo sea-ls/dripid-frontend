@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import {ref} from 'vue'
 import {useRoute} from 'vue-router'
 import {storeToRefs} from 'pinia'
 import {useOrdersStore} from '@/stores/orders'
@@ -38,15 +37,15 @@ import {useOrdersStore} from '@/stores/orders'
 export default {
   name: 'OrdersPage',
   setup() {
-    const store = useOrdersStore()
-    const {orders, headers} = storeToRefs(store)
+    const store = useOrdersStore();
+    const {orders, headers} = storeToRefs(store);
+    const route = useRoute();
+    const role = route.params.role;
 
-    const route = useRoute()
-    const role = route.params.role
-
+    // store.getOrders()
     function changeStatus(event, item) {
-      const store = useOrdersStore()
-      store.changeStatus(event, item)
+      const store = useOrdersStore();
+      store.changeStatus(event, item);
     }
 
     return {

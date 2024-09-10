@@ -20,8 +20,18 @@ export function authService() {
         return get()
     }
 
+    function saveAddress(address) {
+        const {post} = useApi({
+            endpoint: 'api/delivery-service/person/address/save',
+            headers: {authorization: `Bearer ${userStore.token}`},
+            body: address
+        })
+        return post()
+    }
+
     return {
         fetchUserData,
-        fetchAddresses
+        fetchAddresses,
+        saveAddress
     }
 }

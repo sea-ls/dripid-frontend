@@ -3,37 +3,37 @@
 		<v-list-item
 			prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
 			subtitle="Баланс 0.00 ₽"
-			:title="accountInfo.firstName + ' ' + accountInfo.lastName"
+			:title="store.fullName"
 			@click="$router.push('/lk/personal')"
 		>
 		</v-list-item>
-		<div class="buttons position-relative" v-if="!isAdmin">
+		<div class="buttons position-relative" v-if="!store.isAdmin">
 			<v-btn @click.stop="$router.push('/lk/buy')" class="mr-3" variant="text">Заявка на выкуп</v-btn>
 			<v-btn @click.stop="$router.push('/lk/wait')" variant="text">Добавить ожидаемую посылку</v-btn>
 		</div>
-		<v-list-item class="link" rounded="xl" v-if="!isAdmin">
+		<v-list-item class="link" rounded="xl" v-if="!store.isAdmin">
 			<v-list-item-title @click="$router.push('/lk/orders/user')">Заказы</v-list-item-title>
 		</v-list-item>
 		<v-divider />
-		<v-list-item class="link" rounded="xl" v-if="!isAdmin">
+		<v-list-item class="link" rounded="xl" v-if="!store.isAdmin">
 			<v-list-item-title @click="$router.push('/lk/wait')">Ожидание посылки</v-list-item-title>
 		</v-list-item>
 		<v-divider />
-		<v-list-item class="link" rounded="xl" v-if="!isAdmin">
+		<v-list-item class="link" rounded="xl" v-if="!store.isAdmin">
 			<v-list-item-title @click="$router.push('/lk/calc')">Калькулятор стоимости</v-list-item-title>
 		</v-list-item>
 		<v-divider />
 
-		<v-list-item class="link" rounded="xl" v-if="!isAdmin">
+		<v-list-item class="link" rounded="xl" v-if="!store.isAdmin">
 			<v-list-item-title @click="$router.push('/lk/track')">Трек номер</v-list-item-title>
 		</v-list-item>
 
 		<v-divider />
-		<v-list-item class="link" rounded="xl" v-if="isAdmin">
+		<v-list-item class="link" rounded="xl" v-if="store.isAdmin">
 			<v-list-item-title @click="$router.push('/lk/orders/admin')">Администратор</v-list-item-title>
 		</v-list-item>
     <v-divider />
-    <v-list-item class="link" rounded="xl" v-if="isAdmin">
+    <v-list-item class="link" rounded="xl" v-if="store.isAdmin">
       <v-list-item-title @click="$router.push('/lk/orders/admin')">Чаты</v-list-item-title>
     </v-list-item>
 	</v-list>
@@ -45,13 +45,11 @@ import {useUserStore} from "@/stores/user";
 export default {
 	name: 'MenuPage',
 	setup() {
-    const {accountInfo, isAdmin} = useUserStore();
-    console.log(accountInfo)
+    const store = useUserStore();
 
 
     return {
-      accountInfo,
-      isAdmin
+     store
     }
   },
 }

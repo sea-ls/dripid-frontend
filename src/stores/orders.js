@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import {ordersService} from "@/api/sevices/ordersService";
 export const useOrdersStore = defineStore('order', () => {
 	const orders = ref([
 		{
@@ -89,6 +90,13 @@ export const useOrdersStore = defineStore('order', () => {
 		return statuses.find((status) => status.name === name)
 	}
 
+	function getOrders() {
+		const service = ordersService()
+		service.getOrders().then((res) => {
+			console.log(res)
+		})
+	}
+
 	function addOrder(type, cost, address, count, link, warehouse, withCard) {
 		orders.value.push({
 			id: orders.value.length + 1,
@@ -129,5 +137,6 @@ export const useOrdersStore = defineStore('order', () => {
 		statuses,
 		changeStatus,
 		checkTrack,
+		getOrders
 	}
 })
