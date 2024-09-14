@@ -11,18 +11,22 @@
 			<v-text-field placeholder="Страна, город" color="primary" variant="outlined" />
 			<div class="d-flex justify-space-between">
 				<div class="field">
-					<v-text-field color="primary" variant="outlined" placeholder="Вес" v-model="range" type="number" />
+					<v-text-field
+						color="primary"
+						variant="outlined"
+						placeholder="Вес"
+						v-model="range"
+						:step="0.5"
+						type="number"
+					/>
 					<v-btn-toggle v-model="buttonToggle" class="mb-5">
 						<v-btn icon="mdi-cellphone"></v-btn>
 						<v-btn icon="mdi-tshirt-crew"></v-btn>
 						<v-btn icon="mdi-shoe-sneaker"></v-btn>
 					</v-btn-toggle>
 				</div>
-				<div class="field">
-					<v-text-field color="primary" variant="outlined" placeholder="Стоимость" />
-				</div>
 			</div>
-			<v-slider color="primary" :min="0" :max="20" :step="1" v-model="range" thumb-label />
+			<v-slider color="primary" :min="0" :max="20" :step="0.5" v-model="range" thumb-label />
 		</template>
 	</v-card>
 </template>

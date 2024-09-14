@@ -35,9 +35,6 @@
 			<h4 class="text-indigo-accent-4">Описание:</h4>
 			<p class="text-body-1">{{ info.desk }}</p>
 		</v-card-item>
-		<v-card-actions>
-			<v-btn color="indigo-accent-4" @click="$router.push('/lk/menu')">Подтвердить</v-btn>
-		</v-card-actions>
 	</v-card>
 </template>
 
