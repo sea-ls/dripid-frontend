@@ -66,16 +66,24 @@
 					<v-card-title>
 						<span class="headline">{{ product.productType }}</span>
 					</v-card-title>
-					<v-card-subtitle> Стоимость: {{ product.price }} {{ product.currency }} </v-card-subtitle>
+					<v-card-subtitle> Валюта: {{ product.currency }} </v-card-subtitle>
 					<v-card-subtitle> Количество: {{ product.quantity }} </v-card-subtitle>
 					<v-card-subtitle>
 						Ссылка: <a :href="product.productLink" target="_blank">{{ product.productLink }}</a>
 					</v-card-subtitle>
 					<v-card-subtitle> Комментарий: {{ product.comment }} </v-card-subtitle>
+					<v-card-subtitle> Стоимость: {{ product.price }} </v-card-subtitle>
 				</v-card>
 			</v-col>
 		</v-row>
 	</v-container>
+	<v-alert
+		v-if="isAlertVisible"
+		text="Товар успешно добавлен!"
+		type="success"
+		location="bottom left"
+		class="position-fixed alert mb-5 ml-5"
+	></v-alert>
 </template>
 
 <script>
@@ -86,6 +94,7 @@ export default {
 	setup(_, context) {
 		const productStore = useProductStore()
 		const valid = ref(false)
+		const isAlertVisible = ref(false)
 		const productType = ref('')
 		const price = ref('')
 		const currency = ref('')
@@ -102,9 +111,9 @@ export default {
 
 		const convertedPrice = computed(() => {
 			const conversionRates = {
-				USD: 75, // Примерный курс USD к RUB
-				EUR: 80, // Примерный курс EUR к RUB
-				GBP: 90, // Примерный курс GBP к RUB
+				'$ Доллар США': 75, // Примерный курс USD к RUB
+				'€ Евро': 80, // Примерный курс EUR к RUB
+				'£ Фунт стерлингов': 90, // Примерный курс GBP к RUB
 			}
 			return (price.value * (conversionRates[currency.value] || 1)).toFixed(2)
 		})
@@ -117,7 +126,8 @@ export default {
 			if (valid.value) {
 				const newProduct = {
 					productType: productType.value,
-					price: currency.value,
+					currency: currency.value,
+					price: convertedPrice.value,
 					quantity: parseInt(quantity.value, 10),
 					url: productLink.value,
 					description: comment.value,
@@ -129,8 +139,16 @@ export default {
 					price: parseInt(price.value),
 					weight: 1,
 				})
+				showAlert()
 				resetForm()
 			}
+		}
+
+		const showAlert = () => {
+			isAlertVisible.value = true
+			setTimeout(() => {
+				isAlertVisible.value = false
+			}, 3000)
 		}
 
 		const resetForm = () => {
@@ -156,6 +174,7 @@ export default {
 			showConvertedPrice,
 			convertedPrice,
 			productStore,
+			isAlertVisible,
 		}
 	},
 }
@@ -164,5 +183,8 @@ export default {
 <style scoped>
 .headline {
 	font-weight: bold;
+}
+.alert {
+	z-index: 100;
 }
 </style>
