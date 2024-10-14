@@ -1,11 +1,14 @@
 <template>
 	<v-app>
-		<router-view />
+		<Suspense>
+			<MainLayout />
+		</Suspense>
 	</v-app>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import MainLayout from './layouts/MainLayout.vue'
 
 const drawer = ref(false)
 </script>

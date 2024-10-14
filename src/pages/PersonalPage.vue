@@ -9,66 +9,72 @@
 					<div class="lk__about d-flex w-100 ga-2 flex-column">
 						<div class="lk__about_ro d-flex ga-1">
 							<span class="lk__about_row-title">ИМЯ: </span>
-							<div class="lk__about_row-text d-inline-block text-white">{{accountInfo.firstName}}</div>
+							<div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.firstName }}</div>
 						</div>
 						<div class="lk__about_row d-flex ga-1">
-							<span class="lk__about_row-title">ФАМИЛИЯ:  </span>
-							<div class="lk__about_row-text d-inline-block text-white">{{accountInfo.lastName}}</div>
+							<span class="lk__about_row-title">ФАМИЛИЯ: </span>
+							<div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.lastName }}</div>
 						</div>
 						<div class="lk__about_row d-flex flex-column ga-1">
 							<span class="lk__about_row-title">АДРЕСА:</span>
-							<div v-for="address in addresses" class="lk__about_row-text d-inline-block text-white">{{address}}</div>
+							<div v-for="address in addresses" class="lk__about_row-text d-inline-block text-white">
+								{{
+									`${address.country}, ${address.city}, ${address.address}, ${
+										address.region ? address.region : '0'
+									}`
+								}}
+							</div>
 						</div>
-            <div class="lk__about_row">
-                <v-btn color="primary" @click="openDialog">Добавить адрес</v-btn>
-                <v-dialog v-model="dialog" max-width="600px">
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline">Добавить адрес доставки</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-form ref="form" v-model="valid" lazy-validation>
-                        <v-text-field
-                            v-model="country"
-                            :rules="[rules.required]"
-                            label="Страна"
-                            required
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="city"
-                            :rules="[rules.required]"
-                            label="Город"
-                            required
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="address"
-                            :rules="[rules.required]"
-                            label="Адрес"
-                            required
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="postalCode"
-                            :rules="[rules.required, rules.postalCode]"
-                            label="Индекс"
-                            required
-                        ></v-text-field>
-                      </v-form>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="closeDialog">Закрыть</v-btn>
-                      <v-btn color="blue darken-1" text @click="submit">Добавить</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-            </div>
+						<div class="lk__about_row">
+							<v-btn color="primary" @click="openDialog">Добавить адрес</v-btn>
+							<v-dialog v-model="dialog" max-width="600px">
+								<v-card>
+									<v-card-title>
+										<span class="headline">Добавить адрес доставки</span>
+									</v-card-title>
+									<v-card-text>
+										<v-form ref="form" v-model="valid" lazy-validation>
+											<v-text-field
+												v-model="country"
+												:rules="[rules.required]"
+												label="Страна"
+												required
+											></v-text-field>
+											<v-text-field
+												v-model="city"
+												:rules="[rules.required]"
+												label="Город"
+												required
+											></v-text-field>
+											<v-text-field
+												v-model="address"
+												:rules="[rules.required]"
+												label="Адрес"
+												required
+											></v-text-field>
+											<v-text-field
+												v-model="postalCode"
+												:rules="[rules.required, rules.postalCode]"
+												label="Индекс"
+												required
+											></v-text-field>
+										</v-form>
+									</v-card-text>
+									<v-card-actions>
+										<v-spacer></v-spacer>
+										<v-btn color="blue darken-1" text @click="closeDialog">Закрыть</v-btn>
+										<v-btn color="blue darken-1" text @click="submit">Добавить</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-dialog>
+						</div>
 						<div class="lk__about_row d-flex ga-1">
 							<span class="lk__about_row-title">EMAIL: </span>
-							<div class="lk__about_row-text d-inline-block text-white">{{accountInfo.email}}</div>
+							<div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.email }}</div>
 						</div>
 						<div class="lk__about_row d-flex ga-1">
 							<span class="lk__about_row-title">ТЕЛЕФОН: </span>
-							<div class="lk__about_row-text d-inline-block text-white">{{accountInfo.phone}}</div>
+							<div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.phone }}</div>
 						</div>
 						<v-divider />
 						<div class="lk__about_row d-flex ga-1 flex-column">
@@ -87,85 +93,79 @@
 </template>
 
 <script>
-import {computed, ref} from "vue";
-import {useAddressStore} from "@/stores/address";
-import {useAuth} from "@/use/auth";
-import {useUserStore} from "@/stores/user";
-import {authService} from "@/api/sevices/authService";
-
+import { computed, ref } from 'vue'
+import { useAddressStore } from '@/stores/address'
+import { useUserStore } from '@/stores/user'
+import { authService } from '@/api/services/authService'
+import { storeToRefs } from 'pinia'
 
 export default {
 	name: 'PersonalPage',
-  setup() {
-    const {token, accountInfo} = useUserStore();
-    const dialog = ref(false);
-    const valid = ref(false);
-    const country = ref('');
-    const city = ref('');
-    const address = ref('');
-    const postalCode = ref('');
-    const rules = {
-      required: (v) => !!v || 'Это поле обязательно',
-    };
+	setup() {
+		const { token, accountInfo } = useUserStore()
+		const dialog = ref(false)
+		const valid = ref(false)
+		const country = ref('')
+		const city = ref('')
+		const address = ref('')
+		const postalCode = ref('')
+		const rules = {
+			required: (v) => !!v || 'Это поле обязательно',
+		}
 
+		const addressStore = useAddressStore() // Используем store
+		const { addresses } = storeToRefs(addressStore)
 
+		const openDialog = () => {
+			dialog.value = true
+		}
 
-    const addressStore = useAddressStore(); // Используем store
+		const closeDialog = () => {
+			dialog.value = false
+		}
 
-    const openDialog = () => {
-      dialog.value = true;
-    };
+		const submit = () => {
+			if (valid.value) {
+				addressStore.addAddress(country.value, city.value, address.value, postalCode.value)
+				const service = authService()
+				service
+					.saveAddress({
+						country: country.value,
+						city: city.value,
+						address: address.value,
+						region: '',
+					})
+					.then(() => {
+						closeDialog()
+						resetForm()
+					})
+			}
+		}
 
-    const closeDialog = () => {
-      dialog.value = false;
-    };
+		const resetForm = () => {
+			country.value = ''
+			city.value = ''
+			address.value = ''
+			postalCode.value = ''
+			valid.value = false // Сброс валидации формы
+		}
 
-    const submit = () => {
-      if (valid.value) {
-        addressStore.addAddress(country.value, city.value, address.value, postalCode.value);
-        const service = authService()
-        service.saveAddress({
-          country: country.value,
-          city: city.value,
-          address: address.value,
-          region: '',
-        }).then(() => {
-          closeDialog();
-          resetForm();
-        })
-      }
-    };
-
-    const addresses = computed(() => {
-      return addressStore.addresses.map((address) => {
-        return `${address.country} (${address.city}) ${address.address}`;
-      })
-    })
-
-    const resetForm = () => {
-      country.value = '';
-      city.value = '';
-      address.value = '';
-      postalCode.value = '';
-      valid.value = false; // Сброс валидации формы
-    };
-
-    return {
-      dialog,
-      valid,
-      country,
-      city,
-      address,
-      postalCode,
-      rules,
-      openDialog,
-      closeDialog,
-      submit,
-      addressStore,
-      addresses,
-      accountInfo
-    };
-  },
+		return {
+			dialog,
+			valid,
+			country,
+			city,
+			address,
+			postalCode,
+			rules,
+			openDialog,
+			closeDialog,
+			submit,
+			addressStore,
+			addresses,
+			accountInfo,
+		}
+	},
 }
 </script>
 
@@ -185,6 +185,6 @@ export default {
 	width: 100%;
 	background-color: gray;
 	border-radius: 10px;
-  padding: 0 10px;
+	padding: 0 10px;
 }
 </style>

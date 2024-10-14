@@ -34,17 +34,11 @@
 				color="indigo-accent-4"
 				class="bg-grey-lighten-3 mr-1"
 				rounded
-				@click="authorization"
+				@click="handleAuth()"
 			>
-				{{ store.isAuth ? `${store.accountInfo.firstName + ' ' + store.accountInfo.lastName}` : 'Вход' }}
+				{{ isAuth ? fullName : 'Вход' }}
 			</v-btn>
-			<v-icon
-				class="cursor-pointer"
-				icon="mdi-logout"
-				color="#304FFE"
-				v-if="store.isAuth"
-				@click="openConfirmDialog()"
-			>
+			<v-icon class="cursor-pointer" icon="mdi-logout" color="#304FFE" v-if="isAuth" @click="openConfirmDialog()">
 			</v-icon>
 		</v-container>
 	</v-app-bar>
@@ -56,18 +50,19 @@ import { useTrackStore } from '@/stores/track'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { useDisplay, useGoTo } from 'vuetify'
-import { useAuth } from '@/use/auth'
 import AppCurs from '@/components/AppCurs.vue'
-import { useUserStore } from '@/stores/user'
 import { useConfirmStore } from '@/stores/confirm'
 import ConfirmDialog from './ConfirmDialog.vue'
 import { watch } from 'vue'
+import { login, logout } from '@/use/auth'
+import { useUserStore } from '@/stores/user'
 
 export default {
 	name: 'AppHeader',
 	components: { AppCurs, ConfirmDialog },
+	emits: ['menuClick', 'openMenu'],
 	setup() {
-		const store = useUserStore()
+		const userStore = useUserStore()
 		const confirmStore = useConfirmStore()
 		const { mobile } = useDisplay()
 		const router = useRouter()
@@ -77,14 +72,9 @@ export default {
 		const navigateTo = (selector) => {
 			goTo(selector, { duration: 1000, offset: -85 })
 		}
-		const auth = useAuth()
 		const { isConfirmed } = storeToRefs(confirmStore)
 		const { openConfirmDialog } = confirmStore
-
-		const logout = () => {
-			router.push('/')
-			auth.logOut()
-		}
+		const { isAuth, fullName } = storeToRefs(userStore)
 
 		watch(isConfirmed, (newValue, _) => {
 			if (newValue) {
@@ -92,27 +82,23 @@ export default {
 			}
 		})
 
-		const authorization = () => {
-			if (!store.isAuth) {
-				auth.logIn().then(() => {
-					router.push('/lk/menu')
-				})
+		const handleAuth = () => {
+			if (isAuth.value) {
+				window.open('/lk/personal')
 			} else {
-				router.push('/lk/menu')
+				login()
 			}
 		}
 
-		if (store.isAuth) authorization()
-
 		return {
-			store,
 			mobile,
 			navigateTo,
 			router,
 			trackNumber,
-			authorization,
-			logout,
 			openConfirmDialog,
+			handleAuth,
+			isAuth,
+			fullName,
 		}
 	},
 }

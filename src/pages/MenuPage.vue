@@ -8,11 +8,12 @@
 		>
 			<div class="float-left">
 				<v-list-item-title>
-					{{ store.fullName }}
+					{{ fullName }}
 				</v-list-item-title>
 				<v-list-item-subtitle>Баланс 0.00 ₽</v-list-item-subtitle>
 			</div>
-			<div class="buttons float-left ml-5" v-if="!store.isAdmin">
+
+			<div class="buttons float-left ml-5" v-if="!isAdmin">
 				<v-tooltip location="bottom" text="Подсказка 1">
 					<template v-slot:activator="{ props }">
 						<v-btn v-bind="props" @click.stop="$router.push('/lk/buy')" class="mr-3" variant="text">
@@ -29,99 +30,100 @@
 				</v-tooltip>
 			</div>
 		</v-list-item>
+		<template v-if="!isAdmin">
+			<v-tooltip location="bottom" text="Подсказка 3">
+				<template v-slot:activator="{ props }">
+					<v-list-item
+						class="link"
+						rounded="xl"
+						v-if="!isAdmin"
+						v-bind="props"
+						@click="$router.push('/lk/orders/user')"
+					>
+						<v-list-item-title>Заказы</v-list-item-title>
+					</v-list-item>
+				</template>
+			</v-tooltip>
+			<v-divider />
+			<v-tooltip location="bottom" text="Подсказка 4">
+				<template v-slot:activator="{ props }">
+					<v-list-item
+						class="link"
+						rounded="xl"
+						v-if="!isAdmin"
+						v-bind="props"
+						@click="$router.push('/lk/wait')"
+					>
+						<v-list-item-title>Ожидание посылки</v-list-item-title>
+					</v-list-item>
+				</template>
+			</v-tooltip>
+			<v-divider />
+			<v-tooltip location="bottom" text="Подсказка 5">
+				<template v-slot:activator="{ props }">
+					<v-list-item
+						class="link"
+						rounded="xl"
+						v-if="!isAdmin"
+						v-bind="props"
+						@click="$router.push('/lk/calc')"
+					>
+						<v-list-item-title>Калькулятор стоимости</v-list-item-title>
+					</v-list-item>
+				</template>
+			</v-tooltip>
+			<v-divider />
 
-		<v-tooltip location="bottom" text="Подсказка 3">
-			<template v-slot:activator="{ props }">
-				<v-list-item
-					class="link"
-					rounded="xl"
-					v-if="!store.isAdmin"
-					v-bind="props"
-					@click="$router.push('/lk/orders/user')"
-				>
-					<v-list-item-title>Заказы</v-list-item-title>
-				</v-list-item>
-			</template>
-		</v-tooltip>
-		<v-divider />
-		<v-tooltip location="bottom" text="Подсказка 4">
-			<template v-slot:activator="{ props }">
-				<v-list-item
-					class="link"
-					rounded="xl"
-					v-if="!store.isAdmin"
-					v-bind="props"
-					@click="$router.push('/lk/wait')"
-				>
-					<v-list-item-title>Ожидание посылки</v-list-item-title>
-				</v-list-item>
-			</template>
-		</v-tooltip>
-		<v-divider />
-		<v-tooltip location="bottom" text="Подсказка 5">
-			<template v-slot:activator="{ props }">
-				<v-list-item
-					class="link"
-					rounded="xl"
-					v-if="!store.isAdmin"
-					v-bind="props"
-					@click="$router.push('/lk/calc')"
-				>
-					<v-list-item-title>Калькулятор стоимости</v-list-item-title>
-				</v-list-item>
-			</template>
-		</v-tooltip>
-		<v-divider />
+			<v-tooltip location="bottom" text="Подсказка 6">
+				<template v-slot:activator="{ props }">
+					<v-list-item
+						class="link"
+						rounded="xl"
+						v-if="!isAdmin"
+						v-bind="props"
+						@click="$router.push('/lk/track')"
+					>
+						<v-list-item-title>Трек номер</v-list-item-title>
+					</v-list-item>
+				</template>
+			</v-tooltip>
 
-		<v-tooltip location="bottom" text="Подсказка 6">
-			<template v-slot:activator="{ props }">
-				<v-list-item
-					class="link"
-					rounded="xl"
-					v-if="!store.isAdmin"
-					v-bind="props"
-					@click="$router.push('/lk/track')"
-				>
-					<v-list-item-title>Трек номер</v-list-item-title>
-				</v-list-item>
-			</template>
-		</v-tooltip>
+			<v-divider />
+		</template>
 
-		<v-divider />
-		<v-tooltip location="bottom" text="Подсказка 7">
-			<template v-slot:activator="{ props }">
-				<v-list-item
-					class="link"
-					rounded="xl"
-					v-if="store.isAdmin"
-					v-bind="props"
-					@click="$router.push('/lk/orders/admin')"
-				>
-					<v-list-item-title>Администратор</v-list-item-title>
-				</v-list-item>
-			</template>
-		</v-tooltip>
-		<v-divider />
-		<v-tooltip location="bottom" text="Подсказка 8">
-			<template v-slot:activator="{ props }">
-				<v-list-item class="link" rounded="xl" v-if="store.isAdmin" @click="$router.push('/lk/orders/admin')">
-					<v-list-item-title v-bind="props">Чаты</v-list-item-title>
-				</v-list-item>
-			</template>
-		</v-tooltip>
+		<template v-else>
+			<v-tooltip location="bottom" text="Подсказка 7">
+				<template v-slot:activator="{ props }">
+					<v-list-item class="link" rounded="xl" v-bind="props" @click="$router.push('/lk/orders/admin')">
+						<v-list-item-title>Администратор</v-list-item-title>
+					</v-list-item>
+				</template>
+			</v-tooltip>
+			<v-divider />
+			<v-tooltip location="bottom" text="Подсказка 8">
+				<template v-slot:activator="{ props }">
+					<v-list-item class="link" rounded="xl" @click="$router.push('/lk/orders/admin')">
+						<v-list-item-title v-bind="props">Чаты</v-list-item-title>
+					</v-list-item>
+				</template>
+			</v-tooltip>
+		</template>
 	</v-list>
 </template>
 
 <script>
 import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
 export default {
 	name: 'MenuPage',
 	setup() {
-		const store = useUserStore()
+		const userStore = useUserStore()
+		const { fullName, isAdmin } = storeToRefs(userStore)
 
 		return {
-			store,
+			fullName,
+			isAdmin,
 		}
 	},
 }

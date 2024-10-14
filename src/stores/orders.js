@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import {ordersService} from "@/api/sevices/ordersService";
+import { ordersService } from '@/api/services/ordersService'
 export const useOrdersStore = defineStore('order', () => {
 	const orders = ref([
 		{
@@ -137,6 +137,6 @@ export const useOrdersStore = defineStore('order', () => {
 		statuses,
 		changeStatus,
 		checkTrack,
-		getOrders
+		getOrders,
 	}
 })
