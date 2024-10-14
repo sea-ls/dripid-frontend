@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<v-slider color="primary" :min="0" :max="20" :step="0.5" v-model="range" thumb-label />
-			<v-btn-toggle v-model="buttonToggle" class="mb-5">
+			<v-btn-toggle v-model="buttonToggle">
 				<v-btn icon="mdi-cellphone"></v-btn>
 				<v-btn icon="mdi-tshirt-crew"></v-btn>
 				<v-btn icon="mdi-shoe-sneaker"></v-btn>
