@@ -18,7 +18,11 @@
 						<div class="lk__about_row d-flex flex-column ga-1">
 							<span class="lk__about_row-title">АДРЕСА:</span>
 							<div v-for="address in addresses" class="lk__about_row-text d-inline-block text-white">
-								{{ address }}
+								{{
+									`${address.country}, ${address.city}, ${address.address}, ${
+										address.region ? address.region : '0'
+									}`
+								}}
 							</div>
 						</div>
 						<div class="lk__about_row">
@@ -92,13 +96,13 @@
 import { computed, ref } from 'vue'
 import { useAddressStore } from '@/stores/address'
 import { useUserStore } from '@/stores/user'
-import { authService } from '@/api/sevices/authService'
+import { authService } from '@/api/services/authService'
 import { storeToRefs } from 'pinia'
 
 export default {
 	name: 'PersonalPage',
 	setup() {
-		const { token, accountInfo, addresses: serverAddresses } = useUserStore()
+		const { token, accountInfo } = useUserStore()
 		const dialog = ref(false)
 		const valid = ref(false)
 		const country = ref('')
@@ -111,10 +115,6 @@ export default {
 
 		const addressStore = useAddressStore() // Используем store
 		const { addresses } = storeToRefs(addressStore)
-
-		serverAddresses.map((address) => {
-			addressStore.addAddress(address.country, address.city, address.address)
-		})
 
 		const openDialog = () => {
 			dialog.value = true

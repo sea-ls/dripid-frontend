@@ -17,7 +17,6 @@ export const useUserStore = defineStore('user', () => {
 
 	function setToken(accessToken) {
 		token.value = accessToken
-		console.log(token.value)
 	}
 
 	function setAccountInfo(info) {

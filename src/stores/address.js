@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { authService } from '@/api/sevices/authService'
+import { authService } from '@/api/services/authService'
 
 export const useAddressStore = defineStore('address', () => {
 	const addresses = ref([])
