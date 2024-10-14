@@ -84,7 +84,7 @@ export default {
 
 		const handleAuth = () => {
 			if (isAuth.value) {
-				window.open('/lk/personal')
+				router.push('/lk/personal')
 			} else {
 				login()
 			}
