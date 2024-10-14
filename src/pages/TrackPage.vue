@@ -2,7 +2,7 @@
 	<h1 class="title d-flex text-center justify-center">ГДЕ МОЙ ДРИП БОКС?</h1>
 	<v-text-field
 		v-model="trackNumber"
-		placeholder="Номер отслежевания"
+		placeholder="Номер отслеживания"
 		density="comfortable"
 		hide-details
 		color="#304FFE"
