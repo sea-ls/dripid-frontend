@@ -60,6 +60,7 @@ import { useUserStore } from '@/stores/user'
 export default {
 	name: 'AppHeader',
 	components: { AppCurs, ConfirmDialog },
+	emits: ['menuClick', 'openMenu'],
 	setup() {
 		const userStore = useUserStore()
 		const confirmStore = useConfirmStore()
@@ -82,7 +83,7 @@ export default {
 		})
 
 		const handleAuth = () => {
-			if (isAuth) {
+			if (isAuth.value) {
 				window.open('/lk/menu')
 			} else {
 				login()

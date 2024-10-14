@@ -1,25 +1,12 @@
 <template>
 	<v-app>
-		<router-view v-if="isAuth" />
-		<v-progress-circular
-			v-else
-			class="d-flex mt-16 align-self-center"
-			model-value="20"
-			color="primary"
-			:size="256"
-			:width="20"
-			indeterminate
-		/>
+		<router-view />
 	</v-app>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { initKeycloak } from './use/auth'
-import { useUserStore } from './stores/user'
-import { storeToRefs } from 'pinia'
-const userStore = useUserStore()
-const { isAuth } = storeToRefs(userStore)
 
 initKeycloak()
 

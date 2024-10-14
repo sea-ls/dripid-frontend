@@ -1,4 +1,4 @@
-import { authService } from '@/api/sevices/authService'
+import { authService } from '@/api/services/authService'
 import { identityRole } from '@/helpers/roleHelper'
 import { useUserStore } from '@/stores/user'
 import Keycloak from 'keycloak-js'
@@ -17,6 +17,7 @@ export const initKeycloak = async () => {
 	try {
 		const authenticated = await keycloak.init({
 			onLoad: 'check-sso',
+			silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
 			flow: 'standard',
 			pkceMethod: 'S256',
 			checkLoginIframe: false,

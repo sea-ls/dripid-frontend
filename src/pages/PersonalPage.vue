@@ -92,7 +92,7 @@
 import { computed, ref } from 'vue'
 import { useAddressStore } from '@/stores/address'
 import { useUserStore } from '@/stores/user'
-import { authService } from '@/api/sevices/authService'
+import { authService } from '@/api/services/authService'
 import { storeToRefs } from 'pinia'
 
 export default {
