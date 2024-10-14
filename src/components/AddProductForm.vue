@@ -91,6 +91,7 @@ import { ref, computed } from 'vue'
 import { useProductStore } from '@/stores/product'
 
 export default {
+	emits: ['add'],
 	setup(_, context) {
 		const productStore = useProductStore()
 		const valid = ref(false)

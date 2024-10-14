@@ -9,64 +9,58 @@ import TrackPage from '@/pages/TrackPage.vue'
 import PersonalPage from '@/pages/PersonalPage.vue'
 import MenuPage from '@/pages/MenuPage.vue'
 import InfoPage from '@/pages/InfoPage.vue'
-import WaitingTrackPage from "@/pages/WaitingTrackPage.vue";
+import WaitingTrackPage from '@/pages/WaitingTrackPage.vue'
 
 const routes = [
 	{
-		path: '/layout',
-		component: MainLayout,
+		path: '/',
+		name: 'main',
+		component: MainPage,
+	},
+	{
+		path: '/lk',
+		name: 'personal-area',
+		component: PersonalAreaPage,
 		children: [
+			// {
+			// 	name: 'menu',
+			// 	path: '/lk/menu',
+			// 	component: MenuPage,
+			// },
 			{
-				path: '/',
-				name: 'main',
-				component: MainPage,
+				name: 'personal',
+				path: '/lk/personal',
+				component: PersonalPage,
 			},
 			{
-				path: '/lk',
-				name: 'personal-area',
-				component: PersonalAreaPage,
-				children: [
-					{
-						name: 'menu',
-						path: '/lk/menu',
-						component: MenuPage,
-					},
-					{
-						name: 'personal',
-						path: '/lk/personal',
-						component: PersonalPage,
-					},
-					{
-						name: 'orders',
-						path: '/lk/orders/:role',
-						component: OrdersPage,
-					},
-					{
-						name: 'buy',
-						path: '/lk/buy',
-						component: BuyApplicationPage,
-					},
-					{
-						name: 'calc',
-						path: '/lk/calc',
-						component: CalculatorPage,
-					},
-					{
-						name: 'track',
-						path: '/lk/track',
-						component: TrackPage,
-					},
-					{
-						name: 'info',
-						path: '/lk/info',
-						component: InfoPage,
-					},
-					{
-						name: 'waiting',
-						path: '/lk/wait',
-						component: WaitingTrackPage
-					}
-				],
+				name: 'orders',
+				path: '/lk/orders/:role',
+				component: OrdersPage,
+			},
+			{
+				name: 'buy',
+				path: '/lk/buy',
+				component: BuyApplicationPage,
+			},
+			{
+				name: 'calc',
+				path: '/lk/calc',
+				component: CalculatorPage,
+			},
+			{
+				name: 'track',
+				path: '/lk/track',
+				component: TrackPage,
+			},
+			{
+				name: 'info',
+				path: '/lk/info',
+				component: InfoPage,
+			},
+			{
+				name: 'waiting',
+				path: '/lk/wait',
+				component: WaitingTrackPage,
 			},
 		],
 	},

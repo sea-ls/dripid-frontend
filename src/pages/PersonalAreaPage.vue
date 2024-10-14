@@ -1,6 +1,14 @@
 <template>
 	<v-container>
-		<router-view />
+		<v-layout>
+			<v-navigation-drawer class="border-0" :width="330">
+				<PersonalMenu />
+			</v-navigation-drawer>
+
+			<v-main class="ml-5" style="min-height: 80vh">
+				<router-view />
+			</v-main>
+		</v-layout>
 	</v-container>
 </template>
 
@@ -9,9 +17,10 @@ import { inject, ref } from 'vue'
 import router from '@/router/router'
 import { useRouter } from 'vue-router'
 import { useDisplay } from 'vuetify'
+import PersonalMenu from '@/components/PersonalMenu.vue'
 
 export default {
-	name: 'PersonalAreaPAge',
+	name: 'PersonalAreaPage',
 	methods: {
 		router() {
 			return router
