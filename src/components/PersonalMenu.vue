@@ -1,5 +1,5 @@
 <template>
-	<v-list color="gray" class="bg-grey-lighten-4 pa-5" rounded="xl">
+	<v-list color="gray" class="bg-grey-lighten-4 pa-5 h-100" rounded="xl">
 		<v-list-item class="py-2 d-flex" @click="$router.push('/lk/personal')">
 			<template #prepend>
 				<v-avatar :size="64">
@@ -143,7 +143,7 @@ a {
 }
 .link:hover,
 .router-link-active:has(.link) .link {
-	background: #304ffe;
+	background: #2546fd;
 	color: #fff;
 	cursor: pointer;
 }
@@ -155,7 +155,7 @@ a {
 	}
 }
 .name {
-	color: #304ffe;
+	color: #2546fd;
 	font-size: 18px;
 }
 </style>

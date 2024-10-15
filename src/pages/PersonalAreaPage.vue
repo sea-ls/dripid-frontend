@@ -1,11 +1,11 @@
 <template>
 	<v-container>
-		<v-layout>
-			<v-navigation-drawer class="border-0" :width="330">
+		<v-layout style="min-height: 85vh">
+			<v-navigation-drawer class="border-0" :width="330" style="min-height: 100%">
 				<PersonalMenu />
 			</v-navigation-drawer>
 
-			<v-main class="ml-5" style="min-height: 80vh">
+			<v-main class="ml-5" style="min-height: 100%">
 				<router-view />
 			</v-main>
 		</v-layout>
