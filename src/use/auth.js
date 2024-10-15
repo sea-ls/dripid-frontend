@@ -5,7 +5,7 @@ import Keycloak from 'keycloak-js'
 
 const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL
 
-const keycloak = new Keycloak({
+export const keycloak = new Keycloak({
 	url: AUTH_URL,
 	realm: 'dripId',
 	clientId: 'pbpkce_client',
@@ -24,12 +24,13 @@ export const initKeycloak = async () => {
 		})
 		if (authenticated) {
 			store.setToken(keycloak.token)
-			fetchUserData().then(async ({ data }) => {
+			const { data } = await fetchUserData()
+			if (data) {
 				store.setAccountInfo(data.accountInfo)
 				store.setAddresses(data.saveAddresses)
 				store.serUserId(data.id)
 				store.setUserRole(identityRole(keycloak))
-			})
+			}
 		}
 	} catch (error) {
 		console.error('Keycloak initialization failed', error)
