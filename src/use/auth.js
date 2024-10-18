@@ -1,4 +1,4 @@
-import { authService } from '@/api/services/authService'
+import { fetchUserData } from '@/api/services/authService'
 import { identityRole } from '@/helpers/roleHelper'
 import { useUserStore } from '@/stores/user'
 import Keycloak from 'keycloak-js'
@@ -13,7 +13,6 @@ const keycloak = new Keycloak({
 
 export const initKeycloak = async () => {
 	const store = useUserStore()
-	const { fetchUserData } = authService()
 	try {
 		const authenticated = await keycloak.init({
 			onLoad: 'check-sso',
@@ -23,13 +22,12 @@ export const initKeycloak = async () => {
 			checkLoginIframe: false,
 		})
 		if (authenticated) {
-			store.setToken(keycloak.token)
-			fetchUserData().then(async ({ data }) => {
-				store.setAccountInfo(data.accountInfo)
-				store.setAddresses(data.saveAddresses)
-				store.serUserId(data.id)
-				store.setUserRole(identityRole(keycloak))
-			})
+			localStorage.setItem('token', keycloak.token)
+			const data = await fetchUserData()
+			store.setAccountInfo(data.accountInfo)
+			store.setAddresses(data.saveAddresses)
+			store.serUserId(data.id)
+			store.setUserRole(identityRole(keycloak))
 		}
 	} catch (error) {
 		console.error('Keycloak initialization failed', error)

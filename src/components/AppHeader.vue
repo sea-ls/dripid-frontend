@@ -79,6 +79,7 @@ export default {
 		watch(isConfirmed, (newValue, _) => {
 			if (newValue) {
 				logout()
+				localStorage.removeItem('token')
 			}
 		})
 

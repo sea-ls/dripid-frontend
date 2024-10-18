@@ -1,24 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { ordersService } from '@/api/services/ordersService'
+import { fetchOrders } from '@/api/services/ordersService'
 export const useOrdersStore = defineStore('order', () => {
-	const orders = ref([
-		{
-			id: 1,
-			description: 'Nike AIR MAX 95',
-			track: 'E12MW459678',
-			status: 'В обработке',
-			color: 'gray',
-		},
-		{
-			id: 2,
-			description: 'Adidas Color sweatshirt',
-			track: 'E12MW459679',
-			status: 'В обработке',
-			color: 'gray',
-		},
-	])
-
 	const headers = ref([
 		{
 			title: 'НОМЕР ЗАКАЗА',
@@ -34,11 +17,11 @@ export const useOrdersStore = defineStore('order', () => {
 		},
 		{
 			title: 'ТРЕК НОМЕР',
-			key: 'track',
+			key: 'trackNumberExternal',
 		},
 		{
 			title: 'ТИП',
-			key: 'type',
+			key: 'orderType',
 		},
 		{
 			title: 'КОЛ-ВО',
@@ -46,32 +29,37 @@ export const useOrdersStore = defineStore('order', () => {
 		},
 		{
 			title: 'СТАТУС',
-			key: 'status',
+			key: 'orderStatus',
 		},
 	])
-	//
+
 	const statuses = [
 		{
+			value: 'PROCESSING',
 			name: 'В обработке',
 			color: 'gray',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
 		{
+			value: 'asdf',
 			name: 'Доставка по США',
 			color: '#304ffe',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
 		{
+			value: 'dfg',
 			name: 'Доставка по России',
 			color: '#304ffe',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
 		{
+			value: 'fgh',
 			name: 'Отменен',
 			color: 'red',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
 		{
+			value: 'DELIVERED',
 			name: 'Доставлено',
 			color: 'green',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
@@ -82,19 +70,21 @@ export const useOrdersStore = defineStore('order', () => {
 	const withCard = ref(false)
 
 	function checkTrack(track) {
-		const current = orders.value.find((o) => o.track.trim() === track.value.trim())
-		return getStatusByName(current.status)
+		// const current = orders.value.find((o) => o.track.trim() === track.value.trim())
+		// return getStatusByName(current.status)
+		console.log('aboba')
 	}
 
-	function getStatusByName(name) {
-		return statuses.find((status) => status.name === name)
+	function getStatusByValue(value) {
+		return statuses.find((status) => status.value === value)
 	}
 
-	function getOrders() {
-		const service = ordersService()
-		service.getOrders().then((res) => {
-			console.log(res)
-		})
+	async function getOrders() {
+		const data = await fetchOrders()
+		if (data) {
+			orders.value = data.content
+			console.log(data)
+		}
 	}
 
 	function addOrder(type, cost, address, count, link, warehouse, withCard) {
@@ -126,14 +116,13 @@ export const useOrdersStore = defineStore('order', () => {
 	}
 
 	return {
-		orders,
 		headers,
 		addOrder,
 		warehouse,
 		setWarehouse,
 		setIsWithCard,
 		withCard,
-		getStatusByName,
+		getStatusByValue,
 		statuses,
 		changeStatus,
 		checkTrack,

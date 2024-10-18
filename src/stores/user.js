@@ -3,7 +3,6 @@ import { computed, ref } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
 	const accountInfo = ref({})
-	const token = ref('')
 	const addresses = ref([])
 	const userId = ref(null)
 	const userRole = ref('USER')
@@ -14,10 +13,6 @@ export const useUserStore = defineStore('user', () => {
 	const fullName = computed(() =>
 		accountInfo.value.firstName ? accountInfo.value.firstName + ' ' + accountInfo.value.lastName : 'Загрузка...'
 	)
-
-	function setToken(accessToken) {
-		token.value = accessToken
-	}
 
 	function setAccountInfo(info) {
 		accountInfo.value = info
@@ -43,12 +38,10 @@ export const useUserStore = defineStore('user', () => {
 		accountInfo,
 		userId,
 		addresses,
-		token,
 		userBalance,
 		userRole,
 		isAdmin,
 		fullName,
-		setToken,
 		setAccountInfo,
 		setAddresses,
 		serUserId,

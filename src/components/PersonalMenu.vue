@@ -106,7 +106,7 @@
 			<v-divider class="my-1" />
 			<v-tooltip location="bottom" text="Подсказка 8">
 				<template #activator="{ props }">
-					<router-link to="/lk/orders/admin">
+					<router-link to="/lk/wait">
 						<v-list-item class="link" rounded="xl">
 							<v-list-item-title v-bind="props">Чаты</v-list-item-title>
 						</v-list-item>

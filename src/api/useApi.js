@@ -1,33 +1,38 @@
-import axios from "axios";
+import axios from 'axios'
 
-export function useApi(init = {}) {
-    const {endpoint, headers, params, body} = init;
-    const API_URL = import.meta.env.VITE_APP_API_URL
-    const url = `${API_URL}/${endpoint}`
+const createRequestConfig = ({ endpoint, headers, params, body }) => {
+	const API_URL = import.meta.env.VITE_APP_API_URL
+	const url = `${API_URL}/${endpoint}`
+	return {
+		url,
+		headers,
+		params,
+		data: body,
+	}
+}
 
+export const useApi = {
+	get: (config) =>
+		axios({
+			method: 'get',
+			...createRequestConfig(config),
+		}),
 
-    function get() {
-        return axios({
-            method: 'GET',
-            url,
-            params,
-            headers,
-            data: body
-        })
-    }
+	post: (config) =>
+		axios({
+			method: 'post',
+			...createRequestConfig(config),
+		}),
 
-    function post() {
-        return axios({
-            method: 'POST',
-            url,
-            params,
-            headers,
-            data: body
-        })
-    }
+	put: (config) =>
+		axios({
+			method: 'put',
+			...createRequestConfig(config),
+		}),
 
-    return {
-        get,
-        post
-    }
+	delete: (config) =>
+		axios({
+			method: 'delete',
+			...createRequestConfig(config),
+		}),
 }
