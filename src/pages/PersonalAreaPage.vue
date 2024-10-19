@@ -1,7 +1,7 @@
 <template>
 	<v-container>
-		<v-layout style="min-height: 85vh">
-			<v-navigation-drawer class="border-0" :width="330" style="min-height: 100%">
+		<v-layout style="min-height: 89vh">
+			<v-navigation-drawer class="border-0" :width="330" style="height: 100%; max-height: 89vh">
 				<PersonalMenu />
 			</v-navigation-drawer>
 

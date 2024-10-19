@@ -81,8 +81,9 @@
 		v-if="isAlertVisible"
 		text="Товар успешно добавлен!"
 		type="success"
-		location="bottom left"
-		class="position-fixed alert mb-5 ml-5"
+		location="bottom right"
+		class="position-fixed mr-5"
+		style="z-index: 100; margin-bottom: 90px"
 	></v-alert>
 </template>
 
@@ -184,8 +185,5 @@ export default {
 <style scoped>
 .headline {
 	font-weight: bold;
-}
-.alert {
-	z-index: 100;
 }
 </style>

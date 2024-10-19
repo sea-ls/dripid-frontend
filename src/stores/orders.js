@@ -1,24 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { ordersService } from '@/api/services/ordersService'
-export const useOrdersStore = defineStore('order', () => {
-	const orders = ref([
-		{
-			id: 1,
-			description: 'Nike AIR MAX 95',
-			track: 'E12MW459678',
-			status: 'В обработке',
-			color: 'gray',
-		},
-		{
-			id: 2,
-			description: 'Adidas Color sweatshirt',
-			track: 'E12MW459679',
-			status: 'В обработке',
-			color: 'gray',
-		},
-	])
 
+export const useOrdersStore = defineStore('order', () => {
 	const headers = ref([
 		{
 			title: 'НОМЕР ЗАКАЗА',
@@ -34,11 +17,11 @@ export const useOrdersStore = defineStore('order', () => {
 		},
 		{
 			title: 'ТРЕК НОМЕР',
-			key: 'track',
+			key: 'trackNumberExternal',
 		},
 		{
 			title: 'ТИП',
-			key: 'type',
+			key: 'orderType',
 		},
 		{
 			title: 'КОЛ-ВО',
@@ -46,75 +29,60 @@ export const useOrdersStore = defineStore('order', () => {
 		},
 		{
 			title: 'СТАТУС',
-			key: 'status',
+			key: 'orderStatus',
 		},
 	])
-	//
-	const statuses = [
+
+	const statuses = ref([
 		{
+			value: 'PROCESSING',
 			name: 'В обработке',
 			color: 'gray',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
 		{
-			name: 'Доставка по США',
+			value: 'PENDING_PAYMENT',
+			name: 'Ожидает оплаты',
 			color: '#304ffe',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
 		{
-			name: 'Доставка по России',
+			value: 'PAID',
+			name: 'Оплачен',
 			color: '#304ffe',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
 		{
-			name: 'Отменен',
+			value: 'WAREHOUSE_USA',
+			name: 'На складе в США',
 			color: 'red',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
 		{
+			value: 'SHIPPED_RUSSIA',
+			name: 'Отправлен в Россию',
+			color: 'red',
+			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
+		},
+		{
+			value: 'REDEEMED',
+			name: 'Отменён',
+			color: 'red',
+			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
+		},
+		{
+			value: 'DELIVERED',
 			name: 'Доставлено',
 			color: 'green',
 			desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
 		},
-	]
+	])
 
 	const warehouse = ref({})
 	const withCard = ref(false)
 
-	function checkTrack(track) {
-		const current = orders.value.find((o) => o.track.trim() === track.value.trim())
-		return getStatusByName(current.status)
-	}
-
-	function getStatusByName(name) {
-		return statuses.find((status) => status.name === name)
-	}
-
-	function getOrders() {
-		const service = ordersService()
-		service.getOrders().then((res) => {
-			console.log(res)
-		})
-	}
-
-	function addOrder(type, cost, address, count, link, warehouse, withCard) {
-		orders.value.push({
-			id: orders.value.length + 1,
-			description: type,
-			status: 'В обработке',
-			cost,
-			address,
-			count,
-			link,
-			warehouse,
-			withCard,
-			track: 'E12MW459678' + Math.round(Math.random() * 100).toString(),
-		})
-	}
-
-	function changeStatus(status, item) {
-		const current = orders.value.find((o) => o.id === item.id)
-		current.status = status
+	function getStatusByValue(value) {
+		return statuses.find((status) => status.value === value)
 	}
 
 	function setWarehouse(house) {
@@ -126,17 +94,12 @@ export const useOrdersStore = defineStore('order', () => {
 	}
 
 	return {
-		orders,
 		headers,
-		addOrder,
 		warehouse,
 		setWarehouse,
 		setIsWithCard,
 		withCard,
-		getStatusByName,
+		getStatusByValue,
 		statuses,
-		changeStatus,
-		checkTrack,
-		getOrders,
 	}
 })

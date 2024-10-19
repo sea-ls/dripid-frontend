@@ -1,37 +1,29 @@
-import {useApi} from "@/api/useApi";
-import {useUserStore} from "@/stores/user";
+import { useApi } from '@/api/useApi'
 
-export function authService() {
-    const userStore= useUserStore()
+const token = localStorage.getItem('token')
 
-    function fetchUserData() {
-        const {get} = useApi({
-            endpoint: 'api/delivery-service/person/authenticated',
-            headers: {authorization: `Bearer ${userStore.token}`},
-        })
-        return get()
-    }
+export async function fetchUserData() {
+	const response = await useApi.get({
+		endpoint: 'api/delivery-service/person/authenticated',
+		headers: { authorization: `Bearer ${token}` },
+	})
 
-    function fetchAddresses() {
-        const {get} = useApi({
-            endpoint: 'api/delivery-service/person/person/address',
-            headers: {authorization: `Bearer ${userStore.token}`},
-        })
-        return get()
-    }
+	return response.data
+}
 
-    function saveAddress(address) {
-        const {post} = useApi({
-            endpoint: 'api/delivery-service/person/address/save',
-            headers: {authorization: `Bearer ${userStore.token}`},
-            body: address
-        })
-        return post()
-    }
+export async function fetchAddresses() {
+	const response = await useApi.get({
+		endpoint: 'api/delivery-service/person/person/address',
+		headers: { authorization: `Bearer ${token}` },
+	})
+	return response.data
+}
 
-    return {
-        fetchUserData,
-        fetchAddresses,
-        saveAddress
-    }
+export async function saveAddress(address) {
+	await useApi.post({
+		endpoint: 'api/delivery-service/person/address/save',
+		headers: { authorization: `Bearer ${token}` },
+		body: address,
+	})
+	return address
 }

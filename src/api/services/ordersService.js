@@ -1,35 +1,24 @@
-import {useUserStore} from "@/stores/user";
-import {useApi} from "@/api/useApi";
+import { useApi } from '@/api/useApi'
 
-export function ordersService() {
-    const userStore= useUserStore();
+const token = localStorage.getItem('token')
 
-    function saveOrderByUser(order) {
-        const api = useApi ({
-            endpoint: 'api/delivery-service/person/order/save',
-            headers: {authorization: `Bearer ${userStore.token}`},
-            body: order,
-        })
+export async function saveOrderByUser(order) {
+	const response = await useApi.post({
+		endpoint: 'api/delivery-service/person/order/save',
+		headers: { authorization: `Bearer ${token}` },
+		body: order,
+	})
 
-        return api.post()
-    }
+	return response.data
+}
 
-    function getOrders() {
-        const api = useApi ({
-            endpoint: 'api/delivery-service/person/orders/1',
-            headers: {authorization: `Bearer ${userStore.token}`},
-            params:{
-                page: 1,
-                count: 20,
-                id: userStore.userId
-            }
-        })
-
-        return api.get()
-    }
-
-    return {
-        saveOrderByUser,
-        getOrders
-    }
+export async function fetchOrders() {
+	const response = await useApi.get({
+		endpoint: 'api/delivery-service/person/orders/0',
+		headers: { authorization: `Bearer ${token}` },
+		params: {
+			size: 20,
+		},
+	})
+	return response.data
 }

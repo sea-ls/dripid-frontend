@@ -18,11 +18,7 @@
 						<div class="lk__about_row d-flex flex-column ga-1">
 							<span class="lk__about_row-title">АДРЕСА:</span>
 							<div v-for="address in addresses" class="lk__about_row-text d-inline-block text-white">
-								{{
-									`${address.country}, ${address.city}, ${address.address}, ${
-										address.region ? address.region : '0'
-									}`
-								}}
+								{{ `${address.country}, ${address.city}, ${address.address}, ${address.region}` }}
 							</div>
 						</div>
 						<div class="lk__about_row">
@@ -93,16 +89,15 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
-import { useAddressStore } from '@/stores/address'
+import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { authService } from '@/api/services/authService'
-import { storeToRefs } from 'pinia'
+import { useGetAddressesQuery } from '@/api/hooks/addresses/useGetAddressesQuery'
+import { useSaveAddressMutation } from '@/api/hooks/addresses/useSaveAddressMutation'
 
 export default {
 	name: 'PersonalPage',
 	setup() {
-		const { token, accountInfo } = useUserStore()
+		const { accountInfo } = useUserStore()
 		const dialog = ref(false)
 		const valid = ref(false)
 		const country = ref('')
@@ -113,8 +108,8 @@ export default {
 			required: (v) => !!v || 'Это поле обязательно',
 		}
 
-		const addressStore = useAddressStore() // Используем store
-		const { addresses } = storeToRefs(addressStore)
+		const { data: addresses } = useGetAddressesQuery()
+		const { mutate: addAddress } = useSaveAddressMutation()
 
 		const openDialog = () => {
 			dialog.value = true
@@ -126,19 +121,14 @@ export default {
 
 		const submit = () => {
 			if (valid.value) {
-				addressStore.addAddress(country.value, city.value, address.value, postalCode.value)
-				const service = authService()
-				service
-					.saveAddress({
-						country: country.value,
-						city: city.value,
-						address: address.value,
-						region: '',
-					})
-					.then(() => {
-						closeDialog()
-						resetForm()
-					})
+				addAddress({
+					country: country.value,
+					city: city.value,
+					address: address.value,
+					region: postalCode.value,
+				})
+				closeDialog()
+				resetForm()
 			}
 		}
 
@@ -161,7 +151,6 @@ export default {
 			openDialog,
 			closeDialog,
 			submit,
-			addressStore,
 			addresses,
 			accountInfo,
 		}
