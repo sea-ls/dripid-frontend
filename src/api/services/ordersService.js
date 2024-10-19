@@ -9,7 +9,7 @@ export async function saveOrderByUser(order) {
 		body: order,
 	})
 
-	return response
+	return response.data
 }
 
 export async function fetchOrders() {

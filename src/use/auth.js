@@ -19,7 +19,6 @@ export const initKeycloak = async () => {
 			silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
 			flow: 'standard',
 			pkceMethod: 'S256',
-			checkLoginIframe: false,
 		})
 		if (authenticated) {
 			localStorage.setItem('token', keycloak.token)

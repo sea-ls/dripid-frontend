@@ -13,7 +13,7 @@
 						width="200px"
 						density="compact"
 						color="primary"
-						:items="ordersStore.statuses"
+						:items="statuses"
 						item-title="name"
 						:model-value="item.orderStatus"
 						@update:model-value="changeStatus($event, item)"
@@ -31,6 +31,8 @@ import { storeToRefs } from 'pinia'
 import { useOrdersStore } from '@/stores/orders'
 import { useGetOrdersQuery } from '@/api/hooks/orders/useGetOrdersQuery'
 import { ref } from 'vue'
+import { useGetAllOrdersQuery } from '@/api/hooks/admin/useGetAllOrdersQuery'
+import { useUpdateOrderMutation } from '@/api/hooks/admin/useUpdateOrderMutation'
 
 export default {
 	name: 'OrdersPage',
@@ -40,33 +42,19 @@ export default {
 		const ordersStore = useOrdersStore()
 		const { headers, statuses } = storeToRefs(ordersStore)
 
-		const { data: orders } = useGetOrdersQuery()
-
-		// const orders = ref([
-		// 	{
-		// 		id: 1,
-		// 		description: 'Nike AIR MAX 95',
-		// 		track: 'E12MW459678',
-		// 		status: 'В обработке',
-		// 		color: 'gray',
-		// 	},
-		// 	{
-		// 		id: 2,
-		// 		description: 'Adidas Color sweatshirt',
-		// 		track: 'E12MW459679',
-		// 		status: 'В обработке',
-		// 		color: 'gray',
-		// 	},
-		// ])
+		const { data: orders } = role === 'user' ? useGetOrdersQuery() : useGetAllOrdersQuery()
+		const { mutate: updateOrder } = useUpdateOrderMutation()
 
 		function changeStatus(event, item) {
-			store.changeStatus(event, item)
+			const request = { ...item, orderStatus: event }
+			updateOrder(request)
 		}
 
 		return {
 			ordersStore,
 			orders,
 			headers,
+			statuses,
 			role,
 			changeStatus,
 		}
