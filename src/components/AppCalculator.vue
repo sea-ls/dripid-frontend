@@ -72,7 +72,7 @@ export default {
 		}
 	},
 	props: {
-		width: Number,
+		width: String,
 		title: String,
 	},
 }
