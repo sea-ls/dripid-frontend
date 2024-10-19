@@ -5,7 +5,7 @@ import Keycloak from 'keycloak-js'
 
 const AUTH_URL = import.meta.env.VITE_APP_AUTH_URL
 
-const keycloak = new Keycloak({
+export const keycloak = new Keycloak({
 	url: AUTH_URL,
 	realm: 'dripId',
 	clientId: 'pbpkce_client',

@@ -13,9 +13,8 @@ import { initKeycloak } from './use/auth'
 
 const app = createApp(App)
 
-app.use(router)
-
 registerPlugins(app)
 await initKeycloak()
+app.use(router)
 
 app.mount('#app')

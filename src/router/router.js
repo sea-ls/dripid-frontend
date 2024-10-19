@@ -8,6 +8,7 @@ import TrackPage from '@/pages/TrackPage.vue'
 import PersonalPage from '@/pages/PersonalPage.vue'
 import InfoPage from '@/pages/InfoPage.vue'
 import WaitingTrackPage from '@/pages/WaitingTrackPage.vue'
+import { keycloak } from '@/use/auth'
 
 const routes = [
 	{
@@ -19,6 +20,7 @@ const routes = [
 		path: '/lk',
 		name: 'personal-area',
 		component: PersonalAreaPage,
+		meta: { requiresAuth: true },
 		children: [
 			{
 				name: 'personal',
@@ -62,6 +64,18 @@ const routes = [
 const router = createRouter({
 	history: createWebHistory(),
 	routes,
+})
+
+router.beforeEach((to, from, next) => {
+	if (to.matched.some((record) => record.meta.requiresAuth)) {
+		if (keycloak.authenticated) {
+			next()
+		} else {
+			keycloak.login({ redirectUri: window.location.href })
+		}
+	} else {
+		next()
+	}
 })
 
 export default router
