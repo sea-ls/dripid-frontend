@@ -3,14 +3,12 @@
 		<Suspense>
 			<MainLayout />
 		</Suspense>
-		<VueQueryDevtools />
 	</v-app>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import MainLayout from './layouts/MainLayout.vue'
-import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 
 const drawer = ref(false)
 </script>

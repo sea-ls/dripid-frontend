@@ -10,7 +10,7 @@
 		<div class="img d-flex align-center flex-column">
 			<h1 class="img-title text-h1 text-center">DRIP ID!</h1>
 			<p class="img-text text-h4 ma-10">
-				DRIP ID - Сервис достаок посылок из-за рубежа, с помощью которго вы сможете получать в РФ свои покупки
+				DRIP ID - Сервис доставки посылок из-за рубежа, с помощью которого вы сможете получать в РФ свои покупки
 				из США, ЕС, Китая, Турции и ОАЭ
 			</p>
 		</div>
@@ -18,9 +18,21 @@
 			<div class="d-flex justify-center flex-column container-gap align-center">
 				<MainContentCanvas text-top="DRIPID" text-middle="DRIPID" text-low="DRIPID" />
 
+				<AppAboutWrapper id="about" />
+
+				<div class="d-flex justify-space-between align-center w-100 ga-2 flex-column flex-md-row">
+					<v-slide-group selected-class="bg-primary" show-arrows>
+						<v-slide-group-item v-for="n in 15" :key="n">
+							<AppStories :stories="new Array(15)" />
+						</v-slide-group-item>
+					</v-slide-group>
+				</div>
+
 				<div class="w-100" id="roadmap">
 					<AppRoadmap />
 				</div>
+
+				<AppCalculator width="100%" title="Расчёт стоимости" />
 
 				<div class="w-100" id="brands">
 					<AppBrands :images="carouselImages" />
@@ -56,47 +68,6 @@
 						</template>
 					</v-text-field>
 				</div>
-
-				<AppAboutWrapper id="about" />
-
-				<div class="d-flex justify-space-between align-center w-100 ga-2 flex-column flex-md-row">
-					<v-slide-group selected-class="bg-primary" show-arrows>
-						<v-slide-group-item v-for="n in 15" :key="n">
-							<AppStories :stories="new Array(15)" />
-						</v-slide-group-item>
-					</v-slide-group>
-				</div>
-
-				<v-card width="100%" class="bg-grey-lighten-3 pa-10" :rounded="'xl'" title="Расчет стоимости">
-					<template #text class="w-33">
-						<v-select
-							clearable
-							variant="outlined"
-							:items="['Китай', 'США', 'Германия']"
-							label="Откуда"
-							color="primary"
-						/>
-						<v-text-field placeholder="Страна, город" color="primary" variant="outlined" />
-						<div class="d-flex justify-space-between">
-							<div class="field">
-								<v-text-field
-									color="primary"
-									variant="outlined"
-									placeholder="Вес"
-									v-model="range"
-									:step="0.5"
-									type="number"
-								/>
-								<v-btn-toggle v-model="buttonToggle" class="mb-5">
-									<v-btn icon="mdi-cellphone"></v-btn>
-									<v-btn icon="mdi-tshirt-crew"></v-btn>
-									<v-btn icon="mdi-shoe-sneaker"></v-btn>
-								</v-btn-toggle>
-							</div>
-						</div>
-						<v-slider color="primary" :min="0" :max="20" :step="0.5" v-model="range" thumb-label />
-					</template>
-				</v-card>
 
 				<AppFooter id="questions" />
 			</div>

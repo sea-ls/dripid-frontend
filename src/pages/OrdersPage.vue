@@ -30,7 +30,6 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useOrdersStore } from '@/stores/orders'
 import { useGetOrdersQuery } from '@/api/hooks/orders/useGetOrdersQuery'
-import { ref } from 'vue'
 import { useGetAllOrdersQuery } from '@/api/hooks/admin/useGetAllOrdersQuery'
 import { useUpdateOrderMutation } from '@/api/hooks/admin/useUpdateOrderMutation'
 
