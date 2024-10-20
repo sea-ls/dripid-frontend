@@ -1,4 +1,4 @@
-import { fetchUserData } from '@/api/services/authService'
+import { fetchUserData } from '@/api/services/userService'
 import { identityRole } from '@/helpers/roleHelper'
 import { useUserStore } from '@/stores/user'
 import Keycloak from 'keycloak-js'

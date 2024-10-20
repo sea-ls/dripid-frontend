@@ -4,8 +4,11 @@ const token = localStorage.getItem('token')
 
 export async function fetchAllOrders() {
 	const response = await useApi.get({
-		endpoint: 'api/delivery-service/admin/orders/getAll/0?size=20',
+		endpoint: 'api/delivery-service/admin/orders/getAll/0',
 		headers: { authorization: `Bearer ${token}` },
+		params: {
+			size: 50,
+		},
 	})
 	return response.data
 }

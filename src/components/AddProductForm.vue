@@ -2,15 +2,6 @@
 	<v-container>
 		<v-form ref="form" v-model="valid" lazy-validation>
 			<v-text-field
-				v-model="productType"
-				:rules="[rules.required]"
-				label="Тип товара"
-				required
-				variant="outlined"
-				rounded="xl"
-				color="#304FFE"
-			></v-text-field>
-			<v-text-field
 				v-model="price"
 				:rules="[rules.required, rules.numeric]"
 				label="Стоимость"
@@ -19,17 +10,19 @@
 				variant="outlined"
 				rounded="xl"
 				color="#304FFE"
-			></v-text-field>
+			/>
 			<v-select
 				v-model="currency"
 				:items="currencies"
+				item-value="value"
+				item-title="name"
 				:rules="[rules.required]"
 				label="Валюта"
 				required
 				color="#304FFE"
 				variant="outlined"
 				rounded="xl"
-			></v-select>
+			/>
 			<v-text-field
 				v-model="quantity"
 				:rules="[rules.required, rules.numeric]"
@@ -39,7 +32,7 @@
 				variant="outlined"
 				rounded="xl"
 				color="#304FFE"
-			></v-text-field>
+			/>
 			<v-text-field
 				v-model="productLink"
 				:rules="[rules.required, rules.url]"
@@ -48,8 +41,8 @@
 				variant="outlined"
 				rounded="xl"
 				color="#304FFE"
-			></v-text-field>
-			<v-textarea v-model="comment" label="Комментарий к товару" color="#304FFE"></v-textarea>
+			/>
+			<v-textarea v-model="comment" label="Комментарий к товару" color="#304FFE" />
 			<v-btn color="blue darken-1" @click="submit">Добавить товар</v-btn>
 		</v-form>
 
@@ -103,7 +96,20 @@ export default {
 		const quantity = ref('')
 		const productLink = ref('')
 		const comment = ref('')
-		const currencies = ['$ Доллар США', '€ Евро', '£ Фунт стерлингов'] // список валют
+		const currencies = [
+			{
+				value: 'USD',
+				name: '$ Доллар США',
+			},
+			{
+				value: 'EUR',
+				name: '€ Евро',
+			},
+			{
+				value: 'GBP',
+				name: '£ Фунт стерлингов',
+			},
+		] // список валют
 
 		const rules = {
 			required: (v) => !!v || 'Это поле обязательно',
@@ -113,9 +119,9 @@ export default {
 
 		const convertedPrice = computed(() => {
 			const conversionRates = {
-				'$ Доллар США': 75, // Примерный курс USD к RUB
-				'€ Евро': 80, // Примерный курс EUR к RUB
-				'£ Фунт стерлингов': 90, // Примерный курс GBP к RUB
+				USD: 75, // Примерный курс USD к RUB
+				EUR: 80, // Примерный курс EUR к RUB
+				GBP: 90, // Примерный курс GBP к RUB
 			}
 			return (price.value * (conversionRates[currency.value] || 1)).toFixed(2)
 		})

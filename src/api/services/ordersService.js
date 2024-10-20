@@ -17,7 +17,7 @@ export async function fetchOrders() {
 		endpoint: 'api/delivery-service/person/orders/0',
 		headers: { authorization: `Bearer ${token}` },
 		params: {
-			size: 20,
+			size: 50,
 		},
 	})
 	return response.data

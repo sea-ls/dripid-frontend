@@ -1,42 +1,38 @@
 <template>
-	<div>
-		<v-container>
-			<v-sheet class="d-flex flex-column ga-5">
-				<h1>Заявка на ожидание доставки</h1>
-				<v-expansion-panels variant="accordion" multiple v-model="panels">
-					<v-expansion-panel rounded="xl" value="info">
-						<v-expansion-panel-title>
-							<h4>Укажите информацию о товаре</h4>
-						</v-expansion-panel-title>
-						<v-expansion-panel-text>
-							<AppTrackForm></AppTrackForm>
-						</v-expansion-panel-text>
-					</v-expansion-panel>
-					<v-expansion-panel rounded="xl" value="address">
-						<v-expansion-panel-title>
-							<h4>Укажите информацию о адресах доставки и складе</h4>
-						</v-expansion-panel-title>
-						<v-expansion-panel-text>
-							<v-form>
-								<v-select
-									placeholder="Фактический адрес доставки"
-									label="Фактический адрес доставки"
-									color="#304FFE"
-									variant="outlined"
-									rounded="xl"
-									:items="addresses"
-									item-value="id"
-									item-title="address"
-									v-model="currentAddressId"
-								/>
-							</v-form>
-						</v-expansion-panel-text>
-					</v-expansion-panel>
-				</v-expansion-panels>
-				<v-btn color="primary" @click="addApplication">Оставить заявку</v-btn>
-			</v-sheet>
-		</v-container>
-	</div>
+	<v-sheet class="d-flex flex-column ga-5">
+		<h1>Заявка на ожидание доставки</h1>
+		<v-expansion-panels variant="accordion" multiple v-model="panels">
+			<v-expansion-panel rounded="xl" value="info">
+				<v-expansion-panel-title>
+					<h4>Укажите информацию о товаре</h4>
+				</v-expansion-panel-title>
+				<v-expansion-panel-text>
+					<AppTrackForm></AppTrackForm>
+				</v-expansion-panel-text>
+			</v-expansion-panel>
+			<v-expansion-panel rounded="xl" value="address">
+				<v-expansion-panel-title>
+					<h4>Укажите информацию о адресах доставки и складе</h4>
+				</v-expansion-panel-title>
+				<v-expansion-panel-text>
+					<v-form>
+						<v-select
+							placeholder="Фактический адрес доставки"
+							label="Фактический адрес доставки"
+							color="#304FFE"
+							variant="outlined"
+							rounded="xl"
+							:items="addresses"
+							item-value="id"
+							item-title="address"
+							v-model="currentAddressId"
+						/>
+					</v-form>
+				</v-expansion-panel-text>
+			</v-expansion-panel>
+		</v-expansion-panels>
+		<v-btn color="primary" @click="addApplication">Оставить заявку</v-btn>
+	</v-sheet>
 </template>
 
 <script>

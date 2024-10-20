@@ -2,37 +2,6 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useOrdersStore = defineStore('order', () => {
-	const headers = ref([
-		{
-			title: 'НОМЕР ЗАКАЗА',
-			key: 'id',
-		},
-		{
-			title: 'ССЫЛКА',
-			key: 'link',
-		},
-		{
-			title: 'ОПИСАНИЕ ТОВАРА',
-			key: 'description',
-		},
-		{
-			title: 'ТРЕК НОМЕР',
-			key: 'trackNumberExternal',
-		},
-		{
-			title: 'ТИП',
-			key: 'orderType',
-		},
-		{
-			title: 'КОЛ-ВО',
-			key: 'count',
-		},
-		{
-			title: 'СТАТУС',
-			key: 'orderStatus',
-		},
-	])
-
 	const statuses = ref([
 		{
 			value: 'PROCESSING',
@@ -78,12 +47,12 @@ export const useOrdersStore = defineStore('order', () => {
 		},
 	])
 
+	function getStatusByValue(value) {
+		return statuses.value.find((status) => status.value === value)
+	}
+
 	const warehouse = ref({})
 	const withCard = ref(false)
-
-	function getStatusByValue(value) {
-		return statuses.find((status) => status.value === value)
-	}
 
 	function setWarehouse(house) {
 		warehouse.value = house.value
@@ -94,7 +63,6 @@ export const useOrdersStore = defineStore('order', () => {
 	}
 
 	return {
-		headers,
 		warehouse,
 		setWarehouse,
 		setIsWithCard,

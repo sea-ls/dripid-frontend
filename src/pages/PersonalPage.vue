@@ -19,6 +19,7 @@
 							<span class="lk__about_row-title">АДРЕСА:</span>
 							<div v-for="address in addresses" class="lk__about_row-text d-inline-block text-white">
 								{{ `${address.country}, ${address.city}, ${address.address}, ${address.region}` }}
+								<v-btn @click="deleteAddress(address.id)">Удалить</v-btn>
 							</div>
 						</div>
 						<div class="lk__about_row">
@@ -93,6 +94,7 @@ import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useGetAddressesQuery } from '@/api/hooks/addresses/useGetAddressesQuery'
 import { useSaveAddressMutation } from '@/api/hooks/addresses/useSaveAddressMutation'
+import { useDeleteAddressMutation } from '@/api/hooks/addresses/useDeleteAddressMutation'
 
 export default {
 	name: 'PersonalPage',
@@ -110,6 +112,7 @@ export default {
 
 		const { data: addresses } = useGetAddressesQuery()
 		const { mutate: addAddress } = useSaveAddressMutation()
+		const { mutate: deleteAddress } = useDeleteAddressMutation()
 
 		const openDialog = () => {
 			dialog.value = true
@@ -153,6 +156,7 @@ export default {
 			submit,
 			addresses,
 			accountInfo,
+			deleteAddress,
 		}
 	},
 }
@@ -171,7 +175,8 @@ export default {
 }
 
 .lk__about_row-text {
-	width: 100%;
+	width: fit-content;
+	min-width: 200px;
 	background-color: gray;
 	border-radius: 10px;
 	padding: 0 10px;

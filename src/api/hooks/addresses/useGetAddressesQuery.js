@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/vue-query'
-import { fetchAddresses } from '../../services/authService'
+import { fetchAddresses } from '../../services/userService'
 
 export const useGetAddressesQuery = () => {
 	return useQuery({

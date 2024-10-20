@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import { saveAddress } from '@/api/services/userService'
+import { deleteAddress } from '@/api/services/userService'
 
-export const useSaveAddressMutation = () => {
+export const useDeleteAddressMutation = () => {
 	const client = useQueryClient()
 	return useMutation({
-		mutationFn: saveAddress,
+		mutationFn: deleteAddress,
 		onSuccess: () => {
 			client.invalidateQueries({
 				queryKey: ['addresses'],

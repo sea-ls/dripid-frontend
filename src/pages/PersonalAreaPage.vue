@@ -5,8 +5,10 @@
 				<PersonalMenu />
 			</v-navigation-drawer>
 
-			<v-main class="ml-5" style="min-height: 100%">
-				<router-view />
+			<v-main>
+				<v-container>
+					<router-view />
+				</v-container>
 			</v-main>
 		</v-layout>
 	</v-container>
