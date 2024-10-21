@@ -1,9 +1,14 @@
 import { fetchAllOrders } from '@/api/services/adminService'
-import { useQuery } from '@tanstack/vue-query'
+import { useInfiniteQuery } from '@tanstack/vue-query'
 
 export const useGetAllOrdersQuery = () => {
-	return useQuery({
+	return useInfiniteQuery({
 		queryKey: ['orders'],
 		queryFn: fetchAllOrders,
+		getNextPageParam: (lastPage, pages) => {
+			if (lastPage.last === false) {
+				return lastPage.number + 1
+			}
+		},
 	})
 }

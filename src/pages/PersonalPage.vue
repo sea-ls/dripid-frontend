@@ -9,17 +9,21 @@
 					<div class="lk__about d-flex w-100 ga-2 flex-column">
 						<div class="lk__about_ro d-flex ga-1">
 							<span class="lk__about_row-title">ИМЯ: </span>
-							<div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.firstName }}</div>
+							<div class="lk__about_row-text text-white">{{ accountInfo.firstName }}</div>
 						</div>
 						<div class="lk__about_row d-flex ga-1">
 							<span class="lk__about_row-title">ФАМИЛИЯ: </span>
-							<div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.lastName }}</div>
+							<div class="lk__about_row-text text-white">{{ accountInfo.lastName }}</div>
 						</div>
 						<div class="lk__about_row d-flex flex-column ga-1">
 							<span class="lk__about_row-title">АДРЕСА:</span>
-							<div v-for="address in addresses" class="lk__about_row-text d-inline-block text-white">
-								{{ `${address.country}, ${address.city}, ${address.address}, ${address.region}` }}
-								<v-btn @click="deleteAddress(address.id)">Удалить</v-btn>
+							<div v-for="address in addresses" class="lk__about_row-text text-white d-flex align-center">
+								<div style="line-height: 15px">
+									{{
+										`${address.country}, г. ${address.city}, ${address.address}, Индекс: ${address.region}`
+									}}
+								</div>
+								<v-btn @click="deleteAddress(address.id)" icon="mdi-delete" variant="plain" />
 							</div>
 						</div>
 						<div class="lk__about_row">
@@ -67,16 +71,16 @@
 						</div>
 						<div class="lk__about_row d-flex ga-1">
 							<span class="lk__about_row-title">EMAIL: </span>
-							<div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.email }}</div>
+							<div class="lk__about_row-text text-white">{{ accountInfo.email }}</div>
 						</div>
 						<div class="lk__about_row d-flex ga-1">
 							<span class="lk__about_row-title">ТЕЛЕФОН: </span>
-							<div class="lk__about_row-text d-inline-block text-white">{{ accountInfo.phone }}</div>
+							<div class="lk__about_row-text text-white">{{ accountInfo.phone }}</div>
 						</div>
 						<v-divider />
 						<div class="lk__about_row d-flex ga-1 flex-column">
 							<span class="lk__about_row-title">Баланс:</span>
-							<div class="lk__about_row-text d-inline-block text-white">0.00 Р</div>
+							<div class="lk__about_row-text text-white">0.00 Р</div>
 							<span class="lk__about_row-title">
 								Пополнить
 								<v-icon icon="mdi-plus" color="primary" />

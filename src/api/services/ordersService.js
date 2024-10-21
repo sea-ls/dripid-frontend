@@ -12,12 +12,12 @@ export async function saveOrderByUser(order) {
 	return response.data
 }
 
-export async function fetchOrders() {
+export async function fetchOrders({ pageParam = 0 }) {
 	const response = await useApi.get({
-		endpoint: 'api/delivery-service/person/orders/0',
+		endpoint: `api/delivery-service/person/orders/${pageParam}`,
 		headers: { authorization: `Bearer ${token}` },
 		params: {
-			size: 50,
+			size: 30,
 		},
 	})
 	return response.data

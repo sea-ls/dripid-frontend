@@ -1,32 +1,36 @@
 <template>
 	<v-container>
 		<v-form ref="form" v-model="valid" lazy-validation>
+			<div class="d-flex ga-10">
+				<v-text-field
+					v-model="price"
+					:rules="[rules.required, rules.numeric]"
+					label="Стоимость"
+					required
+					type="number"
+					variant="outlined"
+					rounded="xl"
+					color="#304FFE"
+					width="50%"
+				/>
+				<v-select
+					v-model="currency"
+					:items="currencies"
+					item-value="value"
+					item-title="name"
+					:rules="[rules.required]"
+					label="Валюта"
+					required
+					color="#304FFE"
+					variant="outlined"
+					rounded="xl"
+					width="50%"
+				/>
+			</div>
 			<v-text-field
-				v-model="price"
+				v-model="weight"
 				:rules="[rules.required, rules.numeric]"
-				label="Стоимость"
-				required
-				type="number"
-				variant="outlined"
-				rounded="xl"
-				color="#304FFE"
-			/>
-			<v-select
-				v-model="currency"
-				:items="currencies"
-				item-value="value"
-				item-title="name"
-				:rules="[rules.required]"
-				label="Валюта"
-				required
-				color="#304FFE"
-				variant="outlined"
-				rounded="xl"
-			/>
-			<v-text-field
-				v-model="quantity"
-				:rules="[rules.required, rules.numeric]"
-				label="Количество товара"
+				label="Вес (в килограммах)"
 				required
 				type="number"
 				variant="outlined"
@@ -47,28 +51,25 @@
 		</v-form>
 
 		<div v-if="showConvertedPrice">
-			<p>
-				Конвертированная цена: {{ convertedPrice }} ₽ <br />
-				Обратите внимание, что цена может измениться.
-			</p>
+			<p>Конвертированная цена: {{ convertedPrice }}₽</p>
+			<p>Обратите внимание, что цена может измениться.</p>
 		</div>
 
-		<v-row>
-			<v-col v-for="(product, index) in productStore.products" :key="index" cols="12" sm="6" md="4">
-				<v-card>
-					<v-card-title>
-						<span class="headline">{{ product.productType }}</span>
-					</v-card-title>
-					<v-card-subtitle> Валюта: {{ product.currency }} </v-card-subtitle>
-					<v-card-subtitle> Количество: {{ product.quantity }} </v-card-subtitle>
-					<v-card-subtitle>
-						Ссылка: <a :href="product.productLink" target="_blank">{{ product.productLink }}</a>
-					</v-card-subtitle>
-					<v-card-subtitle> Комментарий: {{ product.comment }} </v-card-subtitle>
-					<v-card-subtitle> Стоимость: {{ product.price }} </v-card-subtitle>
-				</v-card>
-			</v-col>
-		</v-row>
+		<div class="d-flex ga-4 flex-wrap mt-3">
+			<v-card v-for="(product, index) in products" :key="index" max-width="fit-content" class="pa-1">
+				<v-card-text>
+					<div>
+						Ссылка: <a :href="product.url" target="_blank">{{ product.url }}</a>
+					</div>
+					<div v-if="product.description">Комментарий: {{ product.description }}</div>
+					<div>Примерная стоимость: {{ product.price }}₽</div>
+					<div>Вес: {{ product.weight }} кг</div>
+					<div class="d-flex justify-end mb-n4 mt-n5">
+						<v-btn variant="plain" icon="mdi-delete" @click="deleteProduct(product)" />
+					</div>
+				</v-card-text>
+			</v-card>
+		</div>
 	</v-container>
 	<v-alert
 		v-if="isAlertVisible"
@@ -80,111 +81,76 @@
 	></v-alert>
 </template>
 
-<script>
+<script setup>
 import { ref, computed } from 'vue'
 import { useProductStore } from '@/stores/product'
+import { storeToRefs } from 'pinia'
 
-export default {
-	emits: ['add'],
-	setup(_, context) {
-		const productStore = useProductStore()
-		const valid = ref(false)
-		const isAlertVisible = ref(false)
-		const productType = ref('')
-		const price = ref('')
-		const currency = ref('')
-		const quantity = ref('')
-		const productLink = ref('')
-		const comment = ref('')
-		const currencies = [
-			{
-				value: 'USD',
-				name: '$ Доллар США',
-			},
-			{
-				value: 'EUR',
-				name: '€ Евро',
-			},
-			{
-				value: 'GBP',
-				name: '£ Фунт стерлингов',
-			},
-		] // список валют
-
-		const rules = {
-			required: (v) => !!v || 'Это поле обязательно',
-			numeric: (v) => !isNaN(v) || 'Должно быть числом',
-			url: (v) => /^(ftp|http|https):\/\/[^ "]+$/.test(v) || 'Введите корректный URL',
-		}
-
-		const convertedPrice = computed(() => {
-			const conversionRates = {
-				USD: 75, // Примерный курс USD к RUB
-				EUR: 80, // Примерный курс EUR к RUB
-				GBP: 90, // Примерный курс GBP к RUB
-			}
-			return (price.value * (conversionRates[currency.value] || 1)).toFixed(2)
-		})
-
-		const showConvertedPrice = computed(() => {
-			return price.value && currency.value
-		})
-
-		const submit = () => {
-			if (valid.value) {
-				const newProduct = {
-					productType: productType.value,
-					currency: currency.value,
-					price: convertedPrice.value,
-					quantity: parseInt(quantity.value, 10),
-					url: productLink.value,
-					description: comment.value,
-				}
-				productStore.addProduct(newProduct)
-				context.emit('add', {
-					url: productLink.value,
-					description: comment.value,
-					price: parseInt(price.value),
-					weight: 1,
-				})
-				showAlert()
-				resetForm()
-			}
-		}
-
-		const showAlert = () => {
-			isAlertVisible.value = true
-			setTimeout(() => {
-				isAlertVisible.value = false
-			}, 3000)
-		}
-
-		const resetForm = () => {
-			productType.value = ''
-			price.value = ''
-			currency.value = ''
-			quantity.value = ''
-			productLink.value = ''
-			comment.value = ''
-		}
-
-		return {
-			valid,
-			productType,
-			price,
-			currency,
-			quantity,
-			productLink,
-			comment,
-			currencies,
-			rules,
-			submit,
-			showConvertedPrice,
-			convertedPrice,
-			productStore,
-			isAlertVisible,
-		}
+const productStore = useProductStore()
+const { addProduct, deleteProduct } = productStore
+const { products } = storeToRefs(productStore)
+const valid = ref(false)
+const form = ref()
+const isAlertVisible = ref(false)
+const price = ref('')
+const currency = ref('')
+const productLink = ref('')
+const comment = ref('')
+const weight = ref('')
+const currencies = [
+	{
+		value: 'USD',
+		name: '$ Доллар США',
 	},
+	{
+		value: 'EUR',
+		name: '€ Евро',
+	},
+	{
+		value: 'GBP',
+		name: '£ Фунт стерлингов',
+	},
+] // список валют
+
+const rules = {
+	required: (v) => !!v || 'Это поле обязательно',
+	numeric: (v) => !isNaN(v) || 'Должно быть числом',
+	url: (v) => /^(ftp|http|https):\/\/[^ "]+$/.test(v) || 'Введите корректный URL',
+}
+
+const convertedPrice = computed(() => {
+	const conversionRates = {
+		USD: 75, // Примерный курс USD к RUB
+		EUR: 80, // Примерный курс EUR к RUB
+		GBP: 90, // Примерный курс GBP к RUB
+	}
+	return (price.value * (conversionRates[currency.value] || 1)).toFixed(2)
+})
+
+const showConvertedPrice = computed(() => {
+	return price.value && currency.value
+})
+
+const submit = () => {
+	if (valid.value) {
+		const newProduct = {
+			price: convertedPrice.value,
+			url: productLink.value,
+			description: comment.value,
+			weight: weight.value,
+		}
+		addProduct(newProduct)
+		showAlert()
+		form.value.reset()
+		form.value.resetValidation()
+	}
+}
+
+const showAlert = () => {
+	isAlertVisible.value = true
+	setTimeout(() => {
+		isAlertVisible.value = false
+	}, 3000)
 }
 </script>
 

@@ -10,7 +10,7 @@
 						<h4>Укажите информацию о товаре</h4>
 					</v-expansion-panel-title>
 					<v-expansion-panel-text>
-						<AddProductForm @add="addProduct($event)"></AddProductForm>
+						<AddProductForm />
 					</v-expansion-panel-text>
 				</v-expansion-panel>
 				<v-expansion-panel rounded="xl" value="address">
@@ -43,6 +43,7 @@ import { useRouter } from 'vue-router'
 import AddProductForm from '@/components/AddProductForm.vue'
 import { useGetAddressesQuery } from '@/api/hooks/addresses/useGetAddressesQuery'
 import { useSaveOrderMutation } from '@/api/hooks/orders/useSaveOrderMutation'
+import { useProductStore } from '@/stores/product'
 
 export default {
 	name: 'BuyApplicationPage',
@@ -56,19 +57,15 @@ export default {
 		const router = useRouter()
 		const panels = ref(['type', 'info', 'address'])
 		const currentAddressId = ref('')
-		const products = ref([])
+		const { products } = useProductStore()
 
 		const { data: addresses, isPending, isError } = useGetAddressesQuery()
 		const { mutate: saveOrder } = useSaveOrderMutation()
 
-		function addProduct(product) {
-			products.value.push(product)
-		}
-
 		function addApplication() {
 			saveOrder({
 				orderType: type.value,
-				products: products.value,
+				products,
 				warehouseId: 1,
 				addressId: currentAddressId.value,
 			})
@@ -83,7 +80,6 @@ export default {
 			panels,
 			addApplication,
 			warehouse,
-			addProduct,
 			currentAddressId,
 			addresses,
 			isPending,

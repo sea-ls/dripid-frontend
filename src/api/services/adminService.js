@@ -2,12 +2,12 @@ import { useApi } from '@/api/useApi'
 
 const token = localStorage.getItem('token')
 
-export async function fetchAllOrders() {
+export async function fetchAllOrders({ pageParam = 0 }) {
 	const response = await useApi.get({
-		endpoint: 'api/delivery-service/admin/orders/getAll/0',
+		endpoint: `api/delivery-service/admin/orders/getAll/${pageParam}`,
 		headers: { authorization: `Bearer ${token}` },
 		params: {
-			size: 50,
+			size: 20,
 		},
 	})
 	return response.data
