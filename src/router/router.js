@@ -8,7 +8,7 @@ import TrackPage from '@/pages/TrackPage.vue'
 import PersonalPage from '@/pages/PersonalPage.vue'
 import InfoPage from '@/pages/InfoPage.vue'
 import WaitingTrackPage from '@/pages/WaitingTrackPage.vue'
-import { keycloak } from '@/use/auth'
+import { keycloak, login } from '@/use/auth'
 
 const routes = [
 	{
@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
 		if (keycloak.authenticated) {
 			next()
 		} else {
-			keycloak.login({ redirectUri: window.location.href })
+			login({ redirectUri: window.location.href })
 		}
 	} else {
 		next()

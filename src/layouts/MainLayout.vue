@@ -2,14 +2,11 @@
 	<v-layout>
 		<AppHeader @menuClick="drawer = !drawer" @openMenu="drawer = !drawer" />
 		<!-- <AppFooter /> -->
-
 		<v-main>
 			<router-view />
 		</v-main>
 	</v-layout>
-
 	<!-- <v-fab icon="mdi-chat" color="indigo-accent-4" appear layout app location="bottom end" extended size="64" /> -->
-
 	<v-speed-dial location="bottom end" transition="fade-transition" :close-on-content-click="false" close-on-back>
 		<template v-slot:activator="{ props: activatorProps }">
 			<v-fab
@@ -25,7 +22,6 @@
 				v-bind="activatorProps"
 			/>
 		</template>
-
 		<v-card
 			width="300px"
 			height="500px"
@@ -74,42 +70,51 @@
 	</v-speed-dial>
 </template>
 
-<script>
+<script setup>
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import { provide, ref } from 'vue'
 import { useDisplay } from 'vuetify'
 import { useSupportStore } from '@/stores/support'
 import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/user'
+import { keycloak } from '@/use/auth'
+import { fetchUserData } from '@/api/services/userService'
+import { identityRole } from '@/helpers/roleHelper'
 
-export default {
-	name: 'MainLayout',
-	components: { AppFooter, AppHeader },
-	setup() {
-		const drawer = ref(false)
-		const message = ref('')
-		const { mobile } = useDisplay()
-		const supportStore = useSupportStore()
-		const { messages } = storeToRefs(supportStore)
-		provide('drawer', drawer)
+const store = useUserStore()
+try {
+	await keycloak.init({
+		onLoad: 'check-sso',
+		silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+		flow: 'standard',
+		pkceMethod: 'S256',
+	})
+	if (keycloak.token) {
+		const data = await fetchUserData()
+		store.setAccountInfo(data.accountInfo)
+		store.setAddresses(data.saveAddresses)
+		store.serUserId(data.id)
+		store.setUserRole(identityRole(keycloak))
+	}
+} catch (error) {
+	console.error('Keycloak initialization failed', error)
+}
 
-		const handleSendMessage = () => {
-			messages.value.push({
-				text: message.value,
-				byUser: true,
-				id: Date.now(),
-			})
-			message.value = ''
-		}
+const drawer = ref(false)
+const message = ref('')
+const { mobile } = useDisplay()
+const supportStore = useSupportStore()
+const { messages } = storeToRefs(supportStore)
+provide('drawer', drawer)
 
-		return {
-			drawer,
-			mobile,
-			message,
-			messages,
-			handleSendMessage,
-		}
-	},
+const handleSendMessage = () => {
+	messages.value.push({
+		text: message.value,
+		byUser: true,
+		id: Date.now(),
+	})
+	message.value = ''
 }
 </script>
 

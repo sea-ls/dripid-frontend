@@ -17,6 +17,7 @@ export const useOrdersStore = defineStore('order', () => {
 		warehouse,
 		setWarehouse,
 		setIsWithCard,
+		checkTrack,
 		withCard,
 	}
 })

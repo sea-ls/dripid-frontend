@@ -38,8 +38,10 @@
 	</v-row>
 </template>
 
-<script>
+<script setup>
 import AppCalculator from '@/components/AppCalculator.vue'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
+const { mobile } = useDisplay()
 </script>
 
 <style scoped>

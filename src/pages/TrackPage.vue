@@ -27,47 +27,40 @@
 			</v-btn>
 		</template>
 	</v-text-field>
-	<v-card class="mt-3">
+	<v-card class="mt-3" v-if="isPanel">
 		<v-card-title> </v-card-title>
 		<v-card-item>
-			<h4 class="text-indigo-accent-4">Статус:</h4>
-			<v-chip :color="info.color">{{ info.name }}</v-chip>
+			<div class="d-flex ga-2 align-center mb-2">
+				<h4 class="text-indigo-accent-4">Статус:</h4>
+				<StatusChip :status-value="info.value" />
+			</div>
 			<h4 class="text-indigo-accent-4">Описание:</h4>
 			<p class="text-body-1">{{ info.desk }}</p>
 		</v-card-item>
 	</v-card>
 </template>
 
-<script>
+<script setup>
 import { useTrackStore } from '@/stores/track'
 import { storeToRefs } from 'pinia'
 import { useDisplay } from 'vuetify'
 import { ref } from 'vue'
 import { useOrdersStore } from '@/stores/orders'
+import StatusChip from '@/components/StatusChip.vue'
 
-export default {
-	name: 'TrackPage',
-	setup() {
-		const { mobile } = useDisplay()
-		const trackStore = useTrackStore()
-		const orderStore = useOrdersStore()
-		const { trackNumber } = storeToRefs(trackStore)
-		const info = ref({})
-		const isPanel = ref(false)
+const { mobile } = useDisplay()
+const trackStore = useTrackStore()
+const { trackNumber } = storeToRefs(trackStore)
+const info = ref({
+	value: 'PROCESSING',
+	name: 'В обработке',
+	color: 'gray',
+	desk: 'Ваш заказ обрабатывается модераторами, после выкупа с вас спишется сумма за доставку и товар. В случае нехватки денег с вами свяжется оператор',
+})
+const isPanel = ref(false)
 
-		function onSearch() {
-			isPanel.value = true
-			info.value = orderStore.checkTrack(trackNumber)
-		}
-
-		return {
-			mobile,
-			isPanel,
-			trackNumber,
-			onSearch,
-			info,
-		}
-	},
+function onSearch() {
+	isPanel.value = true
 }
 </script>
 

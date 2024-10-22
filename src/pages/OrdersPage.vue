@@ -45,13 +45,13 @@
 					<div class="d-flex ga-4 flex-wrap mb-5">
 						<v-card v-for="product in order.products" :key="product.id" width="fit-content">
 							<v-card-text>
-								<div v-if="product.description">
-									<strong>Описание: </strong>{{ product.description }}
-								</div>
 								<div><strong>Цена: </strong>{{ product.price.amount }}₽</div>
 								<div><strong>Вес: </strong>{{ product.weight }} кг</div>
 								<div>
 									<strong>Ссылка на товар: </strong><a :href="product.url">{{ product.url }}</a>
+								</div>
+								<div v-if="product.description">
+									<strong>Описание: </strong>{{ product.description }}
 								</div>
 							</v-card-text>
 						</v-card>
