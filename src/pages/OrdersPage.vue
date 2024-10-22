@@ -1,33 +1,44 @@
 <template>
-	<v-expansion-panels multiple v-if="data">
-		<template v-for="(page, index) in data.pages" :key="index">
-			<v-expansion-panel v-for="order in page.content" bg-color="grey-lighten-5">
+	<div v-if="isFetching && !isFetchingNextPage">Загрузка...</div>
+	<v-expansion-panels multiple v-else-if="data">
+		<template v-if="data.pages" v-for="(page, index) in data.pages" :key="index">
+			<v-expansion-panel v-for="order in page.content" bg-color="grey-lighten-5" v-if="page.content.length > 0">
 				<v-expansion-panel-title>
-					<div class="d-flex ga-3 align-center">
-						<div v-if="order.orderType === 'DELIVERY'">
-							<strong>Номер заказа:</strong> {{ order.trackNumberInternal }}
-						</div>
-						<div v-else><strong>Номер заказа:</strong> {{ order.trackNumberExternal }}</div>
-						<!-- <div class="d-flex align-center ga-1">
-							<strong>Тип:</strong><StatusChip :status-value="order.orderType" />
-						</div> -->
-						<div v-if="!isAdmin" class="d-flex align-center ga-1">
-							<strong>Статус:</strong><StatusChip :status-value="order.orderStatus" />
-						</div>
-						<v-select
-							v-else
-							variant="outlined"
-							rounded="xl"
-							width="200px"
-							density="compact"
-							color="primary"
-							:items="statuses"
-							item-title="name"
-							:model-value="order.orderStatus"
-							@update:model-value="changeStatus($event, order)"
-							@click.stop
-						/>
-					</div>
+					<v-row no-gutters>
+						<v-col class="d-flex align-center justify-start" cols="4">
+							<div v-if="order.orderType === 'DELIVERY'">
+								<strong>Номер заказа:</strong> {{ order.trackNumberInternal }}
+							</div>
+							<div v-else><strong>Номер заказа:</strong> {{ order.trackNumberExternal }}</div>
+						</v-col>
+						<v-col class="text--secondary" cols="8">
+							<v-row style="width: 100%" no-gutters>
+								<v-col class="d-flex align-center justify-start ga-1" cols="6">
+									<strong>Тип:</strong><StatusChip :status-value="order.orderType" />
+								</v-col>
+								<v-col class="d-flex align-center justify-start align-center ga-1" cols="6">
+									<div v-if="!isAdmin">
+										<strong>Статус:</strong><StatusChip :status-value="order.orderStatus" />
+									</div>
+									<v-select
+										v-else
+										variant="outlined"
+										rounded="xl"
+										width="200px"
+										density="compact"
+										color="primary"
+										:items="statuses"
+										hide-details
+										class="mr-10"
+										item-title="name"
+										:model-value="order.orderStatus"
+										@update:model-value="changeStatus($event, order)"
+										@click.stop
+									/>
+								</v-col>
+							</v-row>
+						</v-col>
+					</v-row>
 				</v-expansion-panel-title>
 				<v-expansion-panel-text>
 					<div style="font-size: 24px">Товары</div>
@@ -54,8 +65,13 @@
 					</div>
 				</v-expansion-panel-text>
 			</v-expansion-panel>
+			<div v-else class="d-flex ga-4">
+				<div>Заказов пока нет</div>
+				<RouterLink to="/lk/buy">Перейти к созданию</RouterLink>
+			</div>
 		</template>
 	</v-expansion-panels>
+
 	<v-skeleton-loader type="list-item" v-if="isFetchingNextPage" />
 </template>
 
@@ -64,7 +80,7 @@ import { useGetOrdersQuery } from '@/api/hooks/orders/useGetOrdersQuery'
 import { useGetAllOrdersQuery } from '@/api/hooks/admin/useGetAllOrdersQuery'
 import { useUpdateOrderMutation } from '@/api/hooks/admin/useUpdateOrderMutation'
 import StatusChip from '@/components/StatusChip.vue'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount } from 'vue'
 import { useUserStore } from '@/stores/user'
 
 const statuses = [
@@ -100,7 +116,9 @@ const statuses = [
 
 const { isAdmin } = useUserStore()
 
-const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = isAdmin ? useGetAllOrdersQuery() : useGetOrdersQuery()
+const { data, fetchNextPage, isFetchingNextPage, hasNextPage, isFetching } = isAdmin
+	? useGetAllOrdersQuery()
+	: useGetOrdersQuery()
 const { mutate: updateOrder } = useUpdateOrderMutation()
 
 const handleScroll = () => {
