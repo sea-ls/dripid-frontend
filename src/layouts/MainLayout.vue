@@ -91,6 +91,7 @@ try {
 		pkceMethod: 'S256',
 	})
 	if (keycloak.token) {
+		localStorage.setItem('token', keycloak.token)
 		const data = await fetchUserData()
 		store.setAccountInfo(data.accountInfo)
 		store.setAddresses(data.saveAddresses)

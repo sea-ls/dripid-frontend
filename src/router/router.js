@@ -68,10 +68,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
-		if (keycloak.authenticated) {
+		if (localStorage.getItem('token')) {
 			next()
 		} else {
-			login({ redirectUri: window.location.href })
+			router.push('/')
 		}
 	} else {
 		next()
