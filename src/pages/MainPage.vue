@@ -20,19 +20,19 @@
 
 				<AppAboutWrapper id="about" />
 
-				<div class="d-flex justify-space-between align-center w-100 ga-2 flex-column flex-md-row">
-					<v-slide-group selected-class="bg-primary" show-arrows>
+				<v-sheet class="mx-auto" max-width="100%">
+					<v-slide-group selected-class="bg-primary">
 						<v-slide-group-item v-for="n in 15" :key="n">
 							<AppStories :stories="new Array(15)" />
 						</v-slide-group-item>
 					</v-slide-group>
-				</div>
+				</v-sheet>
 
-				<div class="w-100" id="roadmap">
+				<div class="roadmap" id="roadmap">
 					<AppRoadmap />
 				</div>
 
-				<AppCalculator width="100%" title="Расчёт стоимости" />
+				<AppCalculator width="700px" title="Расчёт стоимости" />
 
 				<div class="w-100" id="brands">
 					<AppBrands :images="carouselImages" />
@@ -45,7 +45,7 @@
 						placeholder="Номер отслеживания"
 						density="comfortable"
 						hide-details
-						color="#304FFE"
+						color="#0011ff"
 						variant="solo-filled"
 						flat
 						class="rounded-xl position-relative overflow-hidden"
@@ -59,7 +59,7 @@
 							<v-btn
 								@click="router.push({ name: 'track' })"
 								v-if="!mobile"
-								color="#304FFE"
+								color="#0011ff"
 								class="h-100 px-16 rounded-0 position-absolute right-0"
 								flat
 							>
@@ -75,7 +75,7 @@
 	</div>
 </template>
 
-<script>
+<script setup>
 import MainContentCanvas from '@/components/MainContentCanvas.vue'
 import AppAboutWrapper from '@/components/AppAboutWrapper.vue'
 import AppCard from '@/components/AppCard.vue'
@@ -88,84 +88,41 @@ import { useTrackStore } from '@/stores/track'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import AppBrands from '@/components/AppBrands.vue'
+import AppCalculator from '@/components/AppCalculator.vue'
+import shop1 from '@/assets/shop1.png'
+import shop2 from '@/assets/shop2.png'
+import shop3 from '@/assets/shop3.png'
+import shop4 from '@/assets/shop4.png'
 
-export default {
-	name: 'MainPage',
-	components: {
-		AppStories,
-		AppRoadmap,
-		AppFooter,
-		AppCard,
-		AppAboutWrapper,
-		MainContentCanvas,
-		AppBrands,
-	},
-	setup() {
-		const { mobile } = useDisplay()
-		const drawer = inject('drawer')
-		const trackStore = useTrackStore()
-		const { trackNumber } = storeToRefs(trackStore)
-		const range = ref(null)
-		const buttonToggle = ref(null)
+const { mobile } = useDisplay()
+const drawer = inject('drawer')
+const trackStore = useTrackStore()
+const { trackNumber } = storeToRefs(trackStore)
+const range = ref(null)
+const buttonToggle = ref(null)
 
-		watch(buttonToggle, (newVal, _) => {
-			switch (newVal) {
-				case 0:
-					range.value = 2
-					break
-				case 1:
-					range.value = 5
-					break
-				case 2:
-					range.value = 10
-					break
-				default:
-					range.value = 0
-					break
-			}
-		})
-		const router = useRouter()
-		const carouselImages = ref([
-			'https://via.placeholder.com/200x200?text=Image1',
-			'https://via.placeholder.com/200x200?text=Image2',
-			'https://via.placeholder.com/200x200?text=Image3',
-			'https://via.placeholder.com/200x200?text=Image4',
-			'https://via.placeholder.com/200x200?text=Image5',
-			'https://via.placeholder.com/200x200?text=Image6',
-			'https://via.placeholder.com/200x200?text=Image7',
-			'https://via.placeholder.com/200x200?text=Image8',
-			'https://via.placeholder.com/200x200?text=Image9',
-			'https://via.placeholder.com/200x200?text=Image10',
-			'https://via.placeholder.com/200x200?text=Image11',
-			'https://via.placeholder.com/200x200?text=Image12',
-			'https://via.placeholder.com/200x200?text=Image13',
-			'https://via.placeholder.com/200x200?text=Image14',
-			'https://via.placeholder.com/200x200?text=Image15',
-			'https://via.placeholder.com/200x200?text=Image16',
-			'https://via.placeholder.com/200x200?text=Image17',
-			'https://via.placeholder.com/200x200?text=Image18',
-			'https://via.placeholder.com/200x200?text=Image19',
-			'https://via.placeholder.com/200x200?text=Image20',
-			'https://via.placeholder.com/200x200?text=Image21',
-			'https://via.placeholder.com/200x200?text=Image22',
-		])
+watch(buttonToggle, (newVal, _) => {
+	switch (newVal) {
+		case 0:
+			range.value = 2
+			break
+		case 1:
+			range.value = 5
+			break
+		case 2:
+			range.value = 10
+			break
+		default:
+			range.value = 0
+			break
+	}
+})
+const router = useRouter()
+const carouselImages = ref([shop1, shop2, shop3, shop4, shop1, shop2, shop3, shop4, shop1, shop2, shop3, shop4])
 
-		const goTo = useGoTo()
-		const navigateTo = (selector) => {
-			goTo(selector)
-		}
-
-		return {
-			mobile,
-			drawer,
-			range,
-			navigateTo,
-			trackNumber,
-			router,
-			carouselImages,
-			buttonToggle,
-		}
-	},
+const goTo = useGoTo()
+const navigateTo = (selector) => {
+	goTo(selector)
 }
 </script>
 
@@ -179,7 +136,7 @@ export default {
 }
 .img-title {
 	font-size: 50px;
-	color: #304ffe;
+	color: #0011ff;
 	font-family: Kharkiv-Tone, sans-serif;
 	display: none;
 }
@@ -207,6 +164,9 @@ export default {
 }
 .title {
 	font-family: Kharkiv-Tone, sans-serif;
-	color: #304ffe;
+	color: #0011ff;
+}
+.roadmap {
+	width: 2000px;
 }
 </style>

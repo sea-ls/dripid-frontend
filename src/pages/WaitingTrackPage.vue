@@ -19,7 +19,7 @@
 						<v-select
 							placeholder="Фактический адрес доставки"
 							label="Фактический адрес доставки"
-							color="#304FFE"
+							color="#0011ff"
 							variant="outlined"
 							rounded="xl"
 							:items="addresses"

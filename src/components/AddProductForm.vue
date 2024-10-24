@@ -10,7 +10,7 @@
 					type="number"
 					variant="outlined"
 					rounded="xl"
-					color="#304FFE"
+					color="#0011ff"
 					width="50%"
 				/>
 				<v-select
@@ -21,7 +21,7 @@
 					:rules="[rules.required]"
 					label="Валюта"
 					required
-					color="#304FFE"
+					color="#0011ff"
 					variant="outlined"
 					rounded="xl"
 					width="50%"
@@ -35,7 +35,7 @@
 				type="number"
 				variant="outlined"
 				rounded="xl"
-				color="#304FFE"
+				color="#0011ff"
 			/>
 			<v-text-field
 				v-model="productLink"
@@ -44,9 +44,9 @@
 				required
 				variant="outlined"
 				rounded="xl"
-				color="#304FFE"
+				color="#0011ff"
 			/>
-			<v-textarea v-model="comment" label="Комментарий к товару" color="#304FFE" />
+			<v-textarea v-model="comment" label="Комментарий к товару" color="#0011ff" />
 			<v-btn color="blue darken-1" @click="submit">Добавить товар</v-btn>
 		</v-form>
 

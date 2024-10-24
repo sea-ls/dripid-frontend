@@ -5,7 +5,7 @@
 		placeholder="Номер отслеживания"
 		density="comfortable"
 		hide-details
-		color="#304FFE"
+		color="#0011ff"
 		variant="solo-filled"
 		:append-inner-icon="mobile ? 'mdi-magnify' : ''"
 		flat
@@ -18,7 +18,7 @@
 		<template #append-inner v-if="!mobile">
 			<v-btn
 				v-if="!mobile"
-				color="#304FFE"
+				color="#0011ff"
 				class="h-100 px-16 rounded-0 position-absolute right-0"
 				flat
 				@click="onSearch"
@@ -31,10 +31,10 @@
 		<v-card-title> </v-card-title>
 		<v-card-item>
 			<div class="d-flex ga-2 align-center mb-2">
-				<h4 class="text-indigo-accent-4">Статус:</h4>
+				<h4 class="text-primary">Статус:</h4>
 				<StatusChip :status-value="info.value" />
 			</div>
-			<h4 class="text-indigo-accent-4">Описание:</h4>
+			<h4 class="text-primary">Описание:</h4>
 			<p class="text-body-1">{{ info.desk }}</p>
 		</v-card-item>
 	</v-card>
@@ -67,6 +67,6 @@ function onSearch() {
 <style scoped>
 .title {
 	font-family: Kharkiv-Tone, sans-serif;
-	color: #304ffe;
+	color: #0011ff;
 }
 </style>

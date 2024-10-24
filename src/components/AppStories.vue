@@ -12,29 +12,22 @@
 				<v-btn variant="plain" @click="props.onClick" class="mb-n15" min-height="85%" min-width="40%" />
 			</template>
 			<v-carousel-item v-for="story in stories" :key="story">
-				<AppCard :height="700" :width="390" />
+				<AppCard height="700" width="390" />
 			</v-carousel-item>
 		</v-carousel>
 	</v-dialog>
 </template>
 
-<script>
+<script setup>
 import AppCard from '@/components/AppCard.vue'
 import { useDisplay } from 'vuetify'
 
-export default {
-	name: 'AppStories',
-	components: { AppCard },
-	props: {
-		stories: {
-			type: Array,
-		},
+const props = defineProps({
+	stories: {
+		type: Array,
 	},
-	setup() {
-		const { mobile } = useDisplay()
-		return { mobile }
-	},
-}
+})
+const { mobile } = useDisplay()
 </script>
 
 <style scoped></style>

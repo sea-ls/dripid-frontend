@@ -28,7 +28,7 @@ export default {
 <style lang="scss" scoped>
 .title {
 	font-size: 2rem;
-	color: #304ffe;
+	color: #0011ff;
 }
 .carousel-container {
 	width: 100%;

@@ -4,14 +4,14 @@
 		height="200px"
 		rounded="xl"
 		:class="{
-			'bg-indigo-accent-4': cardStyle === 'blue',
+			'bg-primary': cardStyle === 'blue',
 			'bg-grey-lighten-3': cardStyle === 'grey',
 		}"
 	>
 		<v-card-title
 			:class="{
 				'bg-grey-lighten-3 ': cardStyle === 'blue',
-				'bg-indigo-accent-4': cardStyle === 'grey',
+				'bg-primary': cardStyle === 'grey',
 			}"
 			class="w-50 card-title"
 		>
@@ -48,7 +48,7 @@ export default {
 
 <style scoped>
 .selected-title {
-	color: #304ffe;
+	color: #0011ff;
 }
 
 .card-title {

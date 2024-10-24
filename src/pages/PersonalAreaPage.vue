@@ -51,7 +51,7 @@ export default {
 				description: 'Louis bag',
 				track: 'E12MW459678',
 				status: 'В Пути',
-				color: '#304FFE',
+				color: '#0011ff',
 			},
 			{
 				id: 4,
@@ -187,7 +187,7 @@ export default {
 }
 
 .lk__about_row-title {
-	color: #304ffe;
+	color: #0011ff;
 }
 
 .lk__about_row-text {

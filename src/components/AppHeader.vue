@@ -23,7 +23,7 @@
 				density="compact"
 				rounded="xl"
 				width="50px"
-				color="#304FFE"
+				color="#0011ff"
 				variant="outlined"
 				append-inner-icon="mdi-chevron-right"
 				@click:append-inner="router.push({ name: 'track' })"
@@ -31,14 +31,14 @@
 
 			<v-btn
 				prepend-icon="mdi-account"
-				color="indigo-accent-4"
+				color="primary"
 				class="bg-grey-lighten-3 mr-1"
 				rounded
 				@click="handleAuth()"
 			>
 				{{ isAuth ? fullName : 'Вход' }}
 			</v-btn>
-			<v-icon class="cursor-pointer" icon="mdi-logout" color="#304FFE" v-if="isAuth" @click="openConfirmDialog()">
+			<v-icon class="cursor-pointer" icon="mdi-logout" color="#0011ff" v-if="isAuth" @click="openConfirmDialog()">
 			</v-icon>
 		</v-container>
 	</v-app-bar>
@@ -107,14 +107,14 @@ export default {
 
 <style scoped>
 .link {
-	color: #304ffe;
+	color: #0011ff;
 	text-decoration: none;
 	cursor: pointer;
 }
 
 .title span {
 	font-family: Kharkiv-Tone, sans-serif;
-	color: #304ffe;
+	color: #0011ff;
 }
 
 :deep(.v-toolbar-title) {

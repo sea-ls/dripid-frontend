@@ -1,9 +1,14 @@
 <template>
-	<v-card :class="['card bg-indigo-accent-4', margin && 'mx-2']" :width="width" :height="height" rounded="xl">
-		<template #title>
-			<h3 class="pa-2">Доставка</h3>
-		</template>
-	</v-card>
+	<AppCardStories
+		:class="['card  d-flex align-end', margin && 'mx-2']"
+		color="primary"
+		:width="width"
+		:height="height"
+	>
+		<v-card-title class="mb-12 ml-10">
+			<p>Доставка</p>
+		</v-card-title>
+	</AppCardStories>
 </template>
 
 <script>
@@ -11,10 +16,10 @@ export default {
 	name: 'AppCard',
 	props: {
 		width: {
-			default: 280,
+			default: 400,
 		},
 		height: {
-			default: 500,
+			default: 750,
 		},
 		margin: {
 			type: Boolean,
@@ -25,4 +30,10 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+p {
+	font-family: 'Kharkiv-Tone';
+	text-transform: uppercase;
+	font-size: 36px;
+}
+</style>

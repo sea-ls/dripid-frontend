@@ -175,7 +175,7 @@ export default {
 }
 
 .lk__about_row-title {
-	color: #304ffe;
+	color: #0011ff;
 }
 
 .lk__about_row-text {

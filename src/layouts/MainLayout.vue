@@ -6,12 +6,12 @@
 			<router-view />
 		</v-main>
 	</v-layout>
-	<!-- <v-fab icon="mdi-chat" color="indigo-accent-4" appear layout app location="bottom end" extended size="64" /> -->
+	<!-- <v-fab icon="mdi-chat" color="primary" appear layout app location="bottom end" extended size="64" /> -->
 	<v-speed-dial location="bottom end" transition="fade-transition" :close-on-content-click="false" close-on-back>
 		<template v-slot:activator="{ props: activatorProps }">
 			<v-fab
 				icon="mdi-chat"
-				color="indigo-accent-4"
+				color="primary"
 				appear
 				layout
 				app
@@ -26,7 +26,7 @@
 			width="300px"
 			height="500px"
 			rounded="xl"
-			class="pa-0 bg-indigo-accent-4 d-flex justify-space-between flex-column"
+			class="pa-0 bg-primary d-flex justify-space-between flex-column"
 		>
 			<template #title>
 				<div class="d-flex justify-space-between pa-0 ma-0">
@@ -58,7 +58,7 @@
 								v-model="message"
 								append-inner-icon="mdi-paperclip"
 								density="compact"
-								color="#304FFE"
+								color="#0011ff"
 								placeholder="Отправить сообщение..."
 								small
 							/>
@@ -90,13 +90,15 @@ try {
 		flow: 'standard',
 		pkceMethod: 'S256',
 	})
-	if (keycloak.token) {
+	if (keycloak.authenticated) {
 		localStorage.setItem('token', keycloak.token)
 		const data = await fetchUserData()
 		store.setAccountInfo(data.accountInfo)
 		store.setAddresses(data.saveAddresses)
 		store.serUserId(data.id)
 		store.setUserRole(identityRole(keycloak))
+	} else {
+		localStorage.removeItem('token', keycloak.token)
 	}
 } catch (error) {
 	console.error('Keycloak initialization failed', error)
@@ -125,7 +127,7 @@ const handleSendMessage = () => {
 	height: 400px;
 	border-radius: 4px;
 	&__primary {
-		color: #304ffe;
+		color: #0011ff;
 		height: 90%;
 	}
 	&__input {

@@ -32,7 +32,7 @@ export default {
 	height: 400px;
 }
 .content-logo {
-	color: #304ffe;
+	color: #0011ff;
 	font-size: 6rem;
 	text-overflow: unset;
 	font-weight: bold;

@@ -1,5 +1,5 @@
 <template>
-	<v-footer class="footer bg-indigo-accent-4 pa-0" rounded="xl">
+	<v-footer class="footer bg-primary pa-0" rounded="xl">
 		<v-container class="pa-0 d-flex flex-column h-100">
 			<v-row class="border-b-md border-white justify-center ma-0">
 				<v-col class="pa-5 flex-grow-0">

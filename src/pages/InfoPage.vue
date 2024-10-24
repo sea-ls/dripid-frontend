@@ -4,11 +4,11 @@
 			<h2>Ваша заявка успешно создана!</h2>
 		</v-card-title>
 		<v-card-item v-if="withCard">
-			<h4 class="text-indigo-accent-4">Тип заявки:</h4>
+			<h4 class="text-primary">Тип заявки:</h4>
 			<h4>{{ withCard ? 'Доставка' : 'Выкуп' }}</h4>
-			<h4 class="text-indigo-accent-4">Страна:</h4>
+			<h4 class="text-primary">Страна:</h4>
 			<h4>{{ warehouse.name }}</h4>
-			<h4 class="text-indigo-accent-4">Адрес склада:</h4>
+			<h4 class="text-primary">Адрес склада:</h4>
 			<h4>{{ warehouse.address }}</h4>
 			<p class="text-body-1">
 				Укажите этот адрес при заказе товара. После получения его на нашем складе, статсус заказа изменится.
@@ -16,7 +16,7 @@
 			</p>
 		</v-card-item>
 		<v-card-actions>
-			<v-btn color="indigo-accent-4" @click="$router.push('/lk/menu')">Подтвердить</v-btn>
+			<v-btn color="primary" @click="$router.push('/lk/menu')">Подтвердить</v-btn>
 		</v-card-actions>
 	</v-card>
 </template>
